@@ -1,0 +1,24 @@
+<app-navbar></app-navbar> <!-- Add Navbar Component -->
+
+<div class="home-container">
+    <app-community-sidebar (communityJoined)="onCommunityJoined($event)"
+        (communityCreated)="onCommunityCreated()"></app-community-sidebar>
+
+    <main class="main-content">
+        <div class="search-bar">
+            <input type="text" placeholder="Search" [(ngModel)]="searchQuery" />
+            <button (click)="postQuestion()">Post your question</button>
+        </div>
+
+        <div class="content-list">
+            <div class="content-item" *ngFor="let item of contentList">
+                <div class="user">{{ item.user }}</div>
+                <div class="question">Q: {{ item.question }}</div>
+                <div class="answer" *ngIf="item.answer">A: {{ item.answer }}</div>
+            </div>
+        </div>
+    </main>
+
+    <app-post *ngIf="showPostQuestionPopup" (questionSubmitted)="handleQuestionSubmitted($event)"
+        (closePopup)="showPostQuestionPopup = false"></app-post>
+</div>

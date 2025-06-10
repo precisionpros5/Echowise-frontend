@@ -1,0 +1,18 @@
+<app-navbar></app-navbar> <!-- Add Navbar Component -->
+
+<div class="create-community-container">
+    <h2>Create a Community</h2>
+    <form (ngSubmit)="createCommunity()">
+        <label for="communityName">Community Name</label>
+        <input id="communityName" type="text" [(ngModel)]="communityName" name="communityName" required />
+
+        <label for="communityDescription">Community Description</label>
+        <textarea id="communityDescription" [(ngModel)]="communityDescription" name="communityDescription"
+            required></textarea>
+
+        <button type="button" (click)="generateCode()">Generate Code</button>
+        <p *ngIf="generatedCode">Generated Code: {{ generatedCode }}</p>
+
+        <button type="submit">Create Community</button>
+    </form>
+</div>

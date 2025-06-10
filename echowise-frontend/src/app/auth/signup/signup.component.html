@@ -1,0 +1,20 @@
+<div class="auth-container">
+    <div class="auth-card">
+        <h2>Sign Up</h2>
+        <form (ngSubmit)="onSignup()">
+            <label for="email">Email</label>
+            <input id="email" type="email" [(ngModel)]="email" name="email" placeholder="Enter your email" required />
+
+            <label for="password">Password</label>
+            <input id="password" type="password" [(ngModel)]="password" name="password"
+                placeholder="Enter your password" required />
+
+            <label for="confirmPassword">Confirm Password</label>
+            <input id="confirmPassword" type="password" [(ngModel)]="confirmPassword" name="confirmPassword"
+                placeholder="Confirm your password" required />
+
+            <button type="submit">Sign Up</button>
+        </form>
+        <p>Already have an account? <a routerLink="/login" class="link">Login</a></p>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+<nav class="navbar">
+    <div class="navbar-left">
+        <img src="assets\logo1.png" alt="Logo" class="logo" />
+        <span class="app-name">App Name</span>
+    </div>
+    <div class="navbar-links">
+        <a routerLink="/community/home" routerLinkActive="active">Home</a>
+        <a routerLink="/about" routerLinkActive="active">About</a>
+        <a routerLink="/contact" routerLinkActive="active">Contact</a>
+    </div>
+    <div class="navbar-right">
+        <div class="profile-container" (click)="toggleDropdown()">
+            <div class="profile-circle">MS</div>
+            <div class="dropdown-menu" *ngIf="showDropdown">
+                <button (click)="navigateTo('/queries')">Your Queries</button>
+                <button (click)="navigateTo('/help')">Help</button>
+                <button (click)="navigateTo('/logout')">Logout</button>
+            </div>
+        </div>
+    </div>
+</nav>

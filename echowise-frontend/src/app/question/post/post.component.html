@@ -1,0 +1,16 @@
+<div class="popup-container">
+    <div class="popup-content">
+        <h3>Post your question</h3>
+        <label for="questionTitle">Title</label>
+        <input id="questionTitle" type="text" [(ngModel)]="questionTitle" placeholder="Enter question title" />
+
+        <label for="questionDescription">Description</label>
+        <textarea id="questionDescription" [(ngModel)]="questionDescription"
+            placeholder="Enter question description"></textarea>
+
+        <label for="questionTags">Tags</label>
+        <input id="questionTags" type="text" [(ngModel)]="questionTags" placeholder="Enter tags (comma-separated)" />
+
+        <button (click)="submitQuestion()">Submit</button>
+    </div>
+</div>

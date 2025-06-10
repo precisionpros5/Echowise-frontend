@@ -1,0 +1,11 @@
+<app-navbar></app-navbar> <!-- Add Navbar Component -->
+
+<div class="join-community-container">
+    <h2>Join a Community</h2>
+    <form (ngSubmit)="joinCommunity()">
+        <label for="communityCode">Community Code</label>
+        <input id="communityCode" type="text" [(ngModel)]="communityCode" name="communityCode" required />
+
+        <button type="submit">Join Community</button>
+    </form>
+</div>

@@ -1,0 +1,11 @@
+<div class="sidebar">
+    <h3>Communities</h3>
+    <ul>
+        <li *ngFor="let community of communities">
+            <input type="radio" name="community" [(ngModel)]="selectedCommunity" [value]="community" />
+            {{ community }}
+        </li>
+    </ul>
+    <button routerLink="/community/join">+ Join</button>
+    <button routerLink="/community/create">+ New</button>
+</div>
