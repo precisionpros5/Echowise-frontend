@@ -1,4 +1,7 @@
 /* filepath: c:\Users\2397916\OneDrive - Cognizant\Desktop\Project_Frontend\echowise-frontend\src\app\auth\signup\signup.component.css */
+body {
+    margin: 0;
+}
 
 .auth-container {
     display: flex;
