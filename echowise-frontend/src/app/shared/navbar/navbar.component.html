@@ -1,16 +1,29 @@
 <nav class="navbar">
     <div class="navbar-left">
-        <img src="assets\logo1.png" alt="Logo" class="logo" />
-        <span class="app-name">App Name</span>
+        <img src="assets/logo1.png" alt="Logo" class="logo" />
+        <div class="app-name-container">
+            <span class="app-name animate-echowise">Echo Wise</span> <!-- Added animate-echowise class -->
+            <span class="tagline">Ignite your understanding</span>
+        </div>
     </div>
     <div class="navbar-links">
-        <a routerLink="/community/home" routerLinkActive="active">Home</a>
-        <a routerLink="/about" routerLinkActive="active">About</a>
-        <a routerLink="/contact" routerLinkActive="active">Contact</a>
+        <div class="navbar-link">
+            <img src="assets/home-logo.svg" alt="Home Icon" class="link-icon" />
+            <a routerLink="/community/home" routerLinkActive="active">Home</a>
+        </div>
+        <div class="navbar-link">
+            <img src="assets/about-logo.svg" alt="About Icon" class="link-icon" />
+            <a routerLink="/about" routerLinkActive="active">About</a>
+        </div>
+        <div class="navbar-link">
+            <img src="assets/contact-logo.svg" alt="Contact Icon" class="link-icon" />
+            <a routerLink="/contact" routerLinkActive="active">Contact</a>
+        </div>
     </div>
     <div class="navbar-right">
         <div class="profile-container" (click)="toggleDropdown()">
-            <div class="profile-circle">MS</div>
+            <img src="assets/profile-logo.svg" alt="Profile Logo" class="profile-logo" />
+            <span class="profile-text">My Profile</span>
             <div class="dropdown-menu" *ngIf="showDropdown">
                 <button (click)="navigateTo('/queries')">Your Queries</button>
                 <button (click)="navigateTo('/help')">Help</button>

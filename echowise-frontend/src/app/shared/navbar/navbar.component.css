@@ -42,7 +42,6 @@
     /* Bold */
 }
 
-
 /* Adjustments for navigation links */
 .navbar-nav .nav-link {
     color: #6c757d;
@@ -96,80 +95,224 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #ddd;
+    padding: 0.3rem 1rem; /* Reduced padding for a compact navbar */
+    background: #fff; /* White background */
+    border-radius: 12px; /* Rounded edges */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    font-family: 'Arial', sans-serif;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.navbar:hover {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
 }
 
 .navbar-left {
     display: flex;
     align-items: center;
+    gap: 0.8rem; /* Reduced gap between logo and app name */
 }
 
 .logo {
-    width: 40px;
-    height: 40px;
-    border-radius: 6px;
+    width: 80px; /* Reduced size */
+    height: auto;
+    margin-right: 0.8rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.app-name-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem; /* Reduced gap between app name and tagline */
 }
 
 .app-name {
-    margin-left: 1rem;
-    font-size: 1.2rem;
+    font-size: 1.4rem; /* Adjusted size */
     font-weight: bold;
+    background: linear-gradient(90deg, #b46cfc, #7367F0); /* Gradient color */
+    -webkit-background-clip: text; /* Clip the gradient to the text */
+    -webkit-text-fill-color: transparent; /* Make the text transparent to show the gradient */
+    animation: gradient-animation 3s infinite; /* Add animation effect */
 }
 
-.navbar-links a {
-    margin: 0 1rem;
+/* Define the gradient animation */
+@keyframes gradient-animation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.tagline {
+    font-size: 0.8rem; /* Reduced size */
+    color: #666; /* Neutral grey text */
+    font-style: italic;
+    transition: opacity 0.3s ease;
+}
+
+.tagline:hover {
+    opacity: 0.8;
+}
+
+.navbar-links {
+    display: flex;
+    gap: 1rem; /* Space between links */
+}
+
+.navbar-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.3rem; /* Uniform space between logo and text */
+}
+
+.link-icon {
+    width: 30px; /* Icon size */
+    height: 30px;
+    border-radius: 50%; /* Circular icons */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions for the logo */
+}
+
+.link-icon:hover {
+    transform: scale(1.1); /* Slight zoom on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Shadow effect for the logo */
+}
+
+.navbar-link a {
     text-decoration: none;
-    color: #007bff;
+    color: #333; /* Dark grey text */
+    font-size: 0.9rem; /* Reduced size */
     font-weight: 500;
+    text-shadow: 0.5px 0.5px 1px rgba(0, 0, 0, 0.3); /* Subtle shadow for text */
+    transition: color 0.3s ease, text-shadow 0.3s ease; /* Smooth transitions for the text */
 }
 
-.navbar-links a.active {
-    font-weight: bold;
-    text-decoration: underline;
+.navbar-link a:hover {
+    color: #007bff; /* Primary blue color on hover */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4); /* Slightly enhanced shadow on hover */
+}
+
+.navbar-link:hover .link-icon,
+.navbar-link:hover a {
+    transform: scale(1.1); /* Apply zoom effect to logo */
+    color: #007bff; /* Apply hover color to text */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4); /* Enhanced shadow for text */
 }
 
 .navbar-right {
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center logo and text */
+    gap: 0.5rem; /* Increased space between profile logo and text */
 }
 
 .profile-container {
+    display: flex;
+    flex-direction: column; /* Align logo and text vertically */
+    align-items: center; /* Center logo and text */
     cursor: pointer;
-    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions for hover effects */
 }
 
-.profile-circle {
-    width: 40px;
-    height: 40px;
-    background-color: #ddd;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
+.profile-logo {
+    width: 30px; /* Match size of home logo */
+    height: 30px; /* Match size of home logo */
+    border-radius: 50%; /* Circular logo */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions for hover effects */
+}
+
+.profile-logo:hover {
+    transform: scale(1.1); /* Slight zoom effect */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Shadow effect */
+}
+
+.profile-text {
+    padding-top: 5px;
+    font-size: 0.9rem; /* Adjusted size */
+    color: #333; /* Dark grey text */
+    font-weight: 500;
+    text-shadow: 0.5px 0.5px 1px rgba(0, 0, 0, 0.3); /* Subtle shadow for text */
+    transition: transform 0.3s ease, color 0.3s ease, text-shadow 0.3s ease; /* Smooth transitions for hover effects */
+}
+
+.profile-container:hover .profile-logo,
+.profile-container:hover .profile-text {
+    transform: scale(1.1); /* Apply zoom effect to both logo and text */
+    color: #007bff; /* Apply hover color to text */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4); /* Enhanced shadow for text */
 }
 
 .dropdown-menu {
     position: absolute;
-    top: 50px;
+    top: 100%;
     right: 0;
-    background-color: white;
-    border: 1px solid #ddd;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     border-radius: 4px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.profile-container:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
 }
 
 .dropdown-menu button {
-    padding: 0.5rem 1rem;
-    border: none;
     background: none;
-    cursor: pointer;
+    border: none;
+    padding: 0.6rem 1rem; /* Reduced padding */
+    width: 100%;
     text-align: left;
+    font-size: 0.9rem; /* Reduced size */
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .dropdown-menu button:hover {
-    background-color: #f8f9fa;
+    background-color: #6c63ff; /* Match theme color */
+    color: #fff;
 }
+
+.animate-echowise {
+    background-image: linear-gradient(
+        -225deg,
+        #b46cfc 0%,
+        #7367F0 29%,
+        #F9658E 67%,
+        #F7C2E6 100%
+    );
+    background-size: 200% auto;
+    color: #fff;
+    background-clip: text;
+    text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient-animation 2s linear infinite;
+}
+
+/* Define the gradient animation */
+@keyframes gradient-animation {
+    to {
+        background-position: 200% center;
+    }
+}
+
+body{margin: 0px;}
