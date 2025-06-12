@@ -1,27 +1,56 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { JoinComponent } from '../../community/join/join.component';
+import { CreateComponent } from '../../community/create/create.component';
 
 @Component({
   selector: 'app-community-sidebar',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule], // Add FormsModule for ngModel
+  imports: [CommonModule, FormsModule, RouterModule, JoinComponent, CreateComponent],
   templateUrl: './community-sidebar.component.html',
   styleUrls: ['./community-sidebar.component.css']
 })
 export class CommunitySidebarComponent {
-  communities = ['Community 1', 'Community 2', 'Community 3']; // Mock data for communities
+  communities = [
+    {
+      name: 'Community 1',
+      discussionGroups: ['Discussion 1', 'Discussion 2']
+    },
+    {
+      name: 'Community 2',
+      discussionGroups: []
+    }
+  ];
+
   selectedCommunity = '';
+  @Output() createDiscussionGroup = new EventEmitter<string>();
 
-  @Output() communityJoined = new EventEmitter<string>();
-  @Output() communityCreated = new EventEmitter<void>();
+  isJoinPopupVisible = false;
+  isCreatePopupVisible = false;
 
-  joinCommunity() {
-    this.communityJoined.emit(this.selectedCommunity); // Emit selected community
+  selectCommunity(community: string) {
+    this.selectedCommunity = community;
   }
 
-  createCommunity() {
-    this.communityCreated.emit(); // Emit create community event
+  openCreateDiscussionGroup(community: string) {
+    this.createDiscussionGroup.emit(community); // Emit the event with the community name
+  }
+
+  showJoinPopup() {
+    this.isJoinPopupVisible = true;
+  }
+
+  closeJoinPopup() {
+    this.isJoinPopupVisible = false;
+  }
+
+  showCreatePopup() {
+    this.isCreatePopupVisible = true;
+  }
+
+  closeCreatePopup() {
+    this.isCreatePopupVisible = false;
   }
 }

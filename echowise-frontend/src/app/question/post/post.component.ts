@@ -15,6 +15,7 @@ export class PostComponent {
   questionTags = '';
 
   @Output() questionSubmitted = new EventEmitter<{ title: string; description: string; tags: string }>();
+  @Output() popupClosed = new EventEmitter<void>(); // Emit event for closing the popup
 
   submitQuestion() {
     const questionData = {
@@ -23,5 +24,9 @@ export class PostComponent {
       tags: this.questionTags
     };
     this.questionSubmitted.emit(questionData);
+  }
+
+  closePopup() {
+    this.popupClosed.emit(); // Emit popupClosed event
   }
 }
