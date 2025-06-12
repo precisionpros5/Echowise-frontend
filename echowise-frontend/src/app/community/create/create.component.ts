@@ -4,11 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NavbarComponent } from '../../shared/navbar/navbar.component'; // Import NavbarComponent
+import { FooterComponent } from '../../shared/footer/footer.component';
 
 @Component({
   selector: 'app-create-community',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, NavbarComponent], // Add NavbarComponent to imports
+  imports: [CommonModule, FormsModule, RouterModule, NavbarComponent, FooterComponent], // Add NavbarComponent to imports
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.css']
 })
