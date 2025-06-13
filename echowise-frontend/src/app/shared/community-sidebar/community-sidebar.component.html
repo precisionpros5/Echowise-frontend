@@ -1,11 +1,25 @@
-<div class="sidebar">
+<div class="sidebar-container">
     <h3>Communities</h3>
-    <ul>
-        <li *ngFor="let community of communities">
-            <input type="radio" name="community" [(ngModel)]="selectedCommunity" [value]="community" />
-            {{ community }}
-        </li>
-    </ul>
-    <button routerLink="/community/join">+ Join</button>
-    <button routerLink="/community/create">+ New</button>
+    <div *ngFor="let community of communities">
+        <div class="community-item">
+            <input type="radio" name="community" [value]="community.name" (change)="selectCommunity(community.name)" />
+            <span>{{ community.name }}</span>
+            <button class="add-button" (click)="openCreateDiscussionGroup(community.name)">+</button>
+        </div>
+        <div class="discussion-groups" *ngIf="selectedCommunity === community.name">
+            <div *ngFor="let group of community.discussionGroups">
+                <span>{{ group }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="buttons-container">
+        <button class="join-button" (click)="showJoinPopup()">+ Join</button>
+        <button class="new-button" (click)="showCreatePopup()">+ New</button>
+    </div>
+
+    <!-- Join Popup -->
+    <app-join-community *ngIf="isJoinPopupVisible" (popupClosed)="closeJoinPopup()"></app-join-community>
+
+    <!-- Create Popup -->
+    <app-create-community *ngIf="isCreatePopupVisible" (popupClosed)="closeCreatePopup()"></app-create-community>
 </div>

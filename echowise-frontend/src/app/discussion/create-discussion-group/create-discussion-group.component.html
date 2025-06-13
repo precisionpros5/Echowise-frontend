@@ -1,0 +1,17 @@
+<div class="popup-container">
+    <div class="popup-content">
+        <button class="close-button" (click)="close()">X</button>
+        <h3>Add to Discussion Group</h3>
+        <label for="groupName">Group Name</label>
+        <input id="groupName" type="text" [(ngModel)]="groupName" placeholder="Enter group name" />
+
+        <div class="user-list">
+            <div *ngFor="let user of users">
+                <input type="checkbox" [checked]="selectedUsers.includes(user)" (change)="toggleUserSelection(user)" />
+                <span>{{ user }}</span>
+            </div>
+        </div>
+
+        <button (click)="createGroup()">Create</button>
+    </div>
+</div>

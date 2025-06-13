@@ -10,8 +10,8 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'signup', component: SignupComponent },
     { path: 'landing', component: LandingComponent },
-    { path: 'community/create', component: CreateComponent },
-    { path: 'community/join', component: JoinComponent },
+    // { path: 'community/create', component: CreateComponent },
+    // { path: 'community/join', component: JoinComponent },
     { path: 'community/home', component: HomeComponent },
     { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];

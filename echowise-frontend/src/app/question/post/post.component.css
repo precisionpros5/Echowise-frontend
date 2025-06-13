@@ -11,6 +11,8 @@
 }
 
 .popup-content {
+    position: relative;
+    /* Ensure the close button is positioned relative to the popup */
     background-color: white;
     padding: 2rem;
     border-radius: 8px;
@@ -42,9 +44,27 @@
     background-color: #007bff;
     color: white;
     border: none;
+    border-radius: 4px;
     cursor: pointer;
 }
 
 .popup-content button:hover {
     background-color: #0056b3;
+}
+
+.close-button {
+    position: absolute;
+    /* Position the button relative to the popup */
+    top: 0.5rem;
+    right: 0.5rem;
+    /* Move the button to the top-right corner */
+    background-color: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #333;
+}
+
+.close-button:hover {
+    color: red;
 }
