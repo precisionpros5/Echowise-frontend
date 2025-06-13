@@ -53,7 +53,7 @@ export class LoginComponent {
     this.authService.login(email, password).subscribe({
       next: (res: any) => {
         console.log('Login successful', res);
-        this.router.navigate(['/landing']);
+        this.router.navigate(['/landing']); // Navigate to the landing page after successful login
       },
       error: (err: any) => {
         alert('Login failed: ' + (err.error?.message || 'Unknown error'));
