@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, 
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -15,7 +16,7 @@ export class SignupComponent {
   signupForm: FormGroup;
   showPassword: boolean = false;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.signupForm = this.fb.group(
       {
         username: ['', [Validators.required]],
@@ -50,7 +51,15 @@ export class SignupComponent {
     }
 
     const { username, email, password } = this.signupForm.value;
-    console.log('Signup successful', { username, email, password });
-    this.router.navigate(['/login']);
+    this.authService.register(email, password).subscribe({
+      next: (res: any) => {
+        console.log('Signup successful', res);
+        alert('Signup successful! Please log in.');
+        this.router.navigate(['/login']); // Navigate to the login page after successful signup
+      },
+      error: (err: any) => {
+        alert('Signup failed: ' + (err.error?.message || 'Unknown error'));
+      }
+    });
   }
 }
