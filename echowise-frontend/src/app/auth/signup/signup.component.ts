@@ -1,38 +1,56 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../auth.service';
+import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent {
-  email = '';
-  password = '';
-  confirmPassword = ''; // Added confirmPassword field
+  signupForm: FormGroup;
+  showPassword: boolean = false;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private fb: FormBuilder, private router: Router) {
+    this.signupForm = this.fb.group(
+      {
+        username: ['', [Validators.required]],
+        email: ['', [Validators.required, Validators.email]],
+        password: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(8),
+            Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)
+          ]
+        ],
+        confirmPassword: ['', [Validators.required]]
+      },
+      { validators: this.passwordMatchValidator }
+    );
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+
+  passwordMatchValidator(group: AbstractControl): ValidationErrors | null {
+    const password = group.get('password')?.value;
+    const confirmPassword = group.get('confirmPassword')?.value;
+    return password === confirmPassword ? null : { passwordsMismatch: true };
+  }
 
   onSignup() {
-    if (this.password !== this.confirmPassword) {
-      alert('Passwords do not match!');
+    if (this.signupForm.invalid) {
       return;
     }
 
-    this.authService.register(this.email, this.password).subscribe({
-      next: () => {
-        console.log('Signup successful');
-        this.router.navigate(['/login']);
-      },
-      error: (err: any) => {
-        alert('Signup failed: ' + (err.error?.message || 'Unknown error'));
-      }
-    });
+    const { username, email, password } = this.signupForm.value;
+    console.log('Signup successful', { username, email, password });
+    this.router.navigate(['/login']);
   }
 }

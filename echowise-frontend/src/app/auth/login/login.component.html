@@ -2,16 +2,15 @@
   <div class="auth-card">
     <h2>Login</h2>
     <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      <!-- Email Input -->
       <div class="form-group">
         <label for="email">Email</label>
         <input
           id="email"
           type="email"
-          placeholder="Enter your email"
-          required
-          autocomplete="email"
           formControlName="email"
           class="form-control"
+          placeholder="Enter your email"
           [class.is-invalid]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
         />
         <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="error-message">
@@ -20,6 +19,7 @@
         </div>
       </div>
 
+      <!-- Password Input -->
       <div class="form-group">
         <label for="password">Password</label>
         <div class="password-container">
@@ -29,7 +29,6 @@
             formControlName="password"
             class="form-control"
             placeholder="Enter your password"
-            required
             [class.is-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
           />
           <span class="toggle-password" (click)="togglePasswordVisibility()">
@@ -45,8 +44,9 @@
         </div>
       </div>
 
+      <!-- Login Button -->
       <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Login</button>
     </form>
-    <p>Don't have an account? <a routerLink="/signup">Sign Up</a></p>
+    <p>Don't have an account? <a routerLink="/signup" class="link">Sign Up</a></p>
   </div>
 </div>
