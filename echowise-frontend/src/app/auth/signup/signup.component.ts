@@ -20,7 +20,7 @@ export class SignupComponent {
     this.signupForm = this.fb.group(
       {
         username: ['', [Validators.required]],
-        email: ['', [Validators.required, Validators.email]],
+        email: ['', [Validators.required, Validators.email]], // Ensure 'email' control is defined
         password: [
           '',
           [
@@ -51,7 +51,7 @@ export class SignupComponent {
     }
 
     const { username, email, password } = this.signupForm.value;
-    this.authService.register(email, password).subscribe({
+    this.authService.register(username, email, password).subscribe({
       next: (res: any) => {
         console.log('Signup successful', res);
         alert('Signup successful! Please log in.');

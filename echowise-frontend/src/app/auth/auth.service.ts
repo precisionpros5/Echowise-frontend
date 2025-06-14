@@ -1,13 +1,14 @@
 // src/app/auth/auth.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = 'http://localhost:8085/api/auth'; // Backend URL
+  private baseUrl = 'http://localhost:8085/api/auth'; // Backend URL for authentication
+  private communityBaseUrl = 'http://localhost:8085/api/communities'; // Backend URL for communities
 
   constructor(private http: HttpClient) { }
 
@@ -17,7 +18,7 @@ export class AuthService {
    */
   login(username: string, password: string): Observable<any> {
     const loginRequest = { username, password };
-    return this.http.post(`${this.baseUrl}/login`, loginRequest, { withCredentials: true }); // Enable credentials for cookies
+    return this.http.post(`${this.baseUrl}/login`, loginRequest, { withCredentials: true });
   }
 
   /**
@@ -34,5 +35,21 @@ export class AuthService {
    */
   logout(): Observable<any> {
     return this.http.post(`${this.baseUrl}/logout`, {}, { withCredentials: true }); // Enable credentials for cookies
+  }
+
+  /**
+   * Create Community method.
+   * Sends community name and description to the backend.
+   */
+  createCommunity(request: { name: string; description: string }): Observable<any> {
+    return this.http.post(`${this.communityBaseUrl}/createCommunity`, request, { withCredentials: true });
+  }
+
+  /**
+   * Get Users in Community method.
+   * Fetches the list of users in a specific community.
+   */
+  getUsersInCommunity(communityCode: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.communityBaseUrl}/${communityCode}/users`, { withCredentials: true });
   }
 }
