@@ -4,6 +4,9 @@
     <app-community-sidebar (createDiscussionGroup)="openCreateDiscussionGroup($event)"></app-community-sidebar>
     <!-- Sidebar -->
     <main class="main-content">
+        <div class="action-bar">
+            <button class="post-button" (click)="showPostPopup()">Post</button>
+        </div>
         <app-list></app-list> <!-- List Component -->
     </main>
 </div>
@@ -12,5 +15,10 @@
 
 <!-- Create Discussion Group Popup -->
 <app-create-discussion-group *ngIf="isCreateDiscussionGroupVisible" [communityName]="selectedCommunityName"
-    [users]="users" (groupCreated)="handleGroupCreated($event)" (closePopup)="closeCreateDiscussionGroup()">
+    (closePopup)="closeCreateDiscussionGroup()">
 </app-create-discussion-group>
+
+<!-- Post Popup -->
+<app-post *ngIf="isPostPopupVisible" (popupClosed)="closePostPopup()"
+    (questionSubmitted)="handleQuestionSubmitted($event)">
+</app-post>
