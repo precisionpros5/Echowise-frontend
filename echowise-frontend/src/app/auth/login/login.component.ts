@@ -32,7 +32,7 @@ export class LoginComponent {
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', []],
       password: [
         '',
         [
@@ -48,8 +48,8 @@ export class LoginComponent {
     if (this.loginForm.invalid) {
       return;
     }
-
     const { email, password } = this.loginForm.value;
+    console.log('Login Form Value:', this.loginForm.value); // Log the form value for debugging
     this.authService.login(email, password).subscribe({
       next: (res: any) => {
         console.log('Login successful', res);

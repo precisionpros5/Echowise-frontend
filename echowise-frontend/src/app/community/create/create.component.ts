@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-create-community',
@@ -15,14 +16,23 @@ export class CreateComponent {
   generatedCode = '';
   @Output() popupClosed = new EventEmitter<void>();
 
-  generateCode() {
-    this.generatedCode = Math.random().toString(36).substring(2, 8).toUpperCase();
-  }
+  constructor(private authService: AuthService) { }
 
   createCommunity() {
-    console.log('Creating community:', this.communityName, this.communityDescription, this.generatedCode);
-    alert('Community created successfully!');
-    this.popupClosed.emit(); // Emit event to close popup
+    const request = {
+      name: this.communityName,
+      description: this.communityDescription
+    };
+
+    this.authService.createCommunity(request).subscribe({
+      next: (response: any) => {
+        this.generatedCode = response.code; // Display the generated code from the backend response
+        alert('Community created successfully!');
+      },
+      error: (err: any) => {
+        alert('Failed to create community: ' + (err.error?.message || 'Unknown error'));
+      }
+    });
   }
 
   closePopup() {

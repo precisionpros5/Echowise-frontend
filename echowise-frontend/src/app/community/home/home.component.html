@@ -3,7 +3,6 @@
 <div class="home-container">
     <app-community-sidebar (createDiscussionGroup)="openCreateDiscussionGroup($event)"></app-community-sidebar>
     <!-- Sidebar -->
-
     <main class="main-content">
         <app-list></app-list> <!-- List Component -->
     </main>
@@ -13,39 +12,5 @@
 
 <!-- Create Discussion Group Popup -->
 <app-create-discussion-group *ngIf="isCreateDiscussionGroupVisible" [communityName]="selectedCommunityName"
-    [users]="users" (groupCreated)="handleGroupCreated($event)"
-    (closePopup)="closeCreateDiscussionGroup()"></app-create-discussion-group>
-
-<!-- Join Popup -->
-<div class="popup-container" *ngIf="isJoinPopupVisible">
-    <div class="popup-content">
-        <button class="close-button" (click)="closeJoinPopup()">X</button>
-        <h2>Join a Community</h2>
-        <form>
-            <label for="communityCode">Community Code</label>
-            <input id="communityCode" type="text" name="communityCode" />
-
-            <button type="button">Join Community</button>
-        </form>
-    </div>
-</div>
-
-<!-- Create Popup -->
-<div class="popup-container" *ngIf="isCreatePopupVisible">
-    <div class="popup-content">
-        <button class="close-button" (click)="closeCreatePopup()">X</button>
-        <h2>Create a Community</h2>
-        <form>
-            <label for="communityName">Community Name</label>
-            <input id="communityName" type="text" name="communityName" />
-
-            <label for="communityDescription">Community Description</label>
-            <textarea id="communityDescription" name="communityDescription"></textarea>
-
-            <button type="button">Generate Code</button>
-            <p>Generated Code: ABC123</p>
-
-            <button type="button">Create Community</button>
-        </form>
-    </div>
-</div>
+    [users]="users" (groupCreated)="handleGroupCreated($event)" (closePopup)="closeCreateDiscussionGroup()">
+</app-create-discussion-group>

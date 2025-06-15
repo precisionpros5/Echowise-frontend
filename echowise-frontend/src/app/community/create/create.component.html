@@ -10,10 +10,9 @@
             <textarea id="communityDescription" [(ngModel)]="communityDescription" name="communityDescription"
                 required></textarea>
 
-            <button type="button" (click)="generateCode()">Generate Code</button>
-            <p *ngIf="generatedCode">Generated Code: {{ generatedCode }}</p>
-
             <button type="submit">Create Community</button>
         </form>
+
+        <p *ngIf="generatedCode">Generated Code: {{ generatedCode }}</p>
     </div>
 </div>
