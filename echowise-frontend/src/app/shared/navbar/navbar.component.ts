@@ -19,6 +19,7 @@ export class NavbarComponent {
 
   toggleDropdown() {
     this.showDropdown = !this.showDropdown;
+    console.log('Dropdown visibility:', this.showDropdown); // Debugging output
   }
 
   navigateTo(route: string) {

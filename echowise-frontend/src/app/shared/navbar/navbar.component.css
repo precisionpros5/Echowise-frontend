@@ -223,6 +223,7 @@
     flex-direction: column; /* Align logo and text vertically */
     align-items: center; /* Center logo and text */
     cursor: pointer;
+    position: relative;
     transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions for hover effects */
 }
 
@@ -255,18 +256,17 @@
 }
 
 .dropdown-menu {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background-color: #fff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    border-radius: 4px;
-    overflow: hidden;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-}
+    position: absolute; /* Position relative to the parent container */
+    top: 100%; /* Position below the profile container */
+    right: 0; /* Align to the right of the parent container */
+    background-color: #cec7f8; /* White background */
+    border: 1px solid #9d8dfa; /* Light border */
+    box-shadow: 0 4px 6px rgba(95, 115, 248, 0.1); /* Add shadow for visibility */
+    padding: 0.5rem; /* Add padding inside the dropdown */
+    display: flex; /* Flex layout for dropdown items */
+    flex-direction: column; /* Stack items vertically */
+    z-index: 1000; /* Ensure it appears above other elements */
+  }
 
 .profile-container:hover .dropdown-menu {
     opacity: 1;
@@ -277,14 +277,10 @@
 .dropdown-menu button {
     background: none;
     border: none;
-    padding: 0.6rem 1rem; /* Reduced padding */
-    width: 100%;
+    padding: 0.5rem;
     text-align: left;
-    font-size: 0.9rem; /* Reduced size */
-    color: #333;
     cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
+  }
 
 .dropdown-menu button:hover {
     background-color: #6c63ff; /* Match theme color */
