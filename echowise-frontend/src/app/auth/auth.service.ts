@@ -42,7 +42,7 @@ export class AuthService {
    * Sends community name and description to the backend.
    */
   createCommunity(request: { name: string; description: string }): Observable<any> {
-    return this.http.post(`${this.communityBaseUrl}/createCommunity`, request, { withCredentials: true });
+    return this.http.post(`${this.communityBaseUrl}`, request, { withCredentials: true });
   }
 
   /**
@@ -51,5 +51,24 @@ export class AuthService {
    */
   getUsersInCommunity(communityCode: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.communityBaseUrl}/${communityCode}/users`, { withCredentials: true });
+  }
+
+  /**
+   * Get User Communities method.
+   * Fetches the list of communities the user is part of.
+   */
+  getUserCommunities(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.communityBaseUrl}`, { withCredentials: true });
+  }
+
+  /**
+   * Join Community method.
+   * Sends community code to the backend to join a community.
+   */
+  joinCommunity(request: { communityCode: string }): Observable<any> {
+    return this.http.post(`${this.communityBaseUrl}/join`, request, {
+      withCredentials: true,
+      responseType: 'text' // Expect plain text response
+    });
   }
 }

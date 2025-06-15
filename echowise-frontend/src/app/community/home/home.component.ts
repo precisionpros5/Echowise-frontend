@@ -8,6 +8,7 @@ import { JoinComponent } from '../../community/join/join.component';
 import { CreateComponent } from '../../community/create/create.component';
 import { FooterComponent } from '../../shared/footer/footer.component';
 import { ListComponent } from '../../question/list/list.component';
+import { PostComponent } from '../../question/post/post.component';
 
 @Component({
   selector: 'app-home',
@@ -21,7 +22,8 @@ import { ListComponent } from '../../question/list/list.component';
     ListComponent,
     JoinComponent,
     CreateComponent,
-    FooterComponent
+    FooterComponent,
+    PostComponent
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
