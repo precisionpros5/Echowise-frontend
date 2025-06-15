@@ -5,6 +5,7 @@ import { LandingComponent } from './pages/landing/landing.component';
 import { CreateComponent } from './community/create/create.component';
 import { JoinComponent } from './community/join/join.component';
 import { HomeComponent } from './community/home/home.component';
+import { DiscussionRoomComponent } from './discussion/discussion-room/discussion-room.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -13,5 +14,6 @@ export const routes: Routes = [
     // { path: 'community/create', component: CreateComponent },
     // { path: 'community/join', component: JoinComponent },
     { path: 'community/home', component: HomeComponent },
+    { path: 'discussion', component: DiscussionRoomComponent },
     { path: '', redirectTo: 'landing', pathMatch: 'full' }
 ];

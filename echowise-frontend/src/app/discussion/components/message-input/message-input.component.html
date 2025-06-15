@@ -1,0 +1,5 @@
+<div class="message-input-container">
+    <input type="text" [(ngModel)]="messageText" (keyup.enter)="sendMessage()" placeholder="Type your message..."
+        autofocus />
+    <button (click)="sendMessage()">Send</button>
+</div>

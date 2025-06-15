@@ -1,0 +1,15 @@
+<div class="chat-window" #scrollMe>
+    <div *ngFor="let msg of messages" class="message-container">
+        <div
+            [ngClass]="{'my-message': msg.user === currentUser, 'other-message': msg.user !== currentUser && msg.user !== 'Admin', 'admin-message': msg.user === 'Admin'}">
+            <ng-container *ngIf="msg.user !== 'Admin'">
+                <span class="user-name">{{ msg.user }}:</span>
+                <span class="message-text">{{ msg.text }}</span>
+            </ng-container>
+            <ng-container *ngIf="msg.user === 'Admin'">
+                <span class="admin-text">{{ msg.text }}</span>
+            </ng-container>
+            <span class="timestamp">{{ msg.timestamp | date:'shortTime' }}</span>
+        </div>
+    </div>
+</div>
