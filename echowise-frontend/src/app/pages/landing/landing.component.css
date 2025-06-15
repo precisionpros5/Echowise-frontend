@@ -1,10 +1,160 @@
-.landing-container {
-    text-align: center;
-    margin-top: 100px;
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, rgba(192, 136, 248, 0.2), rgba(115, 103, 240, 0.2)); /* Light gradient background with opacity */
+  height: 100vh; /* Ensure the background covers the viewport height */
 }
 
-.button-group button {
-    margin: 10px;
-    padding: 10px 20px;
-    font-size: 16px;
+.landing-container {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, rgba(190, 128, 251, 0.2), rgba(108, 96, 245, 0.2)); /* Light gradient background with opacity */
+  min-height: 100vh; /* Ensure the background covers the viewport height */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.highlight {
+  color: #007bff;
+}
+
+.animate-echowise {
+  background-image: linear-gradient(
+      -225deg,
+      #b46cfc 0%,
+      #7367F0 29%,
+      #F9658E 67%,
+      #F7C2E6 100%
+  );
+  background-size: 200% auto;
+  color: #fff;
+  background-clip: text;
+  text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-animation 2s linear infinite;
+}
+
+/* Define the gradient animation */
+@keyframes gradient-animation {
+  to {
+      background-position: 200% center;
+  }
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: #666;
+  margin: 1.5rem auto;
+  text-align: center;
+  max-width: 600px;
+  line-height: 1.5;
+}
+
+.button-group {
+  margin: 3rem 0;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.btn {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #c088f8, #7367F0);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #7367F0, #c088f8);
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, #c088f8, #7367F0);
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: linear-gradient(135deg, #7367F0, #c088f8);
+}
+
+.features {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin: 3rem 0;
+}
+
+.feature-item {
+  text-align: center;
+  max-width: 250px;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 10px;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.feature-item:hover {
+  box-shadow: 0 0 20px #7367F0, 0 0 40px #c088f8;
+  transform: scale(1.05);
+}
+
+.feature-item img {
+  width: 70px;
+  margin-bottom: 0.5rem;
+}
+
+.feature-item h3 {
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.feature-item p {
+  font-size: 1rem;
+  color: #666;
+}
+
+.get-started {
+  margin-top: 2rem;
+}
+
+.get-started h2 {
+  font-size: 1.8rem;
+  color: #333;
+}
+
+.get-started p {
+  font-size: 1rem;
+  color: #666;
+}
+.animated-link {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #7367F0;
+  text-decoration: none;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.animated-link:hover {
+  color: #c088f8;
+  text-shadow: 0 0 10px #c088f8, 0 0 20px #7367F0;
 }
