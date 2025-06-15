@@ -34,7 +34,15 @@ export class HomeComponent {
   isCreateDiscussionGroupVisible = false;
   selectedCommunityName = '';
   communityCode = ''; // Add communityCode property
-  users = ['User 1', 'User 2', 'User 3', 'User 4', 'User 5']; // Example users
+  isPostPopupVisible = false; // Control visibility of the Post popup
+
+  showPostPopup() {
+    this.isPostPopupVisible = true; // Show the Post popup
+  }
+
+  closePostPopup() {
+    this.isPostPopupVisible = false; // Hide the Post popup
+  }
 
   showJoinPopup() {
     this.isJoinPopupVisible = true;
@@ -67,8 +75,9 @@ export class HomeComponent {
     this.closeJoinPopup();
   }
 
-  handleGroupCreated(groupData: { groupName: string; selectedUsers: string[] }) {
-    console.log('Group Created:', groupData);
-    this.isCreateDiscussionGroupVisible = false;
+  handleQuestionSubmitted(questionData: { title: string; description: string; tags: string }) {
+    console.log('Question Submitted:', questionData);
+    this.isPostPopupVisible = false; // Hide the Post popup after submission
+    // Add logic to handle the submitted question (e.g., update the list of questions)
   }
 }

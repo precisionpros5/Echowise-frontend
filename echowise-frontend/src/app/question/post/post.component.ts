@@ -23,7 +23,7 @@ export class PostComponent {
       description: this.questionDescription,
       tags: this.questionTags
     };
-    this.questionSubmitted.emit(questionData);
+    this.questionSubmitted.emit(questionData); // Emit the submitted question data
   }
 
   closePopup() {

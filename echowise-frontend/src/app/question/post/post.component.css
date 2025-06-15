@@ -8,16 +8,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1000;
 }
 
 .popup-content {
-    position: relative;
-    /* Ensure the close button is positioned relative to the popup */
     background-color: white;
     padding: 2rem;
     border-radius: 8px;
     width: 400px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
 }
 
 .popup-content h3 {
@@ -54,10 +54,8 @@
 
 .close-button {
     position: absolute;
-    /* Position the button relative to the popup */
     top: 0.5rem;
     right: 0.5rem;
-    /* Move the button to the top-right corner */
     background-color: transparent;
     border: none;
     font-size: 1.5rem;

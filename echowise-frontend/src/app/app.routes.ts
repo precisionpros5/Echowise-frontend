@@ -13,5 +13,5 @@ export const routes: Routes = [
     // { path: 'community/create', component: CreateComponent },
     // { path: 'community/join', component: JoinComponent },
     { path: 'community/home', component: HomeComponent },
-    { path: '', redirectTo: 'login', pathMatch: 'full' }
+    { path: '', redirectTo: 'landing', pathMatch: 'full' }
 ];
