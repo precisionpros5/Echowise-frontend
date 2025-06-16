@@ -63,7 +63,7 @@ button {
 .popup-content button {
     margin-top: 1.5rem;
     padding: 0.8rem 1.5rem;
-    background-color: #007bff;
+    background: linear-gradient(135deg, #c088f8, #7367F0);
     color: white;
     border: none;
     border-radius: 6px;
@@ -72,19 +72,21 @@ button {
 }
 
 .popup-content button:hover {
-    background-color: #0056b3;
+    background: linear-gradient(135deg, #7367F0, #c088f8);
 }
 
-.close-button {
+.popup-content .close-button {
     position: absolute;
     top: 0.5rem;
     right: 0.5rem;
     background-color: transparent;
     border: none;
-    font-size: 1.5rem;
+    font-size: 1rem; /* Keep the size of "X" unchanged */
     cursor: pointer;
+    padding: 0.5rem; /* Reduce padding to make the button smaller */
+    margin: 0.5rem; /* Adjust margin for positioning */
 }
 
-.close-button:hover {
-    color: red;
+.popup-content .close-button:hover {
+    color: rgb(245, 167, 167);
 }
