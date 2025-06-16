@@ -20,6 +20,7 @@ export class CommunitySidebarComponent implements OnInit {
   selectedCommunity: string = '';
   isCreatePopupVisible = false;
   isJoinPopupVisible = false;
+  roomsByCommunity: { [key: number]: any[] } = {}; // Map of communityId to rooms
 
   constructor(private authService: AuthService) { }
 
@@ -31,12 +32,44 @@ export class CommunitySidebarComponent implements OnInit {
     this.authService.getUserCommunities().subscribe({
       next: (response: any[]) => {
         this.communities = response; // Bind the fetched communities to the component
+        this.fetchRoomsForAllCommunities(); // Start fetching rooms for each community
       },
       error: (err: any) => {
         console.error('Failed to fetch communities:', err);
         alert('Failed to fetch communities.');
       }
     });
+  }
+
+  fetchRoomsForAllCommunities() {
+    // Iterate through each community and fetch its rooms
+    for (const community of this.communities) {
+      this.fetchRoomsByCommunity(community);
+    }
+  }
+
+  fetchRoomsByCommunity(community: any) {
+    if (community && community.code) {
+      const communityCode = community.code; // Extract the community code
+      console.log(`Fetching rooms for community code: ${communityCode}`);
+
+      // Fetch rooms using the extracted community code
+      this.authService.getRoomsByCommunity(communityCode).subscribe({
+        next: (rooms: any[]) => {
+          // Ensure rooms are mapped to the correct community ID
+          this.roomsByCommunity[community.code] = rooms;
+          console.log(`Rooms fetched for community ${community.code}:`, rooms);
+          console.log(`Rooms by community:`, this.roomsByCommunity);
+        },
+        error: (err: any) => {
+          console.error(`Failed to fetch rooms for community ${community.id}:`, err);
+          alert(`Failed to fetch rooms for community ${community.id}.`);
+        }
+      });
+    } else {
+      console.error('Community not found or missing code:', community);
+      alert('Community not found or missing code.');
+    }
   }
 
   selectCommunity(community: string) {

@@ -15,7 +15,8 @@ export class CreateDiscussionGroupComponent implements OnChanges {
   @Output() closePopup = new EventEmitter<void>(); // Event emitter for closing the popup
   users: string[] = []; // List of usernames fetched from the backend
   selectedUsers: string[] = []; // List of selected usernames
-  groupName = '';
+  groupName = ''; // Name of the discussion group
+  groupDescription = ''; // Description of the discussion group
 
   constructor(private authService: AuthService) { }
 
@@ -61,9 +62,28 @@ export class CreateDiscussionGroupComponent implements OnChanges {
   }
 
   createGroup() {
-    console.log('Group Name:', this.groupName);
-    console.log('Selected Users:', this.selectedUsers);
-    alert('Discussion group created successfully!');
+    if (!this.groupName || !this.groupDescription) {
+      alert('Please provide both a group name and description.');
+      return;
+    }
+
+    const payload = {
+      name: this.groupName,
+      description: this.groupDescription,
+      memberUsernames: this.selectedUsers
+    };
+
+    this.authService.createDiscussionRoom(this.communityName, payload).subscribe({
+      next: (response: any) => {
+        console.log('Discussion group created successfully:', response);
+        alert('Discussion group created successfully!');
+        this.close(); // Close the popup after successful creation
+      },
+      error: (err: any) => {
+        console.error('Failed to create discussion group:', err);
+        alert('Failed to create discussion group.');
+      }
+    });
   }
 
   close() {
