@@ -1,1 +1,4 @@
-<p>alert works!</p>
+<div *ngIf="alertState.type" class="alert" [ngClass]="alertState.type">
+  {{ alertState.message }}
+</div>
+
