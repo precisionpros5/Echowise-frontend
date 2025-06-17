@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserListComponent } from '../components/user-list/user-list.component';
 import { ChatWindowComponent } from '../components/chat-window/chat-window.component';
@@ -17,8 +17,8 @@ export class DiscussionRoomComponent {
   title = 'Discussion Room';
   currentUser = 'methilesh1';
 
-  currentRoomId = '3'; // Example room ID
-  currentUserId = 2; // Example user ID
+  @Input() currentRoomId: any = '3'; // Example room ID
+  @Input() currentUserId = 2; // Example user ID
   isConnected = false;
 
   constructor(private webSocketService: WebSocketService) { }

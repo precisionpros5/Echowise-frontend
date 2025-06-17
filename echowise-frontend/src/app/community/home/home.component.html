@@ -11,6 +11,8 @@
         <app-list *ngIf="showList" [questions]="questions" (clickenter)="handleItemClicked($event)"></app-list>
         <app-answers *ngIf="!showList" [question]="question" [questionId]="questionId"
             (backToList)="handleBackToList()"></app-answers>
+        <app-discussion-room *ngIf="showDiscussionRoom" [currentRoomId]="selectedCommunityName"
+            [currentUserId]="currentUser" (backToList)="handleBackToList()"></app-discussion-room>
     </main>
 </div>
 

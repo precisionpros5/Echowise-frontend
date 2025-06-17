@@ -10,6 +10,7 @@ import { FooterComponent } from '../../shared/footer/footer.component';
 import { ListComponent } from '../../question/list/list.component';
 import { PostComponent } from '../../question/post/post.component';
 import { AnswersComponent } from '../../answers/answers.component';
+import { DiscussionRoomComponent } from '../../discussion/discussion-room/discussion-room.component';
 
 @Component({
   selector: 'app-home',
@@ -25,7 +26,8 @@ import { AnswersComponent } from '../../answers/answers.component';
     CreateComponent,
     FooterComponent,
     PostComponent,
-    AnswersComponent
+    AnswersComponent,
+    DiscussionRoomComponent
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
@@ -40,6 +42,7 @@ export class HomeComponent {
   questions: any[] = []; // Store the questions received from the sidebar
   showList: boolean = true; // Controls whether the list is displayed
   questionId: string | null = null;
+  showDiscussionRoom: boolean = false; // Controls whether the discussion room is displayed
 
   question = {
     title: 'How can I query if all POs in a container have reached a specific status?',
@@ -112,8 +115,8 @@ export class HomeComponent {
 
   handleItemClicked(question: any) {
     this.showList = false; // Hide the list and show the answers
-    this.questionId=question.id;
-    
+    this.questionId = question.id;
+
   }
 
   handleBackToList() {
