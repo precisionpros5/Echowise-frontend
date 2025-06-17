@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject, BehaviorSubject } from 'rxjs'; // Removed 'interval', 'take' as no longer needed
-
+import { HttpClient } from '@angular/common/http'; // Import HttpClient
+import { map } from 'rxjs/operators'; // For transforming API response
 export interface Message {
-    user: string;
-    text: string;
+    username: string;
+    content: string;
     timestamp: string;
 }
+
 
 @Injectable({
     providedIn: 'root'
@@ -16,24 +18,25 @@ export class ChatService {
     private messagesSubject = new Subject<Message>();
     private messageHistorySubject = new Subject<Message[]>();
     private usersInRoomSubject = new BehaviorSubject<string[]>([]);
-
+    
+    private readonly apiBaseUrl = 'http://localhost:8085/api/chat/rooms'; 
     // In-memory storage for messages and users (will reset on browser refresh)
     // This will primarily be populated by actual backend data
     private allMessages: Message[] = [];
     private currentUsers = new Set<string>();
 
-    constructor() {
+    constructor(private http: HttpClient) {
         // --- Initial Placeholder Messages (Demo Purposes Only) ---
         // These messages will appear when the service is first initialized.
         this.allMessages.push(
             {
-                user: 'Admin',
-                text: 'Welcome to the discussion room! Waiting for backend connection...',
+                username: 'Admin',
+                content: 'Welcome to the discussion room! Waiting for backend connection...',
                 timestamp: new Date().toISOString()
             },
             {
-                user: 'System',
-                text: 'This is a demo message. Real-time messages will appear here via WebSockets.',
+                username: 'System',
+                content: 'This is a demo message. Real-time messages will appear here via WebSockets.',
                 timestamp: new Date().toISOString()
             }
         );
@@ -66,6 +69,25 @@ export class ChatService {
 
     // For joining a room, you'll likely send a message to your WebSocket backend.
     // The backend will then respond, updating the user list and message history.
+
+    fetchMessages(roomId: string): void {
+        const url = `${this.apiBaseUrl}/${roomId}`;
+        this.http.get<Message[]>(url).pipe(
+            map((response: any) => response.map((msg: any) => ({
+                username: msg.username,
+                content: msg.content,
+                timestamp: msg.timestamp
+            })))
+        ).subscribe(
+            (messages: Message[]) => {
+                this.allMessages = messages; // Update local storage
+                this.messageHistorySubject.next(this.allMessages); // Emit updated history
+            },
+            (error: any) => {
+                console.error('Error fetching messages:', error);
+            }
+        );
+    }
     joinRoom(username: string) {
         if (!this.currentUsers.has(username)) {
             this.currentUsers.add(username); // Add locally for immediate UI update
@@ -88,8 +110,8 @@ export class ChatService {
     // The message will then be echoed back from the server to all clients (including sender).
     sendMessage(messageText: string, username: string) {
         const tempMessage: Message = { // Create a temporary message
-            user: username,
-            text: messageText,
+            username: username,
+            content: messageText,
             timestamp: new Date().toISOString()
         };
         // For a real backend, you'd send this via WebSocket:
