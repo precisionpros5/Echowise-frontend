@@ -37,7 +37,27 @@ export class HomeComponent {
   selectedCommunityName = '';
   communityCode = ''; // Add communityCode property
   isPostPopupVisible = false; // Control visibility of the Post popup
+  questions: any[] = []; // Store the questions received from the sidebar
   showList: boolean = true; // Controls whether the list is displayed
+
+  question = {
+    title: 'How can I query if all POs in a container have reached a specific status?',
+    description: 'I have multiple POs in one container. Each PO has a status. How to check if all POs in one container have reached a specific status?',
+    user: 'laoda',
+    answers: [
+      {
+        text: 'You can aggregate by container and use a HAVING clause to see what statuses it contains.',
+        votes: 10,
+        user: 'Thorsten Kettner'
+      },
+      {
+        text: 'This is very simple. Just do what I suggested in my first comment.',
+        votes: 5,
+        user: 'laoda'
+      }
+    ]
+  };
+
 
   showPostPopup() {
     this.isPostPopupVisible = true; // Show the Post popup
@@ -83,32 +103,18 @@ export class HomeComponent {
     this.isPostPopupVisible = false; // Hide the Post popup after submission
     // Add logic to handle the submitted question (e.g., update the list of questions)
   }
-  question = {
-    title: 'How can I query if all POs in a container have reached a specific status?',
-    description: 'I have multiple POs in one container. Each PO has a status. How to check if all POs in one container have reached a specific status?',
-    user: 'laoda',
-    answers: [
-      {
-        text: 'You can aggregate by container and use a HAVING clause to see what statuses it contains.',
-        votes: 10,
-        user: 'Thorsten Kettner'
-      },
-      {
-        text: 'This is very simple. Just do what I suggested in my first comment.',
-        votes: 5,
-        user: 'laoda'
-      }
-    ]
-  };
-  handleItemClicked(question: any) {
-    // When an item in the list is clicked, hide the list and show the answers
 
-    this.showList = false;
+  onQuestionsFetched(questions: any[]) {
+    console.log('Questions fetched @ HomeComponent:', questions);
+    this.questions = questions; // Update the questions array
   }
-  handleBackToList() {
-    console.log('Back to question list');
-    this.showList = true; // Show the list and hide the answers
 
+  handleItemClicked(question: any) {
+    this.showList = false; // Hide the list and show the answers
+  }
+
+  handleBackToList() {
+    this.showList = true; // Show the list and hide the answers
   }
 
 }

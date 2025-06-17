@@ -54,6 +54,7 @@ export class CommunitySidebarComponent implements OnInit {
       //console.log(`Fetching rooms for community code: ${communityCode}`);
       this.authService.getQuestionsByCommunity(community.code).subscribe({
         next: (questions: any[]) => {
+          console.log(`Questions fetched for community ${community.code}:`, questions);
           this.questionsFetched.emit(questions); // Emit the fetched questions
         },
         error: (err: any) => {

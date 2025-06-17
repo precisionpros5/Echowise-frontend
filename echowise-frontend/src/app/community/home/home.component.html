@@ -1,13 +1,14 @@
 <app-navbar></app-navbar> <!-- Navbar -->
 
 <div class="home-container">
-    <app-community-sidebar (createDiscussionGroup)="openCreateDiscussionGroup($event)"></app-community-sidebar>
+    <app-community-sidebar (createDiscussionGroup)="openCreateDiscussionGroup($event)"
+        (questionsFetched)="onQuestionsFetched($event)"></app-community-sidebar>
     <!-- Sidebar -->
     <main class="main-content">
-        <div class="action-bar">
+        <!-- <div class="action-bar">
             <button class="post-button" (click)="showPostPopup()">Post</button>
-        </div>
-        <app-list *ngIf="showList" (click)="handleItemClicked($event)"></app-list>
+        </div> -->
+        <app-list *ngIf="showList" [questions]="questions" (click)="handleItemClicked($event)"></app-list>
         <app-answers *ngIf="!showList" [question]="question" (backToList)="handleBackToList()"></app-answers>
     </main>
 </div>
@@ -20,6 +21,6 @@
 </app-create-discussion-group>
 
 <!-- Post Popup -->
-<app-post *ngIf="isPostPopupVisible" (popupClosed)="closePostPopup()"
+<!-- <app-post *ngIf="isPostPopupVisible" (popupClosed)="closePostPopup()"
     (questionSubmitted)="handleQuestionSubmitted($event)">
-</app-post>
+</app-post> -->
