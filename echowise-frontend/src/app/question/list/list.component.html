@@ -1,4 +1,12 @@
 <div class="list-container">
-    <app-detail *ngFor="let q of questions" [question]="q.question" [username]="q.username"
-        [votes]="q.votes"></app-detail>
+    <app-community-sidebar (questionsFetched)="onQuestionsFetched($event)"></app-community-sidebar>
+    <div class="questions-container">
+        <div *ngFor="let question of questions">
+            <app-detail [question]="question.title" [description]="question.description" [username]="question.username"
+                [votes]="question.votes || 0" [creationDate]="question.creationDate"
+                [lastEditedDate]="question.lastEditedDate" [communityCode]="question.communityCode"
+                [status]="question.status" [tags]="question.tags">
+            </app-detail>
+        </div>
+    </div>
 </div>

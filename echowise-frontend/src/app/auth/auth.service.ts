@@ -63,7 +63,12 @@ export class AuthService {
     return this.http.get<any[]>(`${this.communityBaseUrl}`, { withCredentials: true });
   }
 
+  getQuestionsByCommunity(communitycode: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.communityBaseUrl}/${communitycode}/questions`, { withCredentials: true });
+  }
+
   getRoomsByCommunity(communityCode: string): Observable<any[]> {
+
     return this.http.get<any[]>(`${this.communityBaseUrl}/${communityCode}/rooms`, { withCredentials: true });
   }
 
