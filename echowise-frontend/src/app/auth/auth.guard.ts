@@ -15,8 +15,9 @@ export class AuthGuard implements CanActivate {
 
   canActivate(): boolean {
     // Check if the cookie exists
-    console.log('All cookies:', this.cookieService.getAll()); const token = this.cookieService.get('precisionPros');
-    console.log('Token from cookie:', token); // Debugging line to check the token
+    //console.log('All cookies:', this.cookieService.getAll()); 
+    const token = this.cookieService.get('precisionPros');
+    //console.log('Token from cookie:', token); // Debugging line to check the token
     if (token && this.authService.isTokenValid(token)) {
       console.log('Token is valid, access granted'); // Debugging line to confirm token validity
       return true; // Allow access if the token is valid

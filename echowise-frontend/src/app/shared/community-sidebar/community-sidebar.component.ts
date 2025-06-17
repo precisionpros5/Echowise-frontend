@@ -15,9 +15,10 @@ import { CreateComponent } from '../../community/create/create.component';
 })
 export class CommunitySidebarComponent implements OnInit {
   @Output() createDiscussionGroup = new EventEmitter<string>(); // Emit a string value
+  @Output() questionsFetched = new EventEmitter<any[]>(); // EventEmitter for questions
 
   communities: any[] = []; // List of communities fetched from the backend
-  selectedCommunity: string = '';
+  selectedCommunity: any = null; // Selected community name
   isCreatePopupVisible = false;
   isJoinPopupVisible = false;
   roomsByCommunity: { [key: number]: any[] } = {}; // Map of communityId to rooms
@@ -32,7 +33,13 @@ export class CommunitySidebarComponent implements OnInit {
     this.authService.getUserCommunities().subscribe({
       next: (response: any[]) => {
         this.communities = response; // Bind the fetched communities to the component
-        this.fetchRoomsForAllCommunities(); // Start fetching rooms for each community
+        if (this.communities.length > 0) {
+          this.selectedCommunity = this.communities[0];
+          //console.log("check", this.selectedCommunity) // Select the first community by default
+          this.fetchRoomsByCommunity(this.selectedCommunity); // Fetch rooms for the first community
+          this.fetchQuestionsByCommunity(this.selectedCommunity); // Fetch questions for the first community
+        }
+        //this.fetchRoomsForAllCommunities(); // Start fetching rooms for each community
       },
       error: (err: any) => {
         console.error('Failed to fetch communities:', err);
@@ -41,17 +48,35 @@ export class CommunitySidebarComponent implements OnInit {
     });
   }
 
-  fetchRoomsForAllCommunities() {
-    // Iterate through each community and fetch its rooms
-    for (const community of this.communities) {
-      this.fetchRoomsByCommunity(community);
+  fetchQuestionsByCommunity(community: any) {
+    if (community && community.code) {
+      const communityCode = community.code; // Extract the community code
+      //console.log(`Fetching rooms for community code: ${communityCode}`);
+      this.authService.getQuestionsByCommunity(community.code).subscribe({
+        next: (questions: any[]) => {
+          console.log(`Questions fetched for community ${community.code}:`, questions);
+          this.questionsFetched.emit(questions); // Emit the fetched questions
+        },
+        error: (err: any) => {
+          console.error(`Failed to fetch questions for community ${community.code}:`, err);
+          alert(`Failed to fetch questions for community ${community.code}.`);
+        }
+      });
     }
   }
 
+  // fetchRoomsForAllCommunities() {
+  //   // Iterate through each community and fetch its rooms
+  //   for (const community of this.communities) {
+  //     this.fetchRoomsByCommunity(community);
+  //   }
+  // }
+
   fetchRoomsByCommunity(community: any) {
+    //console.log('Fetching rooms for community:', community);
     if (community && community.code) {
       const communityCode = community.code; // Extract the community code
-      console.log(`Fetching rooms for community code: ${communityCode}`);
+      //console.log(`Fetching rooms for community code: ${communityCode}`);
 
       // Fetch rooms using the extracted community code
       this.authService.getRoomsByCommunity(communityCode).subscribe({
@@ -72,10 +97,13 @@ export class CommunitySidebarComponent implements OnInit {
     }
   }
 
-  selectCommunity(community: string) {
-    this.selectedCommunity = community;
-  }
+  selectCommunity(community: any) {
+    this.selectedCommunity = community; // Update the selected community
+    // Find the community by name
 
+    this.fetchRoomsByCommunity(community); // Fetch rooms for the selected community
+    this.fetchQuestionsByCommunity(community); // Fetch questions for the selected community
+  }
   openCreateDiscussionGroup(community: string) {
     this.createDiscussionGroup.emit(community); // Emit the community name
   }
