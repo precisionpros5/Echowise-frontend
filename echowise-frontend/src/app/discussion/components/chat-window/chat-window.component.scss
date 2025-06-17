@@ -11,7 +11,7 @@
     overflow: hidden;
 }
 
-.messages-container{
+.messages-container {
     flex: 1;
     overflow-y: auto;
     padding: 10px;
@@ -19,20 +19,26 @@
     flex-direction: column;
     gap: 10px;
 }
-.message-wrapper{
+
+.message-wrapper {
     justify-content: flex-end;
 }
+
 .my-message-wrapper {
-    justify-content: flex-end;
+    align-self: flex-end;
 }
+
 .other-message-wrapper {
-    justify-content: flex-start;
+    align-self: flex-start;
 }
 
 .admin-message-wrapper {
     justify-content: center;
 }
-.my-message, .other-message, .admin-message {
+
+.my-message,
+.other-message,
+.admin-message {
     position: relative;
     padding: 10px 15px;
     border-radius: 20px;
@@ -69,8 +75,9 @@
     background-color: #d0f2b3;
     align-self: flex-end;
     color: #333;
-   // margin-right: 5px;
+    // margin-right: 5px;
     border-bottom-right-radius: 5px;
+
 }
 
 .other-message {
@@ -102,7 +109,7 @@
 .user-name {
     font-weight: bold;
     color: #1da1f2;
-   // margin-bottom: 2px;
+    // margin-bottom: 2px;
 }
 
 .message-text {

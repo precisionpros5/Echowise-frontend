@@ -23,7 +23,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewChecked 
     constructor(private chatService: ChatService, private webSocketService: WebSocketService) { }
 
     ngOnInit(): void {
-        const roomId = '2'; // Hardcoded roomId for now
+        const roomId = '3'; // Hardcoded roomId for now
 
         // Fetch messages for the specified roomId
         this.chatService.fetchMessages(roomId);
@@ -72,7 +72,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewChecked 
             });
         }
         catch (err) {
-            this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight; 
+            this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
         }
-}
+    }
 }

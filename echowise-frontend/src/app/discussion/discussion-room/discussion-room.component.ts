@@ -15,28 +15,28 @@ import { WebSocketService } from '../services/websocket.service';
 })
 export class DiscussionRoomComponent {
   title = 'Discussion Room';
-  currentUser = 'Harry';
+  currentUser = 'methilesh1';
 
-  currentRoomId = '2'; // Example room ID
+  currentRoomId = '3'; // Example room ID
   currentUserId = 2; // Example user ID
   isConnected = false;
 
-  constructor(private webSocketService: WebSocketService) {}
+  constructor(private webSocketService: WebSocketService) { }
 
   ngOnInit(): void {
-      this.webSocketService.getConnectionStatus().subscribe((status) => {
-          this.isConnected = status;
-      });
-      const roomId = this.currentRoomId; // Use the currentRoomId from the component
-      this.webSocketService.connect(roomId);
+    this.webSocketService.getConnectionStatus().subscribe((status) => {
+      this.isConnected = status;
+    });
+    const roomId = this.currentRoomId; // Use the currentRoomId from the component
+    this.webSocketService.connect(roomId);
   }
 
   connect(): void {
-      this.webSocketService.connect(this.currentRoomId);
+    this.webSocketService.connect(this.currentRoomId);
   }
 
   disconnect(): void {
-      this.webSocketService.disconnect();
+    this.webSocketService.disconnect();
   }
 
   handleSendMessage(event: any): void {

@@ -13,17 +13,17 @@ export class MessageInputComponent {
     @Input() currentUser: string = '';
     @Output() sendMessageEvent = new EventEmitter<string>();
 
-    currentRoomId = '2'; // Example room ID
+    currentRoomId = '3'; // Example room ID
     currentUserId = 2; // Example user ID
     isConnected = false;
     messageText: string = '';
 
     constructor(private webSocketService: WebSocketService) { }
 
-    
+
     sendMessage(): void {
         this.webSocketService.sendMessage(this.currentRoomId, this.currentUserId, this.messageText);
         this.messageText = ''; // Clear the input field after sending
     }
-    
+
 }
