@@ -9,11 +9,21 @@
 .detail-container h3 {
     margin: 0;
     font-size: 1.2rem;
-    color: #007bff;
+    color: #7367F0
 }
 
 .detail-container p {
     margin: 0.5rem 0;
     font-size: 0.9rem;
     color: #333;
+}
+
+.tag {
+    display: inline-block;
+    background-color: #e0e0e0;
+    color: #333;
+    padding: 2px 8px;
+    margin: 2px;
+    border-radius: 4px;
+    font-size: 0.9em;
 }

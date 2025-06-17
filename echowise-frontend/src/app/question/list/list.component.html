@@ -1,4 +1,23 @@
 <div class="list-container">
-    <app-detail *ngFor="let q of questions" [question]="q.question" [username]="q.username"
-        [votes]="q.votes"></app-detail>
+    <div class="action-bar">
+        <button class="post-button" (click)="showPostPopup()">Post Question</button>
+    </div>
+
+    <div class="questions-container">
+        <div *ngFor="let question of questions" (click)="GoToAnswers()">
+            <app-detail [question]="question.title" [description]="question.description" [username]="question.username"
+                [votes]="question.votes || 0" [creationDate]="question.creationDate"
+                [lastEditedDate]="question.lastEditedDate" [communityCode]="question.communityCode"
+                [status]="question.status" [tags]="question.tags">
+            </app-detail>
+        </div>
+    </div>
+
+    <!-- Post Popup -->
+    <div class="post-popup-overlay" *ngIf="isPostPopupVisible">
+        <div class="post-popup">
+            <app-post (popupClosed)="closePostPopup()" (questionSubmitted)="handleQuestionSubmitted($event)">
+            </app-post>
+        </div>
+    </div>
 </div>

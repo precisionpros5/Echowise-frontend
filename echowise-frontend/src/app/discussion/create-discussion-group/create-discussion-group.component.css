@@ -24,6 +24,7 @@
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     /* Subtle shadow for depth */
     position: relative;
+    
     animation: fadeIn 0.3s ease-in-out;
     /* Smooth fade-in animation */
 }
@@ -59,13 +60,15 @@
 }
 
 /* Input field styling */
-.popup-content input[type="text"] {
-    width: 100%;
-    padding: 0.8rem;
-    margin-top: 0.5rem;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 1rem;
+.popup-content input[type="text"],
+.popup-content textarea {
+    width: calc(100% - 2rem); /* Ensure both elements have the same width */
+    box-sizing: border-box; /* Include padding and borders in width calculation */
+    padding: 0.8rem; /* Add padding for better readability */
+    margin-top: 0.5rem; /* Add spacing between elements */
+    border: 1px solid #ddd; /* Add a border for visibility */
+    border-radius: 6px; /* Add rounded corners */
+    font-size: 1rem; /* Ensure consistent font size */
 }
 
 /* User list styling */
@@ -78,7 +81,7 @@
 .user-list div {
     display: flex;
     align-items: center;
-    margin-bottom: 0.8rem;
+    margin-bottom: 0rem;
 }
 
 .user-list input[type="checkbox"] {
@@ -90,12 +93,13 @@
     color: #333;
 }
 
+
 /* Buttons styling */
 .popup-content button {
     margin-top: 1.5rem;
     padding: 0.8rem 1.5rem;
-    background-color: #007bff;
-    color: white;
+    background: linear-gradient(135deg, #c088f8, #7367F0);
+  color: white;
     border: none;
     border-radius: 6px;
     cursor: pointer;
@@ -105,22 +109,22 @@
 }
 
 .popup-content button:hover {
-    background-color: #0056b3;
+    background: linear-gradient(135deg, #7367F0, #c088f8);
 }
 
 /* Close button styling */
-.close-button {
+.popup-content .close-button {
     position: absolute;
     top: 0.5rem;
     right: 0.5rem;
     background-color: transparent;
     border: none;
-    font-size: 1.5rem;
+    font-size: 1rem; /* Keep the size of "X" unchanged */
     cursor: pointer;
-    color: #333;
-    transition: color 0.3s ease;
+    padding: 0.5rem; /* Reduce padding to make the button smaller */
+    margin: 0.5rem; /* Adjust margin for positioning */
 }
 
-.close-button:hover {
-    color: red;
+.popup-content .close-button:hover {
+    color: rgb(245, 167, 167);
 }

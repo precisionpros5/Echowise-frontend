@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms'; // Import FormsModule
 import { NavbarComponent } from '../../shared/navbar/navbar.component';
 import { InputFieldComponent } from '../../shared/input-field/input-field.component';
 import { ButtonComponent } from '../../shared/button/button.component';
+import { AlertService } from '../../shared/alert/alert.service'; // Import AlertService
 
 @Component({
   selector: 'app-login',
@@ -30,7 +31,12 @@ export class LoginComponent {
   loginForm: FormGroup;
   showPassword: boolean = false;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private alertService: AlertService // Inject AlertService
+  ) {
     this.loginForm = this.fb.group({
       email: ['', []],
       password: [
@@ -46,6 +52,7 @@ export class LoginComponent {
 
   onLogin() {
     if (this.loginForm.invalid) {
+      this.alertService.showAlert('Please fill out the form correctly.', 'error'); // Custom alert for invalid form
       return;
     }
     const { email, password } = this.loginForm.value;
@@ -53,10 +60,12 @@ export class LoginComponent {
     this.authService.login(email, password).subscribe({
       next: (res: any) => {
         console.log('Login successful', res);
+        this.alertService.showAlert('Login successful!!', 'success'); // Custom alert for successful login
         this.router.navigate(['/landing']); // Navigate to the landing page after successful login
       },
       error: (err: any) => {
-        alert('Login failed: ' + (err.error?.message || 'Unknown error'));
+        console.error('Login failed:', err);
+        this.alertService.showAlert('Login failed: ' + (err.error?.message || 'Unknown error'), 'error'); // Custom alert for login failure
       }
     });
   }

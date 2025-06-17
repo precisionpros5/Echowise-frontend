@@ -2,13 +2,16 @@
     <h3>Communities</h3>
     <div *ngFor="let community of communities">
         <div class="community-item">
-            <input type="radio" name="community" [value]="community.name" (change)="selectCommunity(community.name)" />
+            <input type="radio" name="community" [value]="community.name"
+                [checked]="community.name === selectedCommunity.name" (change)="selectCommunity(community)" />
             <span>{{ community.name }}</span>
             <button class="add-button" (click)="openCreateDiscussionGroup(community.name)">+</button>
         </div>
-        <div class="discussion-groups" *ngIf="selectedCommunity === community.name">
-            <div *ngFor="let group of community.discussionGroups">
-                <span>{{ group }}</span>
+        <div class="discussion-rooms"
+            *ngIf="community.name === selectedCommunity.name && roomsByCommunity[community.code]?.length">
+            <div *ngFor="let room of roomsByCommunity[community.code]">
+                <input type="radio" name="room" [value]="room.name" />
+                <span>{{ room.name }}</span>
             </div>
         </div>
     </div>
@@ -20,5 +23,4 @@
     <!-- Create Popup -->
     <app-create-community *ngIf="isCreatePopupVisible" (popupClosed)="closeCreatePopup()"></app-create-community>
     <app-join-community *ngIf="isJoinPopupVisible" (popupClosed)="closeJoinPopup()"></app-join-community>
-
 </div>

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../auth.service';
+import { AlertService } from '../../shared/alert/alert.service'; // Import AlertService
 
 @Component({
   selector: 'app-signup',
@@ -16,7 +17,12 @@ export class SignupComponent {
   signupForm: FormGroup;
   showPassword: boolean = false;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private alertService: AlertService // Inject AlertService
+  ) {
     this.signupForm = this.fb.group(
       {
         username: ['', [Validators.required]],
@@ -47,6 +53,7 @@ export class SignupComponent {
 
   onSignup() {
     if (this.signupForm.invalid) {
+      this.alertService.showAlert('Please fill out the form correctly.', 'error'); // Custom alert for invalid form
       return;
     }
 
@@ -54,11 +61,12 @@ export class SignupComponent {
     this.authService.register(username, email, password).subscribe({
       next: (res: any) => {
         console.log('Signup successful', res);
-        alert('Signup successful! Please log in.');
+        this.alertService.showAlert('Sign Up successful!! Please log in.', 'success'); // Custom alert for successful signup
         this.router.navigate(['/login']); // Navigate to the login page after successful signup
       },
       error: (err: any) => {
-        alert('Signup failed: ' + (err.error?.message || 'Unknown error'));
+        console.error('Signup failed:', err);
+        this.alertService.showAlert('Sign Up failed: ' + (err.error?.message || 'Unknown error'), 'error'); // Custom alert for signup failure
       }
     });
   }

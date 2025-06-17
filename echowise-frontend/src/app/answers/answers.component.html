@@ -1,0 +1,33 @@
+<div class="question-details">
+    <!-- Question Section -->
+
+    <div class="question-header">
+        <h2>{{ questionId }}kk</h2>
+        <p>{{ question.description }}</p>
+        <small>Posted by: {{ question.user }}</small>
+    </div>
+
+    <!-- Answers Section -->
+    <div class="answers-section">
+        <h3>Answers</h3>
+        <div *ngFor="let answer of question.answers; let i = index" class="answer">
+            <p>{{ answer.text }}</p>
+            <div class="answer-details">
+                <button (click)="handleVote(i, 'up')">Upvote</button>
+                <button (click)="handleVote(i, 'down')">Downvote</button>
+                <span>Votes: {{ answer.votes }}</span>
+                <small>Posted by: {{ answer.user }}</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Answer Form -->
+    <div class="add-answer-form">
+        <h3>Add a New Answer</h3>
+        <textarea id="newans" [(ngModel)]="newAnswer" placeholder="Write your answer here..."></textarea>
+        <button (click)="handleAddAnswer()">Post Answer</button>
+    </div>
+    <div class="back-button">
+        <button (click)="navigateBack()">Back to Question List</button>
+    </div>
+</div>

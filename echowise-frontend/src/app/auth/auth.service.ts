@@ -2,13 +2,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
+import { jwtDecode } from 'jwt-decode'; // Import jwt-decode for token validation
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private baseUrl = 'http://localhost:8085/api/auth'; // Backend URL for authentication
   private communityBaseUrl = 'http://localhost:8085/api/communities'; // Backend URL for communities
+
+  cachedCommunities: { id: number; name: string }[] = []; // Add this property to store cached communities
 
   constructor(private http: HttpClient) { }
 
@@ -61,6 +63,15 @@ export class AuthService {
     return this.http.get<any[]>(`${this.communityBaseUrl}`, { withCredentials: true });
   }
 
+  getQuestionsByCommunity(communitycode: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.communityBaseUrl}/${communitycode}/questions`, { withCredentials: true });
+  }
+
+  getRoomsByCommunity(communityCode: string): Observable<any[]> {
+
+    return this.http.get<any[]>(`${this.communityBaseUrl}/${communityCode}/rooms`, { withCredentials: true });
+  }
+
   /**
    * Join Community method.
    * Sends community code to the backend to join a community.
@@ -70,5 +81,28 @@ export class AuthService {
       withCredentials: true,
       responseType: 'text' // Expect plain text response
     });
+  }
+
+  createDiscussionRoom(communityName: string, payload: { name: string; description: string; memberUsernames: string[] }): Observable<any> {
+    const communityId = this.getCommunityIdByName(communityName); // Assume this method exists to fetch communityId by name
+    return this.http.post<any>(`${this.communityBaseUrl}/${communityId}/rooms`, payload, { withCredentials: true });
+  }
+
+  private getCommunityIdByName(communityName: string): number {
+    // Mock implementation to fetch communityId by name
+    // Replace this with actual logic if needed
+    const community = this.cachedCommunities.find(c => c.name === communityName);
+    return community ? community.id : 0;
+  }
+
+  isTokenValid(token: string): boolean {
+    try {
+      const decodedToken: any = jwtDecode(token);
+      const currentTime = Math.floor(Date.now() / 1000);
+      return decodedToken.exp > currentTime; // Check if the token is not expired
+    } catch (error) {
+      return false; // Return false if the token is invalid
+    }
+
   }
 }

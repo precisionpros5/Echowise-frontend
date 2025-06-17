@@ -2,22 +2,25 @@ import { Component, Input, OnChanges, Output, EventEmitter, SimpleChanges } from
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../auth/auth.service';
+import { AlertService } from '../../shared/alert/alert.service'; // Import AlertService
+import { AlertComponent } from '../../shared/alert/alert.component';
 
 @Component({
   selector: 'app-create-discussion-group',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, AlertComponent],
   templateUrl: './create-discussion-group.component.html',
   styleUrls: ['./create-discussion-group.component.css']
 })
 export class CreateDiscussionGroupComponent implements OnChanges {
-  @Input() communityName!: string; // Input for the community name
-  @Output() closePopup = new EventEmitter<void>(); // Event emitter for closing the popup
-  users: string[] = []; // List of usernames fetched from the backend
-  selectedUsers: string[] = []; // List of selected usernames
+  @Input() communityName!: string;
+  @Output() closePopup = new EventEmitter<void>();
+  users: string[] = [];
+  selectedUsers: string[] = [];
   groupName = '';
+  groupDescription = '';
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private alertService: AlertService) {} // Inject AlertService
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['communityName'] && this.communityName) {
@@ -37,17 +40,17 @@ export class CreateDiscussionGroupComponent implements OnChanges {
             },
             error: (err: any) => {
               console.error('Failed to fetch users:', err);
-              alert('Failed to fetch users for the community.');
+              this.alertService.showAlert('Failed to fetch users for the community.', 'error'); // Custom alert
             }
           });
         } else {
           console.error('Community not found:', this.communityName);
-          alert('Community not found.');
+          this.alertService.showAlert('Community not found.', 'error'); // Custom alert
         }
       },
       error: (err: any) => {
         console.error('Failed to fetch communities:', err);
-        alert('Failed to fetch communities.');
+        this.alertService.showAlert('Failed to fetch communities.', 'error'); // Custom alert
       }
     });
   }
@@ -61,12 +64,31 @@ export class CreateDiscussionGroupComponent implements OnChanges {
   }
 
   createGroup() {
-    console.log('Group Name:', this.groupName);
-    console.log('Selected Users:', this.selectedUsers);
-    alert('Discussion group created successfully!');
+    if (!this.groupName || !this.groupDescription) {
+      this.alertService.showAlert('Please provide both a group name and description.', 'error'); // Custom alert
+      return;
+    }
+
+    const payload = {
+      name: this.groupName,
+      description: this.groupDescription,
+      memberUsernames: this.selectedUsers
+    };
+
+    this.authService.createDiscussionRoom(this.communityName, payload).subscribe({
+      next: (response: any) => {
+        console.log('Discussion group created successfully:', response);
+        this.alertService.showAlert('Discussion group created successfully!', 'success'); // Custom alert
+        this.close();
+      },
+      error: (err: any) => {
+        console.error('Failed to create discussion group:', err);
+        this.alertService.showAlert('Failed to create discussion group.', 'error'); // Custom alert
+      }
+    });
   }
 
   close() {
-    this.closePopup.emit(); // Emit the closePopup event
+    this.closePopup.emit();
   }
 }
