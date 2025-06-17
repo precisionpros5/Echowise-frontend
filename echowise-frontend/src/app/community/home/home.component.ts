@@ -39,6 +39,7 @@ export class HomeComponent {
   isPostPopupVisible = false; // Control visibility of the Post popup
   questions: any[] = []; // Store the questions received from the sidebar
   showList: boolean = true; // Controls whether the list is displayed
+  questionId: string | null = null;
 
   question = {
     title: 'How can I query if all POs in a container have reached a specific status?',
@@ -111,6 +112,8 @@ export class HomeComponent {
 
   handleItemClicked(question: any) {
     this.showList = false; // Hide the list and show the answers
+    this.questionId=question.id;
+    
   }
 
   handleBackToList() {

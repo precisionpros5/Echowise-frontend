@@ -8,8 +8,9 @@
         <!-- <div class="action-bar">
             <button class="post-button" (click)="showPostPopup()">Post</button>
         </div> -->
-        <app-list *ngIf="showList" [questions]="questions" (click)="handleItemClicked($event)"></app-list>
-        <app-answers *ngIf="!showList" [question]="question" (backToList)="handleBackToList()"></app-answers>
+        <app-list *ngIf="showList" [questions]="questions" (clickenter)="handleItemClicked($event)"></app-list>
+        <app-answers *ngIf="!showList" [question]="question" [questionId]="questionId"
+            (backToList)="handleBackToList()"></app-answers>
     </main>
 </div>
 

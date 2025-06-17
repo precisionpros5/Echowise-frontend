@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -18,4 +18,5 @@ export class DetailComponent {
   @Input() communityCode!: number; // Community code
   @Input() status!: string; // Status of the question
   @Input() tags!: string[]; // Tags associated with the question
+ 
 }

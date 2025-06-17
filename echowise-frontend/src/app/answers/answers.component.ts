@@ -13,6 +13,7 @@ export class AnswersComponent {
   answers: any[] = []; // Array to store answers
   newAnswer: string = ''; // Variable to store the new answer text
   @Output() backToList = new EventEmitter<void>(); // EventEmitter to notify parent to navigate back
+  @Input() questionId:any; // Variable to store question ID
 
   ngOnInit() {
     // Initialize answers from the question object

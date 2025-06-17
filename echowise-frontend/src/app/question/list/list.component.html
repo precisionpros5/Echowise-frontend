@@ -4,7 +4,7 @@
     </div>
 
     <div class="questions-container">
-        <div *ngFor="let question of questions">
+        <div *ngFor="let question of questions" (click)="GoToAnswers()">
             <app-detail [question]="question.title" [description]="question.description" [username]="question.username"
                 [votes]="question.votes || 0" [creationDate]="question.creationDate"
                 [lastEditedDate]="question.lastEditedDate" [communityCode]="question.communityCode"

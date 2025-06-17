@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DetailComponent } from '../detail/detail.component';
 import { PostComponent } from '../post/post.component';
@@ -33,5 +33,12 @@ export class ListComponent {
     this.isPostPopupVisible = false; // Hide the Post popup after submission
     // Add logic to handle the submitted question (e.g., update the list of questions)
     this.questions.push(questionData); // Add the new question to the list
+  }
+
+  @Output() clickenter = new EventEmitter<void>(); // Event emitter for click events
+
+  GoToAnswers() {
+    console.log('Answers button clicked');
+    this.clickenter.emit(); // Emit event to notify parent to navigate back
   }
 }
