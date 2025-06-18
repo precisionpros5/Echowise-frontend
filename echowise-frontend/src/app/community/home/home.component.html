@@ -2,17 +2,20 @@
 
 <div class="home-container">
     <app-community-sidebar (createDiscussionGroup)="openCreateDiscussionGroup($event)"
-        (questionsFetched)="onQuestionsFetched($event)"></app-community-sidebar>
+        (questionsFetched)="onQuestionsFetched($event)" (onCommunityclicked)="handleCommunitySelected($event)"
+        (onAnswerclicked)="handleItemClicked($event)"
+        (onDiscussionclicked)="handleDiscussionRoomSelected($event)"></app-community-sidebar>
     <!-- Sidebar -->
     <main class="main-content">
         <!-- <div class="action-bar">
             <button class="post-button" (click)="showPostPopup()">Post</button>
         </div> -->
-        <app-list *ngIf="showList" [questions]="questions" (clickenter)="handleItemClicked($event)"></app-list>
-        <app-answers *ngIf="!showList" [question]="question" [questionId]="questionId"
+        <app-list *ngIf="currentView === 'list'" [questions]="questions"
+            (clickenter)="handleItemClicked($event)"></app-list>
+        <app-answers *ngIf="currentView === 'answers'" [question]="question" [questionId]="questionId"
             (backToList)="handleBackToList()"></app-answers>
-        <app-discussion-room *ngIf="showDiscussionRoom" [currentRoomId]="selectedCommunityName"
-            [currentUserId]="currentUser" (backToList)="handleBackToList()"></app-discussion-room>
+        <app-discussion-room *ngIf="currentView === 'discussionRoom'" [currentRoomId]="discussionRoom.id"
+            (backToList)="handleBackToList()" ></app-discussion-room>
     </main>
 </div>
 

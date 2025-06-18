@@ -11,13 +11,15 @@
                 [status]="question.status" [tags]="question.tags">
             </app-detail>
         </div>
-    </div>
+        <div *ngIf="questions.length === 0" class="no-questions">
+            <p>No questions available. Please post a question.</p>
+        </div>
 
-    <!-- Post Popup -->
-    <div class="post-popup-overlay" *ngIf="isPostPopupVisible">
-        <div class="post-popup">
-            <app-post (popupClosed)="closePostPopup()" (questionSubmitted)="handleQuestionSubmitted($event)">
-            </app-post>
+        <!-- Post Popup -->
+        <div class="post-popup-overlay" *ngIf="isPostPopupVisible">
+            <div class="post-popup">
+                <app-post (popupClosed)="closePostPopup()" (questionSubmitted)="handleQuestionSubmitted($event)">
+                </app-post>
+            </div>
         </div>
     </div>
-</div>

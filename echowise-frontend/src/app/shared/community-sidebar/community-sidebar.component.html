@@ -2,16 +2,20 @@
     <h3>Communities</h3>
     <div *ngFor="let community of communities">
         <div class="community-item">
-            <input type="radio" name="community" [value]="community.name"
-                [checked]="community.name === selectedCommunity.name" (change)="selectCommunity(community)" />
-            <span>{{ community.name }}</span>
+            <div>
+                <input type="radio" name="community" [value]="community.name"
+                    [checked]="community.name === selectedCommunity.name" (change)="selectCommunity(community)"
+                    (click)="selectCommunity(community)" id="community-{{ community.code }}" />
+                <label for="community-{{ community.code }}">{{ community.name }}</label>
+            </div>
             <button class="add-button" (click)="openCreateDiscussionGroup(community.name)">+</button>
         </div>
         <div class="discussion-rooms"
             *ngIf="community.name === selectedCommunity.name && roomsByCommunity[community.code]?.length">
             <div *ngFor="let room of roomsByCommunity[community.code]">
-                <input type="radio" name="room" [value]="room.name" />
-                <span>{{ room.name }}</span>
+                <input type="radio" name="room" [value]="room.name" (change)="selectDiscussion(room)"
+                    id="room-{{ room.name }}" />
+                <label for="room-{{ room.name }}">{{ room.name }}</label>
             </div>
         </div>
     </div>

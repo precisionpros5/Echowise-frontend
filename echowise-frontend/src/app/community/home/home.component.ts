@@ -40,9 +40,9 @@ export class HomeComponent {
   communityCode = ''; // Add communityCode property
   isPostPopupVisible = false; // Control visibility of the Post popup
   questions: any[] = []; // Store the questions received from the sidebar
-  showList: boolean = true; // Controls whether the list is displayed
   questionId: string | null = null;
-  showDiscussionRoom: boolean = false; // Controls whether the discussion room is displayed
+  discussionRoom: any;// Store the selected discussion room ID
+  currentView: 'list' | 'answers' | 'discussionRoom' | null = "list"; // Track the current view
 
   question = {
     title: 'How can I query if all POs in a container have reached a specific status?',
@@ -113,14 +113,37 @@ export class HomeComponent {
     this.questions = questions; // Update the questions array
   }
 
-  handleItemClicked(question: any) {
-    this.showList = false; // Hide the list and show the answers
-    this.questionId = question.id;
-
+  handleCommunitySelected(community: any): void {
+    this.currentView = 'list'; // Switch to the list view
+    this.selectedCommunityName = community.name; // Store the selected community name
+    console.log('Community selected:', community);
   }
 
-  handleBackToList() {
-    this.showList = true; // Show the list and hide the answers
+  // Handle when a question is clicked
+  handleItemClicked(question: any): void {
+    this.currentView = 'answers'; // Switch to the answers view
+    this.question = question; // Store the selected question
+    this.questionId = question.id; // Store the selected question ID
+    console.log('Question clicked:', question);
   }
+
+  // Handle when a discussion room is selected
+  handleDiscussionRoomSelected(room: any): void {
+    this.currentView = 'discussionRoom'; // Switch to the discussion room view
+    this.discussionRoom = room; // Store the selected discussion room
+    console.log('Discussion room selected:', room);
+    // this.roomsFetched.emit(room);
+  }
+  handleBackToList(): void {
+    this.currentView = 'list'; // Switch back to the list view
+
+  }
+  // onRoomsFetched(rooms: any[]) {
+  //   console.log('Rooms fetched @ HomeComponent:', rooms);
+  //   // You can handle the fetched rooms here, e.g., store them in a property
+  //   this.discussionRoom = rooms; // Assuming you have a property to store the rooms
+  //   // Emit the rooms to the parent component if needed
+  //   // 
+  // }
 
 }

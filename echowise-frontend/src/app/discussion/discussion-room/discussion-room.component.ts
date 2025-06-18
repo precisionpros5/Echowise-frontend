@@ -15,15 +15,20 @@ import { WebSocketService } from '../services/websocket.service';
 })
 export class DiscussionRoomComponent {
   title = 'Discussion Room';
-  currentUser = 'methilesh1';
+  @Input() currentUser: string = "";
 
-  @Input() currentRoomId: any = '3'; // Example room ID
-  @Input() currentUserId = 2; // Example user ID
+  @Input() currentRoomId: any = '2'; // Example room ID
+  currentUserId: string | null = null; // Retrieve from session storage
   isConnected = false;
 
   constructor(private webSocketService: WebSocketService) { }
 
   ngOnInit(): void {
+    this.currentUserId = sessionStorage.getItem('userId');
+    this.currentUser = sessionStorage.getItem('username') ?? '';
+    console.log('Current User:', this.currentUser); // Debugging log to check the current user
+    console.log('Current Room ID:discussionroom', this.currentRoomId); // Debugging log to check the roomId
+
     this.webSocketService.getConnectionStatus().subscribe((status) => {
       this.isConnected = status;
     });

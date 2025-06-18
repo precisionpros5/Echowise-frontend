@@ -88,7 +88,8 @@ export class WebSocketService {
         this.stompClient.subscribe(`/topic/room/${roomId}`, (message) => {
             const parsedMessage = JSON.parse(message.body);
             console.log('Received message:', parsedMessage);
-            this.messagesSubject.next([...this.messagesSubject.value, parsedMessage]);
+            this.messagesSubject.next([parsedMessage]);
+            console.log('Updated11 messages:', this.messagesSubject.value);
         });
     }
 

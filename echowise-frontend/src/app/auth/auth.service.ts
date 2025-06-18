@@ -1,7 +1,7 @@
 // src/app/auth/auth.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { jwtDecode } from 'jwt-decode'; // Import jwt-decode for token validation
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,15 @@ export class AuthService {
    */
   login(username: string, password: string): Observable<any> {
     const loginRequest = { username, password };
-    return this.http.post(`${this.baseUrl}/login`, loginRequest, { withCredentials: true });
+    return this.http.post(`${this.baseUrl}/login`, loginRequest, { withCredentials: true }).pipe(
+      tap((response: any) => {
+        // Assuming the response contains userId and username
+        const { id, username } = response;
+        console.log('Login successful:', response);
+        sessionStorage.setItem('userId', id);
+        sessionStorage.setItem('username', username);
+      })
+    );;
   }
 
   /**
@@ -36,7 +44,15 @@ export class AuthService {
    * Logout method to clear the JWT cookie.
    */
   logout(): Observable<any> {
-    return this.http.post(`${this.baseUrl}/logout`, {}, { withCredentials: true }); // Enable credentials for cookies
+    return this.http.post(`${this.baseUrl}/logout`, {}, { withCredentials: true }).pipe(
+      tap(() => {
+        // Clear session storage on successful logout
+        sessionStorage.removeItem('userId');
+        sessionStorage.removeItem('username');
+        console.log('User logged out and session storage cleared.');
+      })
+    );
+ // Enable credentials for cookies
   }
 
   /**

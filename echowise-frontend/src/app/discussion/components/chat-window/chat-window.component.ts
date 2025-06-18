@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewChecked, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewChecked, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common'; // <--- Import CommonModule for standalone components
 import { ChatService, Message } from '../../services/chat.service';
 import { Subscription } from 'rxjs';
@@ -11,22 +11,39 @@ import { WebSocketService } from '../../services/websocket.service';
     templateUrl: './chat-window.component.html',
     styleUrls: ['./chat-window.component.scss']
 })
-export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewChecked {
+export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewChecked, OnChanges {
     @ViewChild('scrollMe') private myScrollContainer!: ElementRef;
     @Input() currentUser: string = '';
-
+    @Input() currentRoomId: string | null = null; // Example room ID, can be passed from parent component
     messages: Message[] = [];
     private messageSubscription!: Subscription;
     private messageHistorySubscription!: Subscription;
     newMessage: string = '';
 
     constructor(private chatService: ChatService, private webSocketService: WebSocketService) { }
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['currentRoomId'] && changes['currentRoomId'].currentValue !== changes['currentRoomId'].previousValue) {
+            const newRoomId = changes['currentRoomId'].currentValue;
+            console.log('Room ID changed:', newRoomId);
+
+            // Clear existing messages
+            this.messages = [];
+
+            // Fetch new message history for the updated room ID
+            if (newRoomId) {
+                this.chatService.fetchMessages(newRoomId);
+                //this.subscribeToMessageHistory(newRoomId);
+            }
+        }
+    }
 
     ngOnInit(): void {
-        const roomId = '3'; // Hardcoded roomId for now
-
+        const roomId = this.currentRoomId; // Hardcoded roomId for now
+        console.log('Current Room ID:fromchatwindow', roomId); // Debugging log to check the roomId
         // Fetch messages for the specified roomId
-        this.chatService.fetchMessages(roomId);
+        if (roomId) {
+            this.chatService.fetchMessages(roomId);
+        }
 
         // Subscribe to message history updates
         this.messageHistorySubscription = this.chatService.getMessageHistory().subscribe(history => {
@@ -41,7 +58,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewChecked 
             messages.forEach((msg: Message) => {
                 this.messages.push(msg); // Append each new message to the array
             });
-            this.scrollToBottom();
+            //this.scrollToBottom();
         });
     }
 

@@ -5,25 +5,32 @@ import { RouterModule } from '@angular/router';
 import { AuthService } from '../../auth/auth.service';
 import { JoinComponent } from '../../community/join/join.component';
 import { CreateComponent } from '../../community/create/create.component';
+import { WebSocketService } from '../../discussion/services/websocket.service'; // Assuming you have a WebSocketService
 
 @Component({
   selector: 'app-community-sidebar',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule, JoinComponent, CreateComponent],
   templateUrl: './community-sidebar.component.html',
-  styleUrls: ['./community-sidebar.component.css']
+  styleUrls: ['./community-sidebar.component.css'],
+
 })
 export class CommunitySidebarComponent implements OnInit {
   @Output() createDiscussionGroup = new EventEmitter<string>(); // Emit a string value
   @Output() questionsFetched = new EventEmitter<any[]>(); // EventEmitter for questions
-
+  // @Output() roomsFetched = new EventEmitter<any[]>(); // EventEmitter for rooms
+  @Output() onCommunityclicked = new EventEmitter<any>(); // EventEmitter for community selection
+  @Output() onAnswerclicked = new EventEmitter<any>(); // EventEmitter for answer selection   
+  @Output() onDiscussionclicked = new EventEmitter<any>(); // EventEmitter for discussion room selection
   communities: any[] = []; // List of communities fetched from the backend
   selectedCommunity: any = null; // Selected community name
   isCreatePopupVisible = false;
   isJoinPopupVisible = false;
   roomsByCommunity: { [key: number]: any[] } = {}; // Map of communityId to rooms
-
-  constructor(private authService: AuthService) { }
+  selectedRoom: any = null; // Selected room
+  constructor(private authService: AuthService, private webSocketService: WebSocketService) {
+    console.log('WebSocketService initialized:', !!this.webSocketService);
+  }
 
   ngOnInit(): void {
     this.fetchCommunities();
@@ -34,6 +41,7 @@ export class CommunitySidebarComponent implements OnInit {
       next: (response: any[]) => {
         this.communities = response; // Bind the fetched communities to the component
         if (this.communities.length > 0) {
+          console.log('Fetched communities:', this.communities);
           this.selectedCommunity = this.communities[0];
           //console.log("check", this.selectedCommunity) // Select the first community by default
           this.fetchRoomsByCommunity(this.selectedCommunity); // Fetch rooms for the first community
@@ -84,6 +92,10 @@ export class CommunitySidebarComponent implements OnInit {
           // Ensure rooms are mapped to the correct community ID
           this.roomsByCommunity[community.code] = rooms;
           console.log(`Rooms fetched for community ${community.code}:`, rooms);
+          this.selectedRoom = this.roomsByCommunity[community.code][1]
+          console.log(`Selected Room:`, this.selectedRoom);
+          // this.roomsFetched.emit(this.selectedRoom); // Emit the fetched rooms
+          console.log(`Rooms fetched for community ${community.code}:`, rooms);
           console.log(`Rooms by community:`, this.roomsByCommunity);
         },
         error: (err: any) => {
@@ -101,8 +113,14 @@ export class CommunitySidebarComponent implements OnInit {
     this.selectedCommunity = community; // Update the selected community
     // Find the community by name
 
+    //this.roomsFetched.emit(this.selectedRoom);
+    this.onCommunityclicked.emit(community); // Emit the selected community
     this.fetchRoomsByCommunity(community); // Fetch rooms for the selected community
-    this.fetchQuestionsByCommunity(community); // Fetch questions for the selected community
+    this.fetchQuestionsByCommunity(community);
+    this.selectedRoom = this.roomsByCommunity[community.code][1]// Set the selected room to the first room of the selected community
+    console.log('Selected Room:', this.selectedRoom); // Fetch questions for the selected community
+    //this.roomsFetched.emit(this.selectedRoom); // Emit the fetched rooms
+
   }
   openCreateDiscussionGroup(community: string) {
     this.createDiscussionGroup.emit(community); // Emit the community name
@@ -122,5 +140,27 @@ export class CommunitySidebarComponent implements OnInit {
 
   closeCreatePopup() {
     this.isCreatePopupVisible = false;
+  }
+  selectDiscussion(room: any): void {
+    console.log('WebSocketService:', this.webSocketService);
+
+    if (this.selectedRoom === room) {
+      console.log('Already connected to this room:', room.name);
+      return;
+    }
+
+    // Disconnect from the current room
+    if (this.selectedRoom) {
+      console.log('Disconnecting from room:', this.selectedRoom.name);
+      this.webSocketService.disconnect();
+    }
+
+    // Connect to the new room
+    this.selectedRoom = room;
+    console.log('Connecting to new room:', room.name);
+    this.webSocketService.connect(room.id);
+
+    // Emit the selected room to the parent component
+    this.onDiscussionclicked.emit(room);
   }
 }
