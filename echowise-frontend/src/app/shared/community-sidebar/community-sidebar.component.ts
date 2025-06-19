@@ -17,7 +17,7 @@ import { WebSocketService } from '../../discussion/services/websocket.service'; 
 })
 export class CommunitySidebarComponent implements OnInit {
   @Output() createDiscussionGroup = new EventEmitter<string>(); // Emit a string value
-  @Output() questionsFetched = new EventEmitter<any[]>(); // EventEmitter for questions
+  @Output() questionsFetched = new EventEmitter<{ questions: any[]; communityCode: number }>(); // EventEmitter for questions
   // @Output() roomsFetched = new EventEmitter<any[]>(); // EventEmitter for rooms
   @Output() onCommunityclicked = new EventEmitter<any>(); // EventEmitter for community selection
   @Output() onAnswerclicked = new EventEmitter<any>(); // EventEmitter for answer selection   
@@ -63,7 +63,7 @@ export class CommunitySidebarComponent implements OnInit {
       this.authService.getQuestionsByCommunity(community.code).subscribe({
         next: (questions: any[]) => {
           console.log(`Questions fetched for community ${community.code}:`, questions);
-          this.questionsFetched.emit(questions); // Emit the fetched questions
+          this.questionsFetched.emit({ questions, communityCode }); // Emit the fetched questions
         },
         error: (err: any) => {
           console.error(`Failed to fetch questions for community ${community.code}:`, err);

@@ -14,14 +14,14 @@ export class PostComponent {
   questionDescription = '';
   questionTags = '';
 
-  @Output() questionSubmitted = new EventEmitter<{ title: string; description: string; tags: string }>();
+  @Output() questionSubmitted = new EventEmitter<{ title: string; description: string; tags: string[] }>();
   @Output() popupClosed = new EventEmitter<void>(); // Emit event for closing the popup
 
   submitQuestion() {
     const questionData = {
       title: this.questionTitle,
       description: this.questionDescription,
-      tags: this.questionTags
+      tags: this.questionTags.split(',').map(tag => tag.trim()) // Split tags by comma and trim whitespace
     };
     this.questionSubmitted.emit(questionData); // Emit the submitted question data
   }

@@ -99,9 +99,17 @@ export class AuthService {
     });
   }
 
-  createDiscussionRoom(communityName: string, payload: { name: string; description: string; memberUsernames: string[] }): Observable<any> {
-    const communityId = this.getCommunityIdByName(communityName); // Assume this method exists to fetch communityId by name
-    return this.http.post<any>(`${this.communityBaseUrl}/${communityId}/rooms`, payload, { withCredentials: true });
+  /**
+ * Create a new question in a specific community.
+ * Sends the question data to the backend.
+ */
+  createQuestion(communityId: number, questionData: { title: string; description: string; tags: string[] }): Observable<any> {
+    console.log('Creating question with data:', questionData); // Debugging
+    return this.http.post<any>(`${this.communityBaseUrl}/${communityId}/questions`, questionData, { withCredentials: true });
+  }
+
+  createDiscussionRoom(communityCode: string, payload: { name: string; description: string; memberUsernames: string[] }): Observable<any> {
+    return this.http.post<any>(`${this.communityBaseUrl}/${communityCode}/rooms`, payload, { withCredentials: true });
   }
 
   getAnswersByquestionId(questionId: string): Observable<any> {

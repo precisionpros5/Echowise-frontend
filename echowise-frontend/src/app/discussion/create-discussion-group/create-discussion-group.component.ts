@@ -3,24 +3,24 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../auth/auth.service';
 import { AlertService } from '../../shared/alert/alert.service'; // Import AlertService
-import { AlertComponent } from '../../shared/alert/alert.component';
 
 @Component({
   selector: 'app-create-discussion-group',
   standalone: true,
-  imports: [CommonModule, FormsModule, AlertComponent],
+  imports: [CommonModule, FormsModule],
   templateUrl: './create-discussion-group.component.html',
   styleUrls: ['./create-discussion-group.component.css']
 })
 export class CreateDiscussionGroupComponent implements OnChanges {
   @Input() communityName!: string;
+  @Input() communityCode!: number; // Add communityCode input
   @Output() closePopup = new EventEmitter<void>();
   users: string[] = [];
   selectedUsers: string[] = [];
   groupName = '';
   groupDescription = '';
 
-  constructor(private authService: AuthService, private alertService: AlertService) {} // Inject AlertService
+  constructor(private authService: AuthService, private alertService: AlertService) { } // Inject AlertService
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['communityName'] && this.communityName) {
@@ -74,18 +74,20 @@ export class CreateDiscussionGroupComponent implements OnChanges {
       description: this.groupDescription,
       memberUsernames: this.selectedUsers
     };
+    console.log('Creating discussion group with payload:', payload), // Debugging
 
-    this.authService.createDiscussionRoom(this.communityName, payload).subscribe({
-      next: (response: any) => {
-        console.log('Discussion group created successfully:', response);
-        this.alertService.showAlert('Discussion group created successfully!', 'success'); // Custom alert
-        this.close();
-      },
-      error: (err: any) => {
-        console.error('Failed to create discussion group:', err);
-        this.alertService.showAlert('Failed to create discussion group.', 'error'); // Custom alert
-      }
-    });
+
+      this.authService.createDiscussionRoom(this.communityName, payload).subscribe({
+        next: (response: any) => {
+          console.log('Discussion group created successfully:', response);
+          this.alertService.showAlert('Discussion group created successfully!', 'success'); // Custom alert
+          this.close();
+        },
+        error: (err: any) => {
+          console.error('Failed to create discussion group:', err);
+          this.alertService.showAlert('Failed to create discussion group.', 'error'); // Custom alert
+        }
+      });
   }
 
   close() {

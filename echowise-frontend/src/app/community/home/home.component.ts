@@ -43,6 +43,8 @@ export class HomeComponent {
   questionId: string | null = null;
   discussionRoom: any;// Store the selected discussion room ID
   currentView: 'list' | 'answers' | 'discussionRoom' | null = "list"; // Track the current view
+  selectedCommunityCode: number | null = null; // Store the community code
+
 
   question = {
     title: 'How can I query if all POs in a container have reached a specific status?',
@@ -102,15 +104,12 @@ export class HomeComponent {
     this.closeJoinPopup();
   }
 
-  handleQuestionSubmitted(questionData: { title: string; description: string; tags: string }) {
-    console.log('Question Submitted:', questionData);
-    this.isPostPopupVisible = false; // Hide the Post popup after submission
-    // Add logic to handle the submitted question (e.g., update the list of questions)
-  }
+  onQuestionsFetched(event: { questions: any[], communityCode: number }): void {
+    console.log('Questions fetched @ HomeComponent:', event.questions);
+    console.log('Community code @ HomeComponent:', event.communityCode);
+    this.questions = event.questions; // Update the questions array
+    this.selectedCommunityCode = event.communityCode; // Update the selected community code
 
-  onQuestionsFetched(questions: any[]) {
-    console.log('Questions fetched @ HomeComponent:', questions);
-    this.questions = questions; // Update the questions array
   }
 
   handleCommunitySelected(community: any): void {
