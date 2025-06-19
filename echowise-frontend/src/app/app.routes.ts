@@ -9,10 +9,6 @@ import { AboutComponent } from './pages/about/about.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { HelpComponent } from './pages/help/help.component';
 
-// import { AboutPageComponent } from './pages/about/about-page/about-page.component';
-// import { ContactComponent } from './pages/contact/contact.component';
-// import { HelpComponent } from './pages/help/help.component';
-
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'signup', component: SignupComponent },
