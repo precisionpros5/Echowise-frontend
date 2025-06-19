@@ -1,0 +1,40 @@
+<!-- <h2>Help Center</h2>
+<p>Need help? Browse FAQs or contact support.</p> -->
+
+<div class="help-container">
+    <h2>Help Center</h2>
+    <p>Need help? Browse FAQs or contact support.</p>
+
+    <mat-form-field appearance="outline" class="search-box">
+        <mat-label>Search FAQs</mat-label>
+        <input matInput [(ngModel)]="searchTerm" placeholder="Type your question...">
+        <button mat-icon-button matSuffix *ngIf="searchTerm" (click)="searchTerm=''">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+
+    <div class="faq-section">
+        <mat-accordion multi>
+            <mat-expansion-panel *ngFor="let category of filteredFaqs">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>{{ category.category }}</mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <mat-accordion multi>
+                    <mat-expansion-panel *ngFor="let item of category.questions">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>{{ item.q }}</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <p>{{ item.a }}</p>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+
+    <div class="cta-section">
+        <h3>Still need help?</h3>
+        <p>If you can't find your answer here, feel free to reach out to our support team.</p>
+        <button mat-raised-button color="primary">Contact Support</button>
+    </div>
+</div>

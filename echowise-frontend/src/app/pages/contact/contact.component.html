@@ -1,0 +1,71 @@
+<div class="contact-wrapper">
+    <mat-card class="contact-options">
+        <h3>Contact Options</h3>
+        <div class="option">
+            <mat-icon>email</mat-icon>
+            <span>support&#64;communityapp.com</span>
+        </div>
+        <div class="option">
+            <mat-icon>phone</mat-icon>
+            <span>+1 (555) 123-4567</span>
+        </div>
+        <div class="option">
+            <mat-icon>chat</mat-icon>
+            <span>Live Chat (Coming Soon)</span>
+        </div>
+        <div class="social-icons">
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-twitter"></i>
+            </a>
+        </div>
+    </mat-card>
+
+    <mat-card class="contact-form-card">
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+            <h3>Send Us a Message</h3>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="name" required placeholder="Enter your name" />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email" required placeholder="Enter your email" />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Category</mat-label>
+                <mat-select formControlName="category" required>
+                    <mat-option value="feedback">Feedback</mat-option>
+                    <mat-option value="bug">Bug Report</mat-option>
+                    <mat-option value="partnership">Partnership</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Message</mat-label>
+                <textarea matInput formControlName="message" rows="4" required
+                    placeholder="Enter your message"></textarea>
+            </mat-form-field>
+
+            <div class="file-upload">
+                <label for="file">Attach a file:</label>
+                <input type="file" id="file" (change)="onFileChange($event)" title="Attach a file" />
+            </div>
+
+            <button mat-raised-button color="primary" type="submit" [disabled]="!contactForm.valid">Submit</button>
+        </form>
+
+        <div class="cta">
+            <h4>Still have questions?</h4>
+            <p>Reach out to our support team and we’ll get back to you as soon as possible.</p>
+        </div>
+    </mat-card>
+</div>
