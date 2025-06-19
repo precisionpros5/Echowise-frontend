@@ -45,22 +45,27 @@ export class ChatWindowComponent implements OnInit, OnDestroy, AfterViewChecked,
             this.chatService.fetchMessages(roomId);
         }
 
-        // Subscribe to message history updates
         this.messageHistorySubscription = this.chatService.getMessageHistory().subscribe(history => {
             console.log('Received message history:', history); // Debugging log
-            this.messages.push(...history); // Append history to existing messages
+            this.messages = history; // Append history to existing messages
             this.scrollToBottom();
         });
 
         // Subscribe to new incoming messages
         this.messageSubscription = this.webSocketService.getMessages().subscribe((messages) => {
             console.log('Updated messages:', messages);
+            // const newMessage = messages[messages.length - 1]; // Get the last message from the array
+            // this.messages.push(newMessage); // Append the new message to the array
+            let newMessage: Message = {} as Message; // Initialize newMessage
             messages.forEach((msg: Message) => {
-                this.messages.push(msg); // Append each new message to the array
+                // Append each new message to the array
+                newMessage = msg;
             });
-            //this.scrollToBottom();
+            this.messages.push(newMessage);
+            this.scrollToBottom();
         });
     }
+
 
     ngAfterViewChecked(): void {
         this.scrollToBottom();
