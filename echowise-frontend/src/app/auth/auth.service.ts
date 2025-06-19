@@ -52,7 +52,7 @@ export class AuthService {
         console.log('User logged out and session storage cleared.');
       })
     );
- // Enable credentials for cookies
+    // Enable credentials for cookies
   }
 
   /**
@@ -102,6 +102,15 @@ export class AuthService {
   createDiscussionRoom(communityName: string, payload: { name: string; description: string; memberUsernames: string[] }): Observable<any> {
     const communityId = this.getCommunityIdByName(communityName); // Assume this method exists to fetch communityId by name
     return this.http.post<any>(`${this.communityBaseUrl}/${communityId}/rooms`, payload, { withCredentials: true });
+  }
+
+  getAnswersByquestionId(questionId: string): Observable<any> {
+    //const communityId = this.getCommunityIdByName(communityName); // Assume this method exists to fetch communityId by name
+    return this.http.get<any>(`http://localhost:8085/api/questions/${questionId}/answers`, { withCredentials: true });
+  }
+
+  vote(answerId: string, payload: { voteType: string }): Observable<any> {
+    return this.http.post<any>(`http://localhost:8085/api/answers/${answerId}/vote`, payload, { withCredentials: true });
   }
 
   private getCommunityIdByName(communityName: string): number {

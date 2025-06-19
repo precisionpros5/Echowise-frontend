@@ -37,8 +37,8 @@ export class ListComponent {
 
   @Output() clickenter = new EventEmitter<void>(); // Event emitter for click events
 
-  GoToAnswers() {
+  GoToAnswers(question: any) {
     console.log('Answers button clicked');
-    this.clickenter.emit(); // Emit event to notify parent to navigate back
+    this.clickenter.emit(question); // Emit event to notify parent to navigate back
   }
 }

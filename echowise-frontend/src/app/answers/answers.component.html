@@ -1,22 +1,23 @@
 <div class="question-details">
     <!-- Question Section -->
-
     <div class="question-header">
-        <h2>{{ questionId }}kk</h2>
+        <h2>{{ question.title }}</h2>
         <p>{{ question.description }}</p>
-        <small>Posted by: {{ question.user }}</small>
+        <small>Posted by: {{ question.username }}</small>
     </div>
 
     <!-- Answers Section -->
     <div class="answers-section">
         <h3>Answers</h3>
-        <div *ngFor="let answer of question.answers; let i = index" class="answer">
-            <p>{{ answer.text }}</p>
+        <div *ngFor="let answer of answers; let i = index" class="answer">
+            <p>{{ answer.content }}</p>
             <div class="answer-details">
-                <button (click)="handleVote(i, 'up')">Upvote</button>
-                <button (click)="handleVote(i, 'down')">Downvote</button>
-                <span>Votes: {{ answer.votes }}</span>
-                <small>Posted by: {{ answer.user }}</small>
+                <button (click)="handleVote(answer.answerId, 'UPVOTE')">Upvote</button>
+                <button (click)="handleVote(answer.answerId, 'DOWNVOTE')">Downvote</button>
+                <span>Votes: {{ answer.voteCount }}</span>
+                <small>Posted by: {{ answer.username }}</small>
+                <small>Created on: {{ answer.creationDate | date:'medium' }}</small>
+                <span *ngIf="answer.isAccepted" class="accepted-answer">✔ Accepted Answer</span>
             </div>
         </div>
     </div>
@@ -27,6 +28,8 @@
         <textarea id="newans" [(ngModel)]="newAnswer" placeholder="Write your answer here..."></textarea>
         <button (click)="handleAddAnswer()">Post Answer</button>
     </div>
+
+    <!-- Back Button -->
     <div class="back-button">
         <button (click)="navigateBack()">Back to Question List</button>
     </div>
