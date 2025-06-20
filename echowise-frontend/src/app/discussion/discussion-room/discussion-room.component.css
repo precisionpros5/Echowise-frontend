@@ -1,13 +1,4 @@
-.app-container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    padding: 20px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #e6ecf0;
-    /* Light blue-grey background */
-    color: #333;
-}
+
 
 h1 {
     text-align: center;
@@ -31,34 +22,42 @@ h1 {
     border-radius: 15px;
 }
 
-.chat-layout {
-    display: flex;
-    flex: 1;
-    /* height: 100vh; */
-    border: 1px solid #ccd6dd;
-    border-radius: 10px;
-    /* overflow: hidden; */
-    background-color: #fff;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
+
 
 .chat-main {
-    flex: 1;
+    flex: 1; /* Allow the chat-main section to grow and shrink */
     display: flex;
     flex-direction: column;
 }
-.chat-area{
-    flex-grow: 1;
-    overflow-y: auto;
-    margin: 1rem;
+
+.chat-area {
+    flex: 1; /* Allow the chat-area to take up remaining space */
+    overflow-y: auto; /* Enable scrolling for chat messages */
+    padding: 0.6rem;
+    border: 1px solid #ddd; /* Optional: Add a border for better visibility */
+    border-radius: 8px;
+    background-color: #fff; /* Optional: Set a background color */
 }
-.input-area{
-    padding: 0.5rem 1rem;
-    border-top: 1px solid #ccc;
-    background-color: #fff;
+
+.input-area {
+    margin-top: 0rem;
 }
 .connection-status{
+    display: flex; /* Use flexbox for alignment */
+    justify-content: space-between; /* Align items to the left and right */
+    align-items: center; /* Vertically center the items */
+    padding: 0.5rem 1rem;
     padding: 0.5rem;
-    background-color: #f1f1f1;
     font-weight: bold;
+    text-align: center;
+    font-size: x-large;
+}
+.discussion-room-title {
+    color:#4ab8dc; /* Optional: Twitter blue for the title */
+    font-size: x-large; /* Adjust font size */
+}
+
+.current-user {
+    color:#4ab8dc; /* Optional: Gray color for the current user */
+    font-size: x-large; /* Adjust font size */
 }
