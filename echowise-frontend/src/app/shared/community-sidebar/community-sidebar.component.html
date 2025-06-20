@@ -8,7 +8,7 @@
                     (click)="selectCommunity(community)" id="community-{{ community.code }}" />
                 <label for="community-{{ community.code }}">{{ community.name }}</label>
             </div>
-            <button class="add-button" (click)="openCreateDiscussionGroup(community.code)">+</button>
+            <button class="add-button" (click)="openCreateDiscussionGroup(community)">+</button>
         </div>
         <div class="discussion-rooms"
             *ngIf="community.name === selectedCommunity.name && roomsByCommunity[community.code]?.length">

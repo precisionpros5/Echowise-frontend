@@ -36,7 +36,7 @@ export class HomeComponent {
   isJoinPopupVisible = false;
   isCreatePopupVisible = false;
   isCreateDiscussionGroupVisible = false;
-  selectedCommunityName = '';
+  selectedCommunity: any;
   communityCode = ''; // Add communityCode property
   isPostPopupVisible = false; // Control visibility of the Post popup
   questions: any[] = []; // Store the questions received from the sidebar
@@ -89,8 +89,8 @@ export class HomeComponent {
     this.isCreatePopupVisible = false;
   }
 
-  openCreateDiscussionGroup(communityName: string) {
-    this.selectedCommunityName = communityName;
+  openCreateDiscussionGroup(community: any) {
+    this.selectedCommunity = community;
     this.isCreateDiscussionGroupVisible = true;
   }
 
@@ -114,7 +114,7 @@ export class HomeComponent {
 
   handleCommunitySelected(community: any): void {
     this.currentView = 'list'; // Switch to the list view
-    this.selectedCommunityName = community.name; // Store the selected community name
+    this.selectedCommunity = community; // Store the selected community name
     console.log('Community selected:', community);
   }
 

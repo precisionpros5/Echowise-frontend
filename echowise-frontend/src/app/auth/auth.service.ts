@@ -108,7 +108,7 @@ export class AuthService {
     return this.http.post<any>(`${this.communityBaseUrl}/${communityId}/questions`, questionData, { withCredentials: true });
   }
 
-  createDiscussionRoom(communityCode: string, payload: { name: string; description: string; memberUsernames: string[] }): Observable<any> {
+  createDiscussionRoom(communityCode: string, payload: { name: string; description: string; memberUsernames: (string | null)[] }): Observable<any> {
     return this.http.post<any>(`${this.communityBaseUrl}/${communityCode}/rooms`, payload, { withCredentials: true });
   }
 

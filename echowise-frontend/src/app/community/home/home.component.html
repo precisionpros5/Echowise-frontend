@@ -3,8 +3,8 @@
 <div class="home-container">
     <app-community-sidebar (createDiscussionGroup)="openCreateDiscussionGroup($event)"
         (questionsFetched)="onQuestionsFetched($event)" (onCommunityclicked)="handleCommunitySelected($event)"
-        (onAnswerclicked)="handleItemClicked($event)"
-        (onDiscussionclicked)="handleDiscussionRoomSelected($event)"></app-community-sidebar>
+        (onAnswerclicked)="handleItemClicked($event)" (onDiscussionclicked)="handleDiscussionRoomSelected($event)">
+    </app-community-sidebar>
     <!-- Sidebar -->
     <main class="main-content">
         <!-- <div class="action-bar">
@@ -22,6 +22,6 @@
 <app-footer></app-footer> <!-- Footer -->
 
 <!-- Create Discussion Group Popup -->
-<app-create-discussion-group *ngIf="isCreateDiscussionGroupVisible" [communityName]="selectedCommunityName"
+<app-create-discussion-group *ngIf="isCreateDiscussionGroupVisible" [community]="selectedCommunity"
     (closePopup)="closeCreateDiscussionGroup()">
 </app-create-discussion-group>
