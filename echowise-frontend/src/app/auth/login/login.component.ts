@@ -65,7 +65,7 @@ export class LoginComponent {
       },
       error: (err: any) => {
         console.error('Login failed:', err);
-        this.alertService.showAlert('Login failed: ' + (err.error?.message || 'Unknown error'), 'error'); // Custom alert for login failure
+        this.alertService.showAlert('Login failed: ' + (err.error || 'Unknown error'), 'error'); // Custom alert for login failure
       }
     });
   }
