@@ -38,7 +38,9 @@ export class LoginComponent {
     private alertService: AlertService // Inject AlertService
   ) {
     this.loginForm = this.fb.group({
-      email: ['', []],
+      email: ['', [
+        Validators.required,
+      ]],
       password: [
         '',
         [

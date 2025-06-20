@@ -4,18 +4,12 @@
     <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
       <!-- Email Input -->
       <div class="form-group">
-        <label for="email">Email</label>
-        <input
-          id="email"
-          type="email"
-          formControlName="email"
-          class="form-control"
-          placeholder="Enter your email"
-          [class.is-invalid]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
-        />
+        <label for="email">Username</label>
+        <input id="email" type="email" formControlName="email" class="form-control" placeholder="Enter your Username"
+          [class.is-invalid]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" />
         <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="error-message">
-          <small *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</small>
-          <small *ngIf="loginForm.get('email')?.errors?.['email']">Please enter a valid email address.</small>
+          <small *ngIf="loginForm.get('email')?.errors?.['required']">Username is required.</small>
+          <small *ngIf="loginForm.get('email')?.errors?.['email']">Please enter a valid Username.</small>
         </div>
       </div>
 
@@ -23,21 +17,17 @@
       <div class="form-group">
         <label for="password">Password</label>
         <div class="password-container">
-          <input
-            id="password"
-            [type]="showPassword ? 'text' : 'password'"
-            formControlName="password"
-            class="form-control"
-            placeholder="Enter your password"
-            [class.is-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
-          />
+          <input id="password" [type]="showPassword ? 'text' : 'password'" formControlName="password"
+            class="form-control" placeholder="Enter your password"
+            [class.is-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" />
           <span class="toggle-password" (click)="togglePasswordVisibility()">
             <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
           </span>
         </div>
         <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="error-message">
           <small *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</small>
-          <small *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must be at least 8 characters long.</small>
+          <small *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must be at least 8 characters
+            long.</small>
           <small *ngIf="loginForm.get('password')?.errors?.['pattern']">
             Password must include uppercase, lowercase, number, and special character.
           </small>

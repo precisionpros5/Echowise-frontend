@@ -14,7 +14,6 @@ export const routes: Routes = [
     { path: 'signup', component: SignupComponent },
     { path: 'landing', component: LandingComponent },
     { path: 'community/home', component: HomeComponent, canActivate: [AuthGuard] }, // Add your AuthGuard here if needed
-    { path: 'discussion', component: DiscussionRoomComponent },
     { path: 'about', component: AboutComponent },
     { path: 'contact', component: ContactComponent },
     { path: 'help', component: HelpComponent },
