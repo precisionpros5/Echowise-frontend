@@ -38,7 +38,9 @@ export class LoginComponent {
     private alertService: AlertService // Inject AlertService
   ) {
     this.loginForm = this.fb.group({
-      email: ['', []],
+      email: ['', [
+        Validators.required,
+      ]],
       password: [
         '',
         [
@@ -65,7 +67,7 @@ export class LoginComponent {
       },
       error: (err: any) => {
         console.error('Login failed:', err);
-        this.alertService.showAlert('Login failed: ' + (err.error?.message || 'Unknown error'), 'error'); // Custom alert for login failure
+        this.alertService.showAlert('Login failed: ' + (err.error || 'Unknown error'), 'error'); // Custom alert for login failure
       }
     });
   }

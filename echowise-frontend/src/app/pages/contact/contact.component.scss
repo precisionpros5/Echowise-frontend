@@ -1,3 +1,4 @@
+
 .contact-wrapper {
     display: grid;
     grid-template-columns: 1fr 2fr;
@@ -94,6 +95,7 @@ mat-card {
             ::ng-deep .mat-select-panel {
                 z-index: 1000 !important;
             }
+
         }
 
         button {

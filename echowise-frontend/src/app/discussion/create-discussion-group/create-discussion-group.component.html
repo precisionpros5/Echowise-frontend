@@ -12,8 +12,11 @@
         <h4>Select Users</h4>
         <div class="user-list">
             <div *ngFor="let user of users">
-                <input type="checkbox" [checked]="selectedUsers.includes(user)" (change)="toggleUserSelection(user)" />
-                <span>{{ user }}</span>
+                <div *ngIf="user !== currentUser">
+                    <input type="checkbox" [checked]="selectedUsers.includes(user)"
+                        (change)="toggleUserSelection(user)" />
+                    <span>{{ user }}</span>
+                </div>
             </div>
         </div>
 

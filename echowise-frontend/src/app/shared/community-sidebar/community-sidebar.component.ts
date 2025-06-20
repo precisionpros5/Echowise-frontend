@@ -122,8 +122,8 @@ export class CommunitySidebarComponent implements OnInit {
     //this.roomsFetched.emit(this.selectedRoom); // Emit the fetched rooms
 
   }
-  openCreateDiscussionGroup(community: string) {
-    this.createDiscussionGroup.emit(community); // Emit the community name
+  openCreateDiscussionGroup(community: any) {
+    this.createDiscussionGroup.emit(community); // Convert communityCode to string
   }
 
   showJoinPopup() {

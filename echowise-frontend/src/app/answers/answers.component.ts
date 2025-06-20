@@ -66,18 +66,32 @@ export class AnswersComponent {
       }
     });
   }
+
   handleAddAnswer() {
-    // Add a new answer to the list
     if (this.newAnswer.trim()) {
-      const newAnswerObj = {
-        text: this.newAnswer,
-        votes: 0,
-        user: 'Current User' // Replace with actual user data
-      };
-      this.answers.push(newAnswerObj);
-      this.newAnswer = ''; // Clear the input field
+      const answerData = { content: this.newAnswer };
+
+      this.authService.postAnswer(this.question.questionId, answerData).subscribe({
+        next: (response) => {
+          console.log('Answer posted successfully:', response);
+          const newAnswerObj = {
+            content: response.content,
+            votes: 0,
+            username: response.username, // Assuming the response contains the username
+            creationDate: new Date().toISOString(), // Use the current date or the one from the response
+            answerId: response.answerId // Assuming the response contains the answer ID
+          };
+          this.answers.push(newAnswerObj); // Add the new answer to the list
+          this.newAnswer = ''; // Clear the input field
+        },
+        error: (err) => {
+          console.error('Failed to post answer:', err);
+          alert('Failed to post the answer. Please try again.');
+        }
+      });
     }
   }
+
   navigateBack() {
     console.log('Navigating back to question list');
     this.backToList.emit(); // Emit event to notify parent to navigate back
