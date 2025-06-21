@@ -49,6 +49,10 @@ export class AuthService {
         // Clear session storage on successful logout
         sessionStorage.removeItem('userId');
         sessionStorage.removeItem('username');
+        localStorage.removeItem('selectedCommunity'); // Clear selected community from local storage
+        localStorage.removeItem('selectedRoom'); // Clear selected room from local storage  
+        localStorage.removeItem('currentView'); // Clear current view from local storage
+        localStorage.removeItem('question'); // Clear question from local storage
         console.log('User logged out and session storage cleared.');
       })
     );

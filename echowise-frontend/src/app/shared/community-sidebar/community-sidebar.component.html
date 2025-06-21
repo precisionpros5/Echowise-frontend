@@ -14,7 +14,7 @@
             *ngIf="community.name === selectedCommunity.name && roomsByCommunity[community.code]?.length">
             <div *ngFor="let room of roomsByCommunity[community.code]">
                 <input type="radio" name="room" [value]="room.name" (change)="selectDiscussion(room)"
-                    id="room-{{ room.name }}" />
+                    [checked]="room.id === selectedRoom?.id" id="room-{{ room.name }}" />
                 <label for="room-{{ room.name }}">{{ room.name }}</label>
             </div>
         </div>
