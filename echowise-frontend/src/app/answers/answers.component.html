@@ -1,5 +1,11 @@
 <div class="question-details">
     <!-- Question Section -->
+    <div class="back">
+        <button (click)="navigateBack()">
+            <span>&#8592;</span>
+        </button>
+    </div>
+    <br>
     <div class="question-header">
         <h2>{{ question.title }}</h2>
         <p>{{ question.description }}</p>
@@ -30,7 +36,5 @@
     </div>
 
     <!-- Back Button -->
-    <div class="back-button">
-        <button (click)="navigateBack()">Back to Question List</button>
-    </div>
+
 </div>

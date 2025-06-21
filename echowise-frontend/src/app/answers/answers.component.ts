@@ -76,7 +76,7 @@ export class AnswersComponent {
           console.log('Answer posted successfully:', response);
           const newAnswerObj = {
             content: response.content,
-            votes: 0,
+            voteCount: 0,
             username: response.username, // Assuming the response contains the username
             creationDate: new Date().toISOString(), // Use the current date or the one from the response
             answerId: response.answerId // Assuming the response contains the answer ID

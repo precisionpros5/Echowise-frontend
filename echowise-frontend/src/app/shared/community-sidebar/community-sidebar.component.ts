@@ -92,8 +92,8 @@ export class CommunitySidebarComponent implements OnInit {
           // Ensure rooms are mapped to the correct community ID
           this.roomsByCommunity[community.code] = rooms;
           console.log(`Rooms fetched for community ${community.code}:`, rooms);
-          this.selectedRoom = this.roomsByCommunity[community.code][1]
-          console.log(`Selected Room:`, this.selectedRoom);
+          this.selectedRoom = null
+          //console.log(`Selected Room:`, this.selectedRoom);
           // this.roomsFetched.emit(this.selectedRoom); // Emit the fetched rooms
           console.log(`Rooms fetched for community ${community.code}:`, rooms);
           console.log(`Rooms by community:`, this.roomsByCommunity);
@@ -114,10 +114,11 @@ export class CommunitySidebarComponent implements OnInit {
     // Find the community by name
 
     //this.roomsFetched.emit(this.selectedRoom);
-    this.onCommunityclicked.emit(community); // Emit the selected community
+    this.onCommunityclicked.emit(community);
+    this.fetchQuestionsByCommunity(community);// Emit the selected community
     this.fetchRoomsByCommunity(community); // Fetch rooms for the selected community
-    this.fetchQuestionsByCommunity(community);
-    this.selectedRoom = this.roomsByCommunity[community.code][1]// Set the selected room to the first room of the selected community
+
+    this.selectedRoom = null// Set the selected room to the first room of the selected community
     console.log('Selected Room:', this.selectedRoom); // Fetch questions for the selected community
     //this.roomsFetched.emit(this.selectedRoom); // Emit the fetched rooms
 
