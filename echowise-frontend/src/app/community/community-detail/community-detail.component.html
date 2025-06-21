@@ -8,5 +8,10 @@
 
         <!-- Copy to Clipboard button -->
         <button class="copy-button" (click)="copyToClipboard()">Copy Community Code</button>
+        <h4>Users in Community:</h4>
+        <ul>
+            <li *ngFor="let user of users">{{ user }}</li>
+        </ul>
+
     </div>
 </div>
