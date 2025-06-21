@@ -16,6 +16,8 @@
                 <input type="radio" name="room" [value]="room.name" (change)="selectDiscussion(room)"
                     [checked]="room.id === selectedRoom?.id" id="room-{{ room.name }}" />
                 <label for="room-{{ room.name }}">{{ room.name }}</label>
+                <i *ngIf="room.isPrivate" class="fa fa-lock lock-symbol" aria-hidden="true"></i>
+
             </div>
         </div>
     </div>

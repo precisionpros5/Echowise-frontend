@@ -105,7 +105,7 @@ export class CommunitySidebarComponent implements OnInit {
         next: (rooms: any[]) => {
           // Ensure rooms are mapped to the correct community ID
           this.roomsByCommunity[community.code] = rooms;
-          console.log(`Rooms fetched for community ${community.code}:`, rooms);
+          console.log(`Rooms fetched for community ${community.code}:`, this.roomsByCommunity);
 
           const savedRoom = localStorage.getItem('selectedRoom');
           if (savedRoom) {
