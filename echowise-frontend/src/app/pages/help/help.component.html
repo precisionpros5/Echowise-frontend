@@ -15,13 +15,13 @@
 
     <div class="faq-section">
         <mat-accordion multi>
-            <mat-expansion-panel *ngFor="let category of filteredFaqs">
+            <mat-expansion-panel *ngFor="let category of filteredFaqs" [expanded]="isCategoryExpanded(category)">
                 <mat-expansion-panel-header>
                     <mat-panel-title>{{ category.category }}</mat-panel-title>
                 </mat-expansion-panel-header>
 
                 <mat-accordion multi>
-                    <mat-expansion-panel *ngFor="let item of category.questions">
+                    <mat-expansion-panel *ngFor="let item of category.questions" [expanded]="isQuestionExpanded(item)">
                         <mat-expansion-panel-header>
                             <mat-panel-title>{{ item.q }}</mat-panel-title>
                         </mat-expansion-panel-header>
