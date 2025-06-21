@@ -2,16 +2,11 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; // Import FormsModule for ngModel
 import { RouterModule } from '@angular/router';
-import { AuthService } from '../../auth/auth.service';
-import { WebSocketService } from '../../discussion/services/websocket.service';
 import { NavbarComponent } from '../../shared/navbar/navbar.component';
 import { CommunitySidebarComponent } from '../../shared/community-sidebar/community-sidebar.component';
 import { CreateDiscussionGroupComponent } from '../../discussion/create-discussion-group/create-discussion-group.component';
-import { JoinComponent } from '../../community/join/join.component';
-import { CreateComponent } from '../../community/create/create.component';
 import { FooterComponent } from '../../shared/footer/footer.component';
 import { ListComponent } from '../../question/list/list.component';
-import { PostComponent } from '../../question/post/post.component';
 import { AnswersComponent } from '../../answers/answers.component';
 import { DiscussionRoomComponent } from '../../discussion/discussion-room/discussion-room.component';
 
@@ -26,10 +21,7 @@ import { DiscussionRoomComponent } from '../../discussion/discussion-room/discus
     CommunitySidebarComponent,
     CreateDiscussionGroupComponent,
     ListComponent,
-    JoinComponent,
-    CreateComponent,
     FooterComponent,
-    PostComponent,
     AnswersComponent,
     DiscussionRoomComponent
   ],

@@ -1,5 +1,9 @@
 <div class="list-container">
     <div class="action-bar">
+        <button class="detail-button" (click)="showCommunityDetailPopup()">View Community Details</button>
+    </div>
+
+    <div class="action-bar">
         <button class="post-button" (click)="showPostPopup()">Post Question</button>
     </div>
 
@@ -22,4 +26,11 @@
                 </app-post>
             </div>
         </div>
+        <div class="post-popup">
+            <app-community-detail *ngIf="isCommunityDetailPopupVisible" [name]="communityDetail?.name"
+                [code]="communityDetail?.code" [description]="communityDetail?.description"
+                (closePopup)="closeCommunityDetailPopup()">
+            </app-community-detail>
+        </div>
     </div>
+</div>

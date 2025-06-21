@@ -103,6 +103,10 @@ export class AuthService {
     });
   }
 
+  getCommunityDetails(communityCode: number): Observable<any> {
+    const url = `${this.communityBaseUrl}/detail/${communityCode}`;
+    return this.http.get<any>(url, { withCredentials: true });
+  }
   /**
  * Create a new question in a specific community.
  * Sends the question data to the backend.

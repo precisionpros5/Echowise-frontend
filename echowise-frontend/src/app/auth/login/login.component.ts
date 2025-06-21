@@ -6,9 +6,6 @@ import { AuthService } from '../auth.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms'; // Import FormsModule
-import { NavbarComponent } from '../../shared/navbar/navbar.component';
-import { InputFieldComponent } from '../../shared/input-field/input-field.component';
-import { ButtonComponent } from '../../shared/button/button.component';
 import { AlertService } from '../../shared/alert/alert.service'; // Import AlertService
 
 @Component({
@@ -19,10 +16,7 @@ import { AlertService } from '../../shared/alert/alert.service'; // Import Alert
     RouterModule,
     RouterLink,
     FormsModule,
-    ReactiveFormsModule, // Add ReactiveFormsModule here
-    NavbarComponent,
-    InputFieldComponent,
-    ButtonComponent
+    ReactiveFormsModule
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']

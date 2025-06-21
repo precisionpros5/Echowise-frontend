@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { DetailComponent } from '../detail/detail.component';
 import { PostComponent } from '../post/post.component';
 import { AuthService } from '../../auth/auth.service';
+import { CommunityDetailComponent } from '../../community/community-detail/community-detail.component';
 
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [CommonModule, DetailComponent, PostComponent],
+  imports: [CommonModule, DetailComponent, PostComponent, CommunityDetailComponent],
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css']
 })
@@ -17,6 +18,8 @@ export class ListComponent {
   @Input() questions: any[] = []; // Accept questions as input
   @Input() communityCode!: number;
   isPostPopupVisible = false; // Control visibility of the Post popup
+  isCommunityDetailPopupVisible = false;
+  communityDetail: any = null; // Store community details for the popup
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['questions']) {
@@ -30,6 +33,24 @@ export class ListComponent {
 
   closePostPopup() {
     this.isPostPopupVisible = false; // Hide the Post popup
+  }
+
+  showCommunityDetailPopup() {
+    this.authService.getCommunityDetails(this.communityCode).subscribe({
+      next: (response) => {
+        console.log('Community details fetched successfully:', response);
+        this.communityDetail = response; // Store the community details
+        this.isCommunityDetailPopupVisible = true; // Show the popup
+      },
+      error: (err) => {
+        console.error('Failed to fetch community details:', err);
+        alert('Failed to fetch community details. Please try again.');
+      }
+    });
+  }
+
+  closeCommunityDetailPopup() {
+    this.isCommunityDetailPopupVisible = false; // Hide the popup
   }
 
   handleQuestionSubmitted(questionData: { title: string; description: string; tags: string[] }) {
