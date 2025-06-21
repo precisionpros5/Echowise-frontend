@@ -138,6 +138,18 @@ export class CommunitySidebarComponent implements OnInit {
   }
 
   selectCommunity(community: any) {
+    if (this.selectedCommunity?.code === community.code) {
+      console.log('Switching to question view for the same community:', community.name);
+
+      // Reset the selected room to null to clear the discussion room selection
+      this.selectedRoom = null;
+      this.onCommunityclicked.emit(community);
+
+      // Fetch questions for the community
+      //this.fetchQuestionsByCommunity(community);
+
+      return; // Exit early since the community is already selected
+    }
     this.selectedCommunity = community; // Update the selected community
     // Find the community by name
 
@@ -147,7 +159,7 @@ export class CommunitySidebarComponent implements OnInit {
     this.fetchRoomsByCommunity(community); // Fetch rooms for the selected community
 
     this.selectedRoom = null// Set the selected room to the first room of the selected community
-    console.log('Selected Room:', this.selectedRoom); // Fetch questions for the selected community
+    console.log('Selected Room:comm', this.selectedRoom); // Fetch questions for the selected community
     //this.roomsFetched.emit(this.selectedRoom); // Emit the fetched rooms
     localStorage.setItem('selectedCommunity', JSON.stringify(community));
   }
@@ -192,5 +204,9 @@ export class CommunitySidebarComponent implements OnInit {
 
     // Emit the selected room to the parent component
     this.onDiscussionclicked.emit(room);
+  }
+  handleCommunityCreated(): void {
+    //console.log('Community created, refreshing list...');
+    this.fetchCommunities(); // Refresh the list of communities
   }
 }

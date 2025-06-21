@@ -25,6 +25,8 @@
     </div>
 
     <!-- Create Popup -->
-    <app-create-community *ngIf="isCreatePopupVisible" (popupClosed)="closeCreatePopup()"></app-create-community>
-    <app-join-community *ngIf="isJoinPopupVisible" (popupClosed)="closeJoinPopup()"></app-join-community>
+    <app-create-community *ngIf="isCreatePopupVisible" (popupClosed)="closeCreatePopup()"
+        (communityCreated)="handleCommunityCreated()"></app-create-community>
+    <app-join-community *ngIf="isJoinPopupVisible" (popupClosed)="closeJoinPopup()"
+        (communityJoined)="handleCommunityCreated()"></app-join-community>
 </div>
