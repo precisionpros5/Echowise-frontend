@@ -84,3 +84,9 @@
 .new-button:hover {
   background: linear-gradient(135deg, #7367F0, #c088f8);
 }
+
+.lock-symbol {
+  margin-left: 3px;
+  color: #000000;
+  font-size: 0.7rem;
+}
