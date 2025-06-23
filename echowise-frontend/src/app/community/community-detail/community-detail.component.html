@@ -1,0 +1,17 @@
+<div class="popup-container">
+    <div class="popup-content">
+        <!-- Close button inside the popup content -->
+        <button class="close-button" (click)="triggerClosePopup()">X</button>
+        <h3>{{ name }}</h3>
+        <p><strong>Description:</strong> {{ description }}</p>
+        <p><strong>Community Code:</strong> {{ code }}</p>
+
+        <!-- Copy to Clipboard button -->
+        <button class="copy-button" (click)="copyToClipboard()">Copy Community Code</button>
+        <h4>Users in Community:</h4>
+        <ul>
+            <li *ngFor="let user of users">{{ user }}</li>
+        </ul>
+
+    </div>
+</div>

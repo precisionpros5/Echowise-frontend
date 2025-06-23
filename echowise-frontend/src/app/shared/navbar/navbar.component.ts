@@ -31,7 +31,7 @@ export class NavbarComponent {
     this.authService.logout().subscribe({
       next: (res: any) => {
         console.log('Logout successful', res);
-        this.router.navigate(['/login']); // Redirect to the landing page after successful logout
+        this.router.navigate(['']); // Redirect to the landing page after successful logout
       },
       error: (err: any) => {
         alert('Logout failed: ' + (err.error?.message || 'Unknown error'));

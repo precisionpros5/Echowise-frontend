@@ -8,6 +8,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import emailjs from 'emailjs-com';
 
 @Component({
     selector: 'app-contact',
@@ -42,8 +43,24 @@ export class ContactComponent {
 
     onSubmit() {
         if (this.contactForm.valid) {
-            this.snackBar.open('Message sent successfully!', 'Close', { duration: 3000 });
-            this.contactForm.reset();
+            const formData = this.contactForm.value;
+
+            const templateParams = {
+                name: formData.name,
+                email: formData.email,
+                message: formData.message,
+                time: new Date().toLocaleString()
+            };
+
+            emailjs.send('service_9076oaq', 'template_el2n0b3', templateParams, 'CS8ePOh5P7PwUisk9')
+                .then(() => {
+                    alert('Message sent successfully!');
+                    this.contactForm.reset();
+                })
+                .catch((error) => {
+                    console.error('EmailJS error:', error);
+                    alert('Failed to send message.');
+                });
         }
     }
 

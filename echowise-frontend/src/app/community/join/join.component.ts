@@ -13,7 +13,7 @@ import { AuthService } from '../../auth/auth.service';
 export class JoinComponent {
   communityCode = '';
   @Output() popupClosed = new EventEmitter<void>();
-
+  @Output() communityJoined = new EventEmitter<void>(); 
   constructor(private authService: AuthService) { }
 
   joinCommunity() {
@@ -23,6 +23,7 @@ export class JoinComponent {
       next: (response: any) => {
         console.log('Joined community successfully:', response);
         alert('Joined community successfully!');
+        this.communityJoined.emit();
         this.popupClosed.emit(); // Close the popup after successful join
       },
       error: (err: any) => {

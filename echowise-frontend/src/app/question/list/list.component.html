@@ -1,14 +1,17 @@
 <div class="list-container">
     <div class="action-bar">
+        <button class="detail-button" (click)="showCommunityDetailPopup()">View Community Details</button>
+    </div>
+
+    <div class="action-bar">
         <button class="post-button" (click)="showPostPopup()">Post Question</button>
     </div>
 
     <div class="questions-container">
         <div *ngFor="let question of questions" (click)="GoToAnswers(question)">
             <app-detail [question]="question.title" [description]="question.description" [username]="question.username"
-                [votes]="question.votes || 0" [creationDate]="question.creationDate"
-                [lastEditedDate]="question.lastEditedDate" [communityCode]="question.communityCode"
-                [status]="question.status" [tags]="question.tags">
+                [creationDate]="question.creationDate" [lastEditedDate]="question.lastEditedDate"
+                [communityCode]="question.communityCode" [status]="question.status" [tags]="question.tags">
             </app-detail>
         </div>
         <div *ngIf="questions.length === 0" class="no-questions">
@@ -22,4 +25,11 @@
                 </app-post>
             </div>
         </div>
+        <div class="post-popup">
+            <app-community-detail *ngIf="isCommunityDetailPopupVisible" [name]="communityDetail?.name"
+                [code]="communityDetail?.code" [description]="communityDetail?.description"
+                (closePopup)="closeCommunityDetailPopup()">
+            </app-community-detail>
+        </div>
     </div>
+</div>

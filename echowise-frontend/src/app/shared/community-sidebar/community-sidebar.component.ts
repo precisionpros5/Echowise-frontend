@@ -18,7 +18,6 @@ import { WebSocketService } from '../../discussion/services/websocket.service'; 
 export class CommunitySidebarComponent implements OnInit {
   @Output() createDiscussionGroup = new EventEmitter<string>(); // Emit a string value
   @Output() questionsFetched = new EventEmitter<{ questions: any[]; communityCode: number }>(); // EventEmitter for questions
-  // @Output() roomsFetched = new EventEmitter<any[]>(); // EventEmitter for rooms
   @Output() onCommunityclicked = new EventEmitter<any>(); // EventEmitter for community selection
   @Output() onAnswerclicked = new EventEmitter<any>(); // EventEmitter for answer selection   
   @Output() onDiscussionclicked = new EventEmitter<any>(); // EventEmitter for discussion room selection
@@ -33,6 +32,21 @@ export class CommunitySidebarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    const savedCommunity = localStorage.getItem('selectedCommunity');
+    const savedRoom = localStorage.getItem('selectedRoom');
+
+    if (savedCommunity) {
+      console.log('Saved community found:', savedCommunity);
+      this.selectedCommunity = JSON.parse(savedCommunity);
+      this.fetchRoomsByCommunity(this.selectedCommunity);
+      this.fetchQuestionsByCommunity(this.selectedCommunity);
+    }
+
+    if (savedRoom) {
+      this.selectedRoom = JSON.parse(savedRoom);
+    }
+    console.log('Selected Room:', this.selectedRoom, this.selectedCommunity);
     this.fetchCommunities();
   }
 
@@ -40,12 +54,17 @@ export class CommunitySidebarComponent implements OnInit {
     this.authService.getUserCommunities().subscribe({
       next: (response: any[]) => {
         this.communities = response; // Bind the fetched communities to the component
-        if (this.communities.length > 0) {
+        if (!this.selectedCommunity && this.communities.length > 0) {
           console.log('Fetched communities:', this.communities);
           this.selectedCommunity = this.communities[0];
           //console.log("check", this.selectedCommunity) // Select the first community by default
           this.fetchRoomsByCommunity(this.selectedCommunity); // Fetch rooms for the first community
           this.fetchQuestionsByCommunity(this.selectedCommunity); // Fetch questions for the first community
+        }
+        else if (this.selectedCommunity) {
+          // Restore rooms and questions for the saved community
+          this.fetchRoomsByCommunity(this.selectedCommunity);
+          this.fetchQuestionsByCommunity(this.selectedCommunity);
         }
         //this.fetchRoomsForAllCommunities(); // Start fetching rooms for each community
       },
@@ -73,12 +92,7 @@ export class CommunitySidebarComponent implements OnInit {
     }
   }
 
-  // fetchRoomsForAllCommunities() {
-  //   // Iterate through each community and fetch its rooms
-  //   for (const community of this.communities) {
-  //     this.fetchRoomsByCommunity(community);
-  //   }
-  // }
+
 
   fetchRoomsByCommunity(community: any) {
     //console.log('Fetching rooms for community:', community);
@@ -91,9 +105,23 @@ export class CommunitySidebarComponent implements OnInit {
         next: (rooms: any[]) => {
           // Ensure rooms are mapped to the correct community ID
           this.roomsByCommunity[community.code] = rooms;
-          console.log(`Rooms fetched for community ${community.code}:`, rooms);
-          this.selectedRoom = this.roomsByCommunity[community.code][1]
-          console.log(`Selected Room:`, this.selectedRoom);
+          console.log(`Rooms fetched for community ${community.code}:`, this.roomsByCommunity);
+
+          const savedRoom = localStorage.getItem('selectedRoom');
+          if (savedRoom) {
+            const parsedRoom = JSON.parse(savedRoom);
+            const matchingRoom = rooms.find((room) => room.id === parsedRoom.id);
+            if (matchingRoom) {
+              console.log('Restoring selected room from localStorage:', matchingRoom);
+              this.selectedRoom = matchingRoom;
+              console.log('Restored selected room:', this.selectedRoom);
+            } else {
+              this.selectedRoom = null; // Reset if the saved room is not found in the fetched rooms
+            }
+          } else {
+            this.selectedRoom = null; // Reset if no saved room exists
+          }
+          //console.log(`Selected Room:`, this.selectedRoom);
           // this.roomsFetched.emit(this.selectedRoom); // Emit the fetched rooms
           console.log(`Rooms fetched for community ${community.code}:`, rooms);
           console.log(`Rooms by community:`, this.roomsByCommunity);
@@ -110,17 +138,30 @@ export class CommunitySidebarComponent implements OnInit {
   }
 
   selectCommunity(community: any) {
+    if (this.selectedCommunity?.code === community.code) {
+      console.log('Switching to question view for the same community:', community.name);
+
+      // Reset the selected room to null to clear the discussion room selection
+      this.selectedRoom = null;
+      this.onCommunityclicked.emit(community);
+
+      // Fetch questions for the community
+      //this.fetchQuestionsByCommunity(community);
+
+      return; // Exit early since the community is already selected
+    }
     this.selectedCommunity = community; // Update the selected community
     // Find the community by name
 
     //this.roomsFetched.emit(this.selectedRoom);
-    this.onCommunityclicked.emit(community); // Emit the selected community
+    this.onCommunityclicked.emit(community);
+    this.fetchQuestionsByCommunity(community);// Emit the selected community
     this.fetchRoomsByCommunity(community); // Fetch rooms for the selected community
-    this.fetchQuestionsByCommunity(community);
-    this.selectedRoom = this.roomsByCommunity[community.code][1]// Set the selected room to the first room of the selected community
-    console.log('Selected Room:', this.selectedRoom); // Fetch questions for the selected community
-    //this.roomsFetched.emit(this.selectedRoom); // Emit the fetched rooms
 
+    this.selectedRoom = null// Set the selected room to the first room of the selected community
+    console.log('Selected Room:comm', this.selectedRoom); // Fetch questions for the selected community
+    //this.roomsFetched.emit(this.selectedRoom); // Emit the fetched rooms
+    localStorage.setItem('selectedCommunity', JSON.stringify(community));
   }
   openCreateDiscussionGroup(community: any) {
     this.createDiscussionGroup.emit(community); // Convert communityCode to string
@@ -142,7 +183,7 @@ export class CommunitySidebarComponent implements OnInit {
     this.isCreatePopupVisible = false;
   }
   selectDiscussion(room: any): void {
-    console.log('WebSocketService:', this.webSocketService);
+    //console.log('WebSocketService:', this.webSocketService);
 
     if (this.selectedRoom === room) {
       console.log('Already connected to this room:', room.name);
@@ -159,8 +200,13 @@ export class CommunitySidebarComponent implements OnInit {
     this.selectedRoom = room;
     console.log('Connecting to new room:', room.name);
     this.webSocketService.connect(room.id);
+    localStorage.setItem('selectedRoom', JSON.stringify(room));
 
     // Emit the selected room to the parent component
     this.onDiscussionclicked.emit(room);
+  }
+  handleCommunityCreated(): void {
+    //console.log('Community created, refreshing list...');
+    this.fetchCommunities(); // Refresh the list of communities
   }
 }

@@ -49,6 +49,10 @@ export class AuthService {
         // Clear session storage on successful logout
         sessionStorage.removeItem('userId');
         sessionStorage.removeItem('username');
+        localStorage.removeItem('selectedCommunity'); // Clear selected community from local storage
+        localStorage.removeItem('selectedRoom'); // Clear selected room from local storage  
+        localStorage.removeItem('currentView'); // Clear current view from local storage
+        localStorage.removeItem('question'); // Clear question from local storage
         console.log('User logged out and session storage cleared.');
       })
     );
@@ -99,6 +103,10 @@ export class AuthService {
     });
   }
 
+  getCommunityDetails(communityCode: number): Observable<any> {
+    const url = `${this.communityBaseUrl}/detail/${communityCode}`;
+    return this.http.get<any>(url, { withCredentials: true });
+  }
   /**
  * Create a new question in a specific community.
  * Sends the question data to the backend.

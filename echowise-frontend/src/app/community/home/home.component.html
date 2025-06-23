@@ -15,7 +15,7 @@
         <app-answers *ngIf="currentView === 'answers'" [question]="question" [questionId]="questionId"
             (backToList)="handleBackToList()"></app-answers>
         <app-discussion-room *ngIf="currentView === 'discussionRoom'" [currentRoomId]="discussionRoom.id"
-            (backToList)="handleBackToList()"></app-discussion-room>
+            [currentRoom]="discussionRoom" (backToList)="handleBackToList()"></app-discussion-room>
     </main>
 </div>
 

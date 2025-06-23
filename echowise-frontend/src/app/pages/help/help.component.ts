@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 
+
 @Component({
     selector: 'app-help',
     standalone: true,
@@ -21,13 +22,14 @@ import { FormsModule } from '@angular/forms';
         FormsModule
     ],
     templateUrl: './help.component.html',
-    styleUrls: ['./help.component.scss']
+    styleUrls: ['./help.component.scss'],
+
 })
 export class HelpComponent {
     searchTerm: string = '';
 
     faqs = [
-        
+
         {
             category: 'Community',
             questions: [
@@ -72,5 +74,19 @@ export class HelpComponent {
                 questions: cat.questions.filter(q => q.q.toLowerCase().includes(term) || q.a.toLowerCase().includes(term))
             }))
             .filter(cat => cat.questions.length > 0);
+    }
+
+    isCategoryExpanded(category: any): boolean {
+        const term = this.searchTerm.trim().toLowerCase();
+        if (!term) return false; // Prevent expansion when search is cleared
+        return category.questions.some((q: { q: string; a: string }) =>
+            q.q.toLowerCase().includes(term) || q.a.toLowerCase().includes(term)
+        );
+    }
+
+    isQuestionExpanded(question: { q: string; a: string }): boolean {
+        const term = this.searchTerm.trim().toLowerCase();
+        if (!term) return false; // Prevent expansion when search is cleared
+        return question.q.toLowerCase().includes(term) || question.a.toLowerCase().includes(term);
     }
 }

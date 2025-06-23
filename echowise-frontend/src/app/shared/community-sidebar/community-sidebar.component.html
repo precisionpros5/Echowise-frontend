@@ -14,8 +14,10 @@
             *ngIf="community.name === selectedCommunity.name && roomsByCommunity[community.code]?.length">
             <div *ngFor="let room of roomsByCommunity[community.code]">
                 <input type="radio" name="room" [value]="room.name" (change)="selectDiscussion(room)"
-                    id="room-{{ room.name }}" />
+                    [checked]="room.id === selectedRoom?.id" id="room-{{ room.name }}" />
                 <label for="room-{{ room.name }}">{{ room.name }}</label>
+                <i *ngIf="room.isPrivate" class="fa fa-lock lock-symbol" aria-hidden="true"></i>
+
             </div>
         </div>
     </div>
@@ -25,6 +27,8 @@
     </div>
 
     <!-- Create Popup -->
-    <app-create-community *ngIf="isCreatePopupVisible" (popupClosed)="closeCreatePopup()"></app-create-community>
-    <app-join-community *ngIf="isJoinPopupVisible" (popupClosed)="closeJoinPopup()"></app-join-community>
+    <app-create-community *ngIf="isCreatePopupVisible" (popupClosed)="closeCreatePopup()"
+        (communityCreated)="handleCommunityCreated()"></app-create-community>
+    <app-join-community *ngIf="isJoinPopupVisible" (popupClosed)="closeJoinPopup()"
+        (communityJoined)="handleCommunityCreated()"></app-join-community>
 </div>

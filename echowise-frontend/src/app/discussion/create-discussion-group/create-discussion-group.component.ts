@@ -3,12 +3,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../auth/auth.service';
 import { AlertService } from '../../shared/alert/alert.service'; // Import AlertService
-import { AlertComponent } from '../../shared/alert/alert.component';
 
 @Component({
   selector: 'app-create-discussion-group',
   standalone: true,
-  imports: [CommonModule, FormsModule, AlertComponent],
+  imports: [CommonModule, FormsModule],
   templateUrl: './create-discussion-group.component.html',
   styleUrls: ['./create-discussion-group.component.css']
 })

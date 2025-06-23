@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ButtonComponent } from './button.component';
+import { CommunityDetailComponent } from './community-detail.component';
 
-describe('ButtonComponent', () => {
-  let component: ButtonComponent;
-  let fixture: ComponentFixture<ButtonComponent>;
+describe('CommunityDetailComponent', () => {
+  let component: CommunityDetailComponent;
+  let fixture: ComponentFixture<CommunityDetailComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ButtonComponent]
+      imports: [CommunityDetailComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ButtonComponent);
+    fixture = TestBed.createComponent(CommunityDetailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

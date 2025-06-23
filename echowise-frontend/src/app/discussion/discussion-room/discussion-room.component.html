@@ -1,14 +1,14 @@
 <div class="chat-main">
     <div class="connection-status" [ngClass]="{ connected: isConnected, disconnected: !isConnected }">
-        <span class="discussion-room-title">Discussion Room</span>
+        <span class="discussion-room-title">{{currentRoom.name}}</span>
         <span class="current-user">{{ currentUser }}</span>
     </div>
     <div class="chat-area">
         <app-chat-window [currentUser]="currentUser" [currentRoomId]="currentRoomId"></app-chat-window>
     </div>
     <div class="input-area">
-        <app-message-input [currentUser]="currentUser" [currentRoomId]="currentRoomId" (sendMessageEvent)="handleSendMessage($event)">
+        <app-message-input [currentUser]="currentUser" [currentRoomId]="currentRoomId"
+            (sendMessageEvent)="handleSendMessage($event)">
         </app-message-input>
     </div>
 </div>
-
