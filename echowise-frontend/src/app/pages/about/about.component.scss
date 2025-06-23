@@ -1,117 +1,153 @@
 $primary-color: #2c3e50;
 $secondary-color: #34495e;
-$accent-color: #3498db;
-$text-color: #555;
-$bg-color: #ffffff;
+$accent-color: #6a72fa;
+$text-color: #080808;
+$bg-color:linear-gradient(135deg, rgba(190, 128, 251, 0.2), rgba(108, 96, 245, 0.2));
 $box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 
 .about-container {
-    max-width: 800px;
-    margin: 40px auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw; /* Full width */
+    height: 100vh; 
     padding: 20px;
-    background-color: $bg-color;
+    background: linear-gradient(135deg, rgba(189, 128, 251, 0.29), rgba(108, 96, 245, 0.313));;
     border-radius: 12px;
     box-shadow: $box-shadow;
     font-family: 'Segoe UI', sans-serif;
-    transition: all 0.3s ease-in-out;
+    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: hidden;
+}
 
-    h1,
-    h2 {
-        color: $primary-color;
-        margin-bottom: 15px;
+h1, h2 {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #7774fc;
+    // text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add subtle text shadow */
+}
 
-        i {
-            margin-right: 10px;
-            color: $accent-color;
-        }
-    }
+h1 {
+    font-size: 2.5em;
+    animation: fadeIn 1s ease-in-out;
+}
 
-    p,
-    ul {
-        color: $text-color;
-        font-size: 1.1em;
-        line-height: 1.6;
-    }
+h2 {
+    font-size: 1.8em;
+    animation: fadeIn 1.5s ease-in-out;
+}
 
-    ul {
-        list-style: none;
-        padding-left: 0;
+p, ul {
+    font-size: 1.2em;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    animation: fadeIn 2s ease-in-out;
+    
+}
 
-        li {
-            margin-bottom: 10px;
+ul {
+    list-style: none;
+    padding-left: 0;
+}
 
-            i {
-                margin-right: 8px;
-                color: $accent-color;
-            }
-        }
-    }
+li {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    animation: fadeIn 2.5s ease-in-out;
+}
 
-    // Fade-in animations
-    .fade-in {
+li i {
+    margin-right: 10px;
+    color: #fc63bc; /* Accent color for icons */
+}
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 1s ease-in-out forwards;
+}
+
+.fade-in.delay-1 { animation-delay: 0.5s; }
+.fade-in.delay-2 { animation-delay: 1s; }
+.fade-in.delay-3 { animation-delay: 1.5s; }
+.fade-in.delay-4 { animation-delay: 2s; }
+.fade-in.delay-5 { animation-delay: 2.5s; }
+.fade-in.delay-6 { animation-delay: 3s; }
+.fade-in.delay-7 { animation-delay: 3.5s; }
+.fade-in.delay-8 { animation-delay: 4s; }
+.fade-in.delay-9 { animation-delay: 4.5s; }
+
+@keyframes fadeIn {
+    0% {
         opacity: 0;
         transform: translateY(20px);
-        animation: fadeInUp 0.6s forwards;
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.delay-1 {
+    animation-delay: 0.2s;
+}
+
+.delay-2 {
+    animation-delay: 0.4s;
+}
+
+.delay-3 {
+    animation-delay: 0.6s;
+}
+
+.delay-4 {
+    animation-delay: 0.8s;
+}
+
+.delay-5 {
+    animation-delay: 1s;
+}
+
+.delay-6 {
+    animation-delay: 1.2s;
+}
+
+.delay-7 {
+    animation-delay: 1.4s;
+}
+
+.delay-8 {
+    animation-delay: 1.6s;
+}
+
+.delay-9 {
+    animation-delay: 1.8s;
+}
+
+@media (max-width: 600px) {
+    .about-container {
+        padding: 20px;
     }
 
-    .delay-1 {
-        animation-delay: 0.2s;
+    h1 {
+        font-size: 2em;
     }
 
-    .delay-2 {
-        animation-delay: 0.4s;
+    h2 {
+        font-size: 1.5em;
     }
 
-    .delay-3 {
-        animation-delay: 0.6s;
-    }
-
-    .delay-4 {
-        animation-delay: 0.8s;
-    }
-
-    .delay-5 {
-        animation-delay: 1s;
-    }
-
-    .delay-6 {
-        animation-delay: 1.2s;
-    }
-
-    .delay-7 {
-        animation-delay: 1.4s;
-    }
-
-    .delay-8 {
-        animation-delay: 1.6s;
-    }
-
-    .delay-9 {
-        animation-delay: 1.8s;
-    }
-
-    @keyframes fadeInUp {
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    // Responsive Design
-    @media (max-width: 600px) {
-        padding: 15px;
-
-        h1 {
-            font-size: 1.8em;
-        }
-
-        h2 {
-            font-size: 1.4em;
-        }
-
-        p,
-        li {
-            font-size: 1em;
-        }
+    p, li {
+        font-size: 1em;
     }
 }
