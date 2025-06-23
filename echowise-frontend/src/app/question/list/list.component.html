@@ -10,9 +10,8 @@
     <div class="questions-container">
         <div *ngFor="let question of questions" (click)="GoToAnswers(question)">
             <app-detail [question]="question.title" [description]="question.description" [username]="question.username"
-                [votes]="question.votes || 0" [creationDate]="question.creationDate"
-                [lastEditedDate]="question.lastEditedDate" [communityCode]="question.communityCode"
-                [status]="question.status" [tags]="question.tags">
+                [creationDate]="question.creationDate" [lastEditedDate]="question.lastEditedDate"
+                [communityCode]="question.communityCode" [status]="question.status" [tags]="question.tags">
             </app-detail>
         </div>
         <div *ngIf="questions.length === 0" class="no-questions">
