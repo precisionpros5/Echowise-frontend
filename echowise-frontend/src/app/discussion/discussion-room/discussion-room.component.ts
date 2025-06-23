@@ -15,7 +15,7 @@ import { WebSocketService } from '../services/websocket.service';
 export class DiscussionRoomComponent {
   title = 'Discussion Room';
   @Input() currentUser: string = "";
-
+  @Input() currentRoom: any;
   @Input() currentRoomId: any = '2'; // Example room ID
   currentUserId: string | null = null; // Retrieve from session storage
   isConnected = false;
