@@ -27,7 +27,7 @@ export class CreateComponent {
     this.authService.createCommunity(request).subscribe({
       next: (response: any) => {
         this.generatedCode = response.code; // Display the generated code from the backend response
-        alert('Community created successfully!');
+        alert('Community created successfully! with community code: ' + this.generatedCode);
         this.communityCreated.emit();
         this.closePopup(); // Close the popup after successful creation
       },
