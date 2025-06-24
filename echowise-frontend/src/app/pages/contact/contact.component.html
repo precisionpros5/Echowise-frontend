@@ -1,3 +1,4 @@
+<app-navbar></app-navbar>
 <div class="contact-wrapper">
     <mat-card class="contact-options">
         <h3>Contact Options</h3>
@@ -55,10 +56,10 @@
                     placeholder="Enter your message"></textarea>
             </mat-form-field>
 
-            <div class="file-upload">
+            <!-- <div class="file-upload">
                 <label for="file">Attach a file:</label>
                 <input type="file" id="file" (change)="onFileChange($event)" title="Attach a file" />
-            </div>
+            </div> -->
 
             <button mat-raised-button color="primary" type="submit" [disabled]="!contactForm.valid">Submit</button>
         </form>
@@ -68,4 +69,6 @@
             <p>Reach out to our support team and we’ll get back to you as soon as possible.</p>
         </div>
     </mat-card>
+
 </div>
+<app-footer></app-footer>

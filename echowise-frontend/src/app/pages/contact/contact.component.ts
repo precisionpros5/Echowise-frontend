@@ -9,6 +9,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import emailjs from 'emailjs-com';
+import { NavbarComponent } from '../../shared/navbar/navbar.component';
+import { FooterComponent } from '../../shared/footer/footer.component';
 
 @Component({
     selector: 'app-contact',
@@ -22,7 +24,8 @@ import emailjs from 'emailjs-com';
         MatSelectModule,
         MatButtonModule,
         MatIconModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        NavbarComponent,FooterComponent
     ],
     templateUrl: './contact.component.html',
     styleUrls: ['./contact.component.scss']

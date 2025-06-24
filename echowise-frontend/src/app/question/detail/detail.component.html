@@ -1,12 +1,18 @@
-<div class="detail-container">
-    <h3>{{ question }}</h3>
-    <p><strong>Description:</strong> {{ description }}</p>
-    <p><strong>Posted by:</strong> {{ username }}</p>
-    <p><strong>Creation Date:</strong> {{ creationDate }}</p>
-    <p><strong>Last Edited Date:</strong> {{ lastEditedDate }}</p>
-    <p><strong>Community Code:</strong> {{ communityCode }}</p>
-    <p><strong>Status:</strong> {{ status }}</p>
-    <p><strong>Tags:</strong>
-        <span *ngFor="let tag of tags" class="tag">{{ tag }}</span>
-    </p>
+<div class="detail-card">
+    <div class="detail-header">
+        <h2 class="question-title">{{ question }}</h2>
+        <p class="author-info">Posted by <span class="username">{{ username }}</span></p>
+    </div>
+    <div class="detail-body">
+        <p class="description">{{ description }}</p>
+    </div>
+    <div class="detail-footer">
+        <p><strong>Creation Date:</strong> {{ creationDate | date:'medium' }}</p>
+        <p><strong>Last Edited Date:</strong> {{ lastEditedDate | date:'medium' }}</p>
+        <p><strong>Status:</strong> <span class="status">{{ status }}</span></p>
+        <div class="tags-container">
+            <strong>Tags:</strong>
+            <span *ngFor="let tag of tags" class="tag">{{ tag }}</span>
+        </div>
+    </div>
 </div>

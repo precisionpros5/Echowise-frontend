@@ -7,6 +7,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
+import { NavbarComponent } from '../../shared/navbar/navbar.component';
+import { FooterComponent } from '../../shared/footer/footer.component';
 
 
 @Component({
@@ -19,7 +21,7 @@ import { FormsModule } from '@angular/forms';
         MatFormFieldModule,
         MatIconModule,
         MatButtonModule,
-        FormsModule
+        FormsModule, NavbarComponent, FooterComponent
     ],
     templateUrl: './help.component.html',
     styleUrls: ['./help.component.scss'],
