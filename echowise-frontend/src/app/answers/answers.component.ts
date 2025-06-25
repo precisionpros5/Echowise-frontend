@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../auth/auth.service';
+import { Session } from 'inspector';
 
 @Component({
   selector: 'app-answers',
@@ -13,9 +14,14 @@ export class AnswersComponent {
   @Input() question: any; // Input property to receive question data
   answers: any[] = []; // Array to store answers
   newAnswer: string = ''; // Variable to store the new answer text
+  thisUserName = sessionStorage.getItem('username'); // Get the current user's ID from session storage
   @Output() backToList = new EventEmitter<void>(); // EventEmitter to notify parent to navigate back
 
   @Input() questionId: any; // Variable to store question ID
+  isUpdatePopupVisible = false; // Control visibility of the update popup
+  updatedAnswerContent = '';
+  answerToUpdateId: number | null = null; // Store the ID of the answer being updated
+
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
@@ -91,6 +97,55 @@ export class AnswersComponent {
       });
     }
   }
+
+  deleteAnswer(answerId: number) {
+    if (confirm('Are you sure you want to delete this answer?')) {
+      this.authService.deleteAnswer(answerId).subscribe({
+        next: () => {
+          console.log('Answer deleted successfully:', answerId);
+          this.answers = this.answers.filter(answer => answer.answerId !== answerId); // Remove the deleted answer from the list
+        },
+        error: (err) => {
+          console.error('Failed to delete answer:', err);
+          alert('Failed to delete the answer. Please try again.');
+        }
+      });
+    }
+  }
+
+  showUpdatePopup(answer: any) {
+    this.isUpdatePopupVisible = true;
+    this.updatedAnswerContent = answer.content; // Pre-fill the popup with the current answer content
+    this.answerToUpdateId = answer.answerId; // Store the ID of the answer being updated
+  }
+
+  closeUpdatePopup() {
+    this.isUpdatePopupVisible = false;
+    this.updatedAnswerContent = '';
+    this.answerToUpdateId = null;
+  }
+
+  updateAnswer() {
+    if (this.updatedAnswerContent.trim() && this.answerToUpdateId !== null) {
+      const updateData = { content: this.updatedAnswerContent };
+
+      this.authService.updateAnswer(this.answerToUpdateId, updateData).subscribe({
+        next: (response) => {
+          console.log('Answer updated successfully:', response);
+          const answer = this.answers.find(a => a.answerId === this.answerToUpdateId);
+          if (answer) {
+            answer.content = response.content; // Update the answer content locally
+          }
+          this.closeUpdatePopup(); // Close the popup
+        },
+        error: (err) => {
+          console.error('Failed to update answer:', err);
+          alert('Failed to update the answer. Please try again.');
+        }
+      });
+    }
+  }
+
 
   navigateBack() {
     console.log('Navigating back to question list');

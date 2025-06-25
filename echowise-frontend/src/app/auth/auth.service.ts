@@ -122,6 +122,17 @@ export class AuthService {
     return this.http.post(url, answerData, { withCredentials: true });
   }
 
+  deleteAnswer(answerId: number): Observable<any> {
+    const url = `http://localhost:8085/api/questions/answers/${answerId}`;
+    console.log('Deleting answer with ID:', answerId); // Debugging
+    return this.http.delete(url, { withCredentials: true });
+  }
+
+  updateAnswer(answerId: number, updateData: { content: string }): Observable<any> {
+    const url = `http://localhost:8085/api/questions/answers/${answerId}`; // Replace `this.baseUrl` with your API base URL
+    return this.http.put(url, updateData, { withCredentials: true });
+  }
+
   createDiscussionRoom(communityCode: string, payload: { name: string; description: string; memberUsernames: (string | null)[] }): Observable<any> {
     return this.http.post<any>(`${this.communityBaseUrl}/${communityCode}/rooms`, payload, { withCredentials: true });
   }
