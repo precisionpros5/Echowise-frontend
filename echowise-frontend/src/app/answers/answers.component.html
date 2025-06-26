@@ -24,7 +24,21 @@
                 <small>Posted by: {{ answer.username }}</small>
                 <small>Created on: {{ answer.creationDate | date:'medium' }}</small>
                 <span *ngIf="answer.isAccepted" class="accepted-answer">✔ Accepted Answer</span>
+
+                <button *ngIf="answer.username===thisUserName" (click)="showUpdatePopup(answer)">Update</button>
+                <button *ngIf="answer.username===thisUserName" (click)="deleteAnswer(answer.answerId)">Delete</button>
+
             </div>
+        </div>
+    </div>
+
+    <!-- Update Answer Popup -->
+    <div *ngIf="isUpdatePopupVisible" class="popup-container">
+        <div class="popup-content">
+            <h3>Update Answer</h3>
+            <textarea [(ngModel)]="updatedAnswerContent" placeholder="Enter updated answer"></textarea>
+            <button (click)="updateAnswer()">Submit</button>
+            <button (click)="closeUpdatePopup()">Cancel</button>
         </div>
     </div>
 
