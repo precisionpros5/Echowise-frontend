@@ -6,11 +6,12 @@ import { AuthService } from '../../auth/auth.service';
 import { JoinComponent } from '../../community/join/join.component';
 import { CreateComponent } from '../../community/create/create.component';
 import { WebSocketService } from '../../discussion/services/websocket.service'; // Assuming you have a WebSocketService
+import { CommunityDetailComponent } from '../../community/community-detail/community-detail.component';
 
 @Component({
   selector: 'app-community-sidebar',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, JoinComponent, CreateComponent],
+  imports: [CommonModule, FormsModule, RouterModule, JoinComponent, CreateComponent, CommunityDetailComponent],
   templateUrl: './community-sidebar.component.html',
   styleUrls: ['./community-sidebar.component.css'],
 
@@ -30,6 +31,8 @@ export class CommunitySidebarComponent implements OnInit {
   constructor(private authService: AuthService, private webSocketService: WebSocketService) {
     console.log('WebSocketService initialized:', !!this.webSocketService);
   }
+  isCommunityDetailPopupVisible = false;
+  communityDetail: any; // Store community details for the popup
 
   ngOnInit(): void {
 
@@ -139,7 +142,7 @@ export class CommunitySidebarComponent implements OnInit {
 
   selectCommunity(community: any) {
     if (this.selectedCommunity?.code === community.code) {
-      console.log('Switching to question view for the same community:', community.name);
+      console.log('Switching to question view for the same community:', community.name, this.roomsByCommunity);
 
       // Reset the selected room to null to clear the discussion room selection
       this.selectedRoom = null;
@@ -164,6 +167,7 @@ export class CommunitySidebarComponent implements OnInit {
     localStorage.setItem('selectedCommunity', JSON.stringify(community));
   }
   openCreateDiscussionGroup(community: any) {
+    console.log('Opening create discussion group for community:', community);
     this.createDiscussionGroup.emit(community); // Convert communityCode to string
   }
 
@@ -208,5 +212,59 @@ export class CommunitySidebarComponent implements OnInit {
   handleCommunityCreated(): void {
     //console.log('Community created, refreshing list...');
     this.fetchCommunities(); // Refresh the list of communities
+  }
+  showCommunityDetailPopup(community: any) {
+    console.log('Showing community detail popup for1:', community);
+
+    this.authService.getCommunityDetails(community.code).subscribe({
+      next: (response) => {
+        console.log('Community details fetched successfully:', response);
+        this.communityDetail = { ...response };
+        console.log('Community details fetched successfully:', this.communityDetail) // Store the community details
+        this.isCommunityDetailPopupVisible = true; // Show the popup
+      },
+      error: (err) => {
+        console.error('Failed to fetch community details:', err);
+        alert('Failed to fetch community details. Please try again.');
+      }
+    });
+  }
+  closeCommunityDetailPopup() {
+    this.isCommunityDetailPopupVisible = false; // Hide the popup
+  }
+  updateCommunity(event: any): void {
+    this.authService.updatecommunities(event.communitycode, event.update).subscribe({
+      next: (response: string) => {
+
+        console.log('Community details updated successfully:', response);
+        alert('Community updated successfully!');
+        this.communityDetail.name = event.update.name;
+        this.communityDetail.description = event.update.description;
+        localStorage.setItem('selectedCommunity', JSON.stringify(this.communityDetail));
+        this.isCommunityDetailPopupVisible = false; // Hide the popup after updating
+        this.fetchCommunities();
+      },
+      error: (err) => {
+        console.error('Failed to update community details:', err);
+        alert('Failed to update community details. Please try again.');
+      }
+    });
+  }
+  deleteCommunity(event: any): void {
+    console.log('Deleting community with code:', event);
+    this.authService.deletecommunities(event).subscribe({
+      next: (response: string) => {
+
+        console.log('Community details updated successfully:', response);
+        alert('Community updated successfully!');
+
+        this.isCommunityDetailPopupVisible = false; // Hide the popup after updating
+        this.fetchCommunities();
+      },
+      error: (err) => {
+        console.error('Failed to update community details:', err);
+        alert('Failed to update community details. Please try again.');
+      }
+    });
   }
 }

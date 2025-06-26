@@ -18,8 +18,7 @@ export class ListComponent {
   @Input() questions: any[] = []; // Accept questions as input
   @Input() communityCode!: number;
   isPostPopupVisible = false; // Control visibility of the Post popup
-  isCommunityDetailPopupVisible = false;
-  communityDetail: any = null; // Store community details for the popup
+
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['questions']) {
@@ -35,23 +34,8 @@ export class ListComponent {
     this.isPostPopupVisible = false; // Hide the Post popup
   }
 
-  showCommunityDetailPopup() {
-    this.authService.getCommunityDetails(this.communityCode).subscribe({
-      next: (response) => {
-        console.log('Community details fetched successfully:', response);
-        this.communityDetail = response; // Store the community details
-        this.isCommunityDetailPopupVisible = true; // Show the popup
-      },
-      error: (err) => {
-        console.error('Failed to fetch community details:', err);
-        alert('Failed to fetch community details. Please try again.');
-      }
-    });
-  }
+ 
 
-  closeCommunityDetailPopup() {
-    this.isCommunityDetailPopupVisible = false; // Hide the popup
-  }
 
   handleQuestionSubmitted(questionData: { title: string; description: string; tags: string[] }) {
     console.log('Question Submitted:', questionData);
