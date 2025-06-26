@@ -1,8 +1,24 @@
 <div class="chat-main">
     <div class="connection-status" [ngClass]="{ connected: isConnected, disconnected: !isConnected }">
         <span class="discussion-room-title">{{currentRoom.name}}</span>
-        <span class="current-user">{{ currentUser }}</span>
+        <!-- <span class="current-user">{{ currentUser }}</span> -->
+        <span class="room-actions">
+          <button mat-icon-button [matMenuTriggerFor]="roomMenu">
+              <mat-icon>more_vert</mat-icon>
+          </button>
+      </span>
+      <mat-menu #roomMenu="matMenu">
+        <button mat-menu-item (click)="viewRoomDetails()">Room Details</button>
+        <button mat-menu-item (click)="openUpdateRoomDialog()">Update Room</button>
+        <button mat-menu-item (click)="confirmDeleteRoom()">Delete Room</button>
+        <button mat-menu-item (click)="openAddMembersDialog()">Add Members</button>
+        <button mat-menu-item (click)="viewExistingUsers()">Existing Users</button>
+    </mat-menu>
     </div>
+    <div class="action-bar">
+        <button class="post-button" (click) = "editDetails()">Edit Room Details</button>
+    </div>
+    <hr class="my-2" style="border-width: 2px;" />
     <div class="chat-area">
         <app-chat-window [currentUser]="currentUser" [currentRoomId]="currentRoomId"></app-chat-window>
     </div>
@@ -11,4 +27,17 @@
             (sendMessageEvent)="handleSendMessage($event)">
         </app-message-input>
     </div>
+    <div class="popup-overlay" *ngIf="isEditPopupVisible">
+        <div class="popup-container">
+          <h2>Edit Room Details</h2>
+          <div class="form-group">
+            <label for="room-name">Room Name</label>
+            <input id="room-name" type="text" [(ngModel)]="updatedRoomName" class="form-control" />
+          </div>
+          <div class="popup-actions">
+            <button class="btn btn-primary" (click)="saveRoomDetails()">Save</button>
+            <button class="btn btn-secondary" (click)="closeEditPopup()">Cancel</button>
+          </div>
+        </div>
+      </div>
 </div>
