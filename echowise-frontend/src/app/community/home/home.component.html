@@ -3,7 +3,8 @@
 <div class="home-container">
     <app-community-sidebar (createDiscussionGroup)="openCreateDiscussionGroup($event)"
         (questionsFetched)="onQuestionsFetched($event)" (onCommunityclicked)="handleCommunitySelected($event)"
-        (onAnswerclicked)="handleItemClicked($event)" (onDiscussionclicked)="handleDiscussionRoomSelected($event)">
+        (onAnswerclicked)="handleItemClicked($event)" (onDiscussionclicked)="handleDiscussionRoomSelected($event)"
+        [roomDeletedEvent]="roomDeletedEvent">
     </app-community-sidebar>
     <!-- Sidebar -->
     <main class="main-content">
@@ -15,7 +16,8 @@
         <app-answers *ngIf="currentView === 'answers'" [question]="question" [questionId]="questionId"
             (backToList)="handleBackToList()"></app-answers>
         <app-discussion-room *ngIf="currentView === 'discussionRoom'" [currentRoomId]="discussionRoom.id"
-            [currentRoom]="discussionRoom" (backToList)="handleBackToList()"></app-discussion-room>
+            [currentRoom]="discussionRoom" (backToList)="handleBackToList()"
+            (roomDeleted)="handleDeleteRoom($event)"></app-discussion-room>
     </main>
 </div>
 
