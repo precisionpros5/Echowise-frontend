@@ -95,26 +95,26 @@ export class DiscussionRoomComponent {
     this.isEditPopupVisible = false; // Hide the popup
   }
 
-   
+
   viewRoomDetails(): void {
     this.roomService.getRoomById(this.currentRoomId).subscribe(room => {
       alert(`Room Name: ${room.name}\nDescription: ${room.description}`);
     });
   }
- 
+
   openUpdateRoomDialog(): void {
     const dialogRef = this.dialog.open(UpdateRoomDialogComponent, {
       width: '400px',
       data: { roomId: this.currentRoomId }
     });
- 
+
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         console.log('Room updated successfully');
       }
     });
   }
- 
+
   confirmDeleteRoom(): void {
     const confirmed = confirm('Are you sure you want to delete this room?');
     if (confirmed) {
@@ -124,14 +124,14 @@ export class DiscussionRoomComponent {
       });
     }
   }
- 
+
   openAddMembersDialog(): void {
     this.dialog.open(AddMembersDialogComponent, {
       width: '400px',
       data: { roomId: this.currentRoomId }
     });
   }
- 
+
   viewExistingUsers(): void {
     this.dialog.open(ExistingUsersDialogComponent, {
       width: '400px',
@@ -139,5 +139,5 @@ export class DiscussionRoomComponent {
     });
   }
 }
- 
-}
+
+

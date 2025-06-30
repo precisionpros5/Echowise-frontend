@@ -7,6 +7,8 @@ import { jwtDecode } from 'jwt-decode'; // Import jwt-decode for token validatio
   providedIn: 'root'
 })
 export class AuthService {
+
+  private discussionRoomUrl = 'http://localhost:8085/api';
   private baseUrl = 'http://localhost:8085/api/auth'; // Backend URL for authentication
   private communityBaseUrl = 'http://localhost:8085/api/communities'; // Backend URL for communities
 
@@ -152,7 +154,22 @@ export class AuthService {
     const community = this.cachedCommunities.find(c => c.name === communityName);
     return community ? community.id : 0;
   }
-
+  updatecommunities(communityCode: number, request: { name: string, des: string }): Observable<any> {
+    const url = `${this.communityBaseUrl}/${communityCode}`;
+    return this.http.put<any>(url, request, { withCredentials: true, responseType: 'text' as 'json' });
+  }
+  deletecommunities(communityCode: number): Observable<any> {
+    const url = `${this.communityBaseUrl}/${communityCode}`;
+    return this.http.delete<any>(url, { withCredentials: true, responseType: 'text' as 'json' });
+  }
+  editRoomDetails(roomId: number, name: string) {
+    return this.http.patch(`${this.discussionRoomUrl}/rooms/${roomId}`, name, {
+      headers: {
+        'Content-Type': 'text/plain' // Specify the content type as plain text
+      },
+      withCredentials: true
+    });
+  }
   isTokenValid(token: string): boolean {
     try {
       const decodedToken: any = jwtDecode(token);

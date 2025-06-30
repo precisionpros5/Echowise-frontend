@@ -60,4 +60,13 @@ export class ListComponent {
     console.log('Answers button clicked');
     this.clickenter.emit(question); // Emit event to notify parent to navigate back
   }
+  handleUpdateQuestion(event: { description: string }): void {
+    console.log('Updated description:', event.description);
+    // Logic to update the question description in the backend
+  }
+  
+  handleDeleteQuestion(): void {
+    console.log('Delete Question button clicked');
+    // Logic to delete the question in the backend
+  }
 }

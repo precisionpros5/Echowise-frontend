@@ -17,5 +17,29 @@ export class DetailComponent {
   @Input() communityCode!: number; // Community code
   @Input() status!: string; // Status of the question
   @Input() tags!: string[]; // Tags associated with the question
+  @Output() questionUpdated = new EventEmitter<{ description: string }>();
+  @Output() questionDeleted = new EventEmitter<void>();
 
+  isEditMode = false;
+  updatedDescription!: string;
+
+  enableEditMode(): void {
+    this.isEditMode = true;
+    this.updatedDescription = this.description; // Initialize with current description
+  }
+
+  saveChanges(): void {
+    if (this.updatedDescription.trim()) {
+      this.questionUpdated.emit({ description: this.updatedDescription });
+      this.isEditMode = false; // Exit edit mode after saving
+    } else {
+      alert('Description cannot be empty.');
+    }
+  }
+
+  deleteQuestion(): void {
+    if (confirm('Are you sure you want to delete this question?')) {
+      this.questionDeleted.emit(); // Emit event to notify parent component
+    }
+  }
 }
