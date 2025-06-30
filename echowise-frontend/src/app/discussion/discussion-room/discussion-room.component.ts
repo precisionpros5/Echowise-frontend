@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ChatWindowComponent } from '../components/chat-window/chat-window.component';
@@ -26,10 +26,14 @@ export class DiscussionRoomComponent {
   @Input() currentUser: string = "";
   @Input() currentRoom: any; // Example room details
   @Input() currentRoomId: any = '2'; // Example room ID
+  @Output() roomDeleted = new EventEmitter<any>(); // Emit when room details are updated
   currentUserId: string | null = null; // Retrieve from session storage
   isConnected = false;
   isEditPopupVisible: boolean = false; // Control popup visibility
   updatedRoomName: string = ''; // Store updated room name
+  roomDetails: any = null; // Store room details
+  roomMembers: any[] = []; // Store room members
+  isRoomDetailsPopupVisible: boolean = false; // Control popup visibility
 
   constructor(private webSocketService: WebSocketService, private authService: AuthService, private dialog: MatDialog, private roomService: RoomService) { }
 
@@ -97,20 +101,52 @@ export class DiscussionRoomComponent {
 
    
   viewRoomDetails(): void {
-    this.roomService.getRoomById(this.currentRoomId).subscribe(room => {
-      alert(`Room Name: ${room.name}\nDescription: ${room.description}`);
+    // this.roomService.getRoomById(this.currentRoomId).subscribe(room => {
+    //   alert(`Room Name: ${room.name}\nDescription: ${room.description}`);
+    // });
+    const roomId = this.currentRoomId; // Use the currentRoomId from the component
+    // Fetch room details
+    this.roomService.getRoomDetails(roomId).subscribe({
+      next: (response: any) => {
+        this.roomDetails = response; // Store room details
+        console.log('Room details fetched:', this.roomDetails);
+
+        // Fetch room members
+        this.roomService.getRoomMembers(roomId).subscribe({
+          next: (members: any[]) => {
+            this.roomMembers = members; // Store room members
+            console.log('Room members fetched:', this.roomMembers);
+            this.isRoomDetailsPopupVisible = true; // Show the popup
+          },
+          error: (err: any) => {
+            console.error('Failed to fetch room members:', err);
+            alert('Failed to fetch room members. Please try again.');
+          }
+        });
+      },
+      error: (err: any) => {
+        console.error('Failed to fetch room details:', err);
+        alert('Failed to fetch room details. Please try again.');
+      }
     });
+    this.isRoomDetailsPopupVisible = true;
   }
  
+  closeRoomDetailsPopup(): void {
+    this.isRoomDetailsPopupVisible = false; // Hide the popup
+  }
+
   openUpdateRoomDialog(): void {
     const dialogRef = this.dialog.open(UpdateRoomDialogComponent, {
       width: '400px',
       data: { roomId: this.currentRoomId }
     });
  
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log('Room updated successfully');
+    dialogRef.afterClosed().subscribe((updatedRoomName : string) => {
+      if (updatedRoomName) {
+        console.log('Room updated successfully'+ updatedRoomName);
+        this.currentRoom.name = updatedRoomName; // Update the local room name
+        localStorage.setItem('selectedRoom', JSON.stringify(this.currentRoom)); // Store updated room in local storage
       }
     });
   }
@@ -118,17 +154,39 @@ export class DiscussionRoomComponent {
   confirmDeleteRoom(): void {
     const confirmed = confirm('Are you sure you want to delete this room?');
     if (confirmed) {
-      this.roomService.deleteRoom(this.currentRoomId).subscribe(() => {
-        alert('Room deleted successfully');
-        // Optionally navigate away or refresh
+      this.roomService.deleteRoom(this.currentRoomId).subscribe({
+        next: (response: string) => {
+          alert(response); // Show success message from the backend
+          // Refresh the page or navigate away to remove the deleted room from the frontend
+          localStorage.removeItem('selectedRoom'); // Clear the selected room from local storage
+          this.webSocketService.disconnect();
+          this.roomDeleted.emit(this.currentRoom.communityId); // Emit the roomDeleted event
+          //localStorage.setItem('currentView', 'list'); // Reset current view to community
+         //location.reload(); // Refresh the page to update the UI
+        },
+        error: (err: any) => {
+          console.error('Failed to delete room:', err);
+          if (err.error && typeof err.error === 'string') {
+            alert(err.error); // Show the error message from the backend
+          } else {
+            alert('Failed to delete the room. Please try again.');
+          }
+        }
       });
     }
   }
  
   openAddMembersDialog(): void {
-    this.dialog.open(AddMembersDialogComponent, {
+    console.log('Opening Add Members Dialog for room:', this.currentRoom.communityId);
+    const dialogRef = this.dialog.open(AddMembersDialogComponent, {
       width: '400px',
-      data: { roomId: this.currentRoomId }
+      data: { roomId: this.currentRoom.id, communityId: this.currentRoom.communityId }
+    });
+  
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        alert('Members added successfully!');
+      }
     });
   }
  
@@ -139,5 +197,5 @@ export class DiscussionRoomComponent {
     });
   }
 }
- 
-}
+
+

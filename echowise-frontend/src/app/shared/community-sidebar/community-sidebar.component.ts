@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit, Input, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -20,7 +20,8 @@ export class CommunitySidebarComponent implements OnInit {
   @Output() questionsFetched = new EventEmitter<{ questions: any[]; communityCode: number }>(); // EventEmitter for questions
   @Output() onCommunityclicked = new EventEmitter<any>(); // EventEmitter for community selection
   @Output() onAnswerclicked = new EventEmitter<any>(); // EventEmitter for answer selection   
-  @Output() onDiscussionclicked = new EventEmitter<any>(); // EventEmitter for discussion room selection
+  @Output() onDiscussionclicked = new EventEmitter<any>();
+  @Input() roomDeletedEvent: any = null; // EventEmitter for discussion room selection
   communities: any[] = []; // List of communities fetched from the backend
   selectedCommunity: any = null; // Selected community name
   isCreatePopupVisible = false;
@@ -49,7 +50,12 @@ export class CommunitySidebarComponent implements OnInit {
     console.log('Selected Room:', this.selectedRoom, this.selectedCommunity);
     this.fetchCommunities();
   }
-
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['roomDeletedEvent'] && changes['roomDeletedEvent'].currentValue) {
+      const communityId = changes['roomDeletedEvent'].currentValue;
+      console.log(`Room deleted event received for community sidebar ${communityId}. Refreshing rooms...`);
+      this.fetchRoomsByCommunity({ code: communityId }); // Trigger room refresh
+    }}
   fetchCommunities() {
     this.authService.getUserCommunities().subscribe({
       next: (response: any[]) => {

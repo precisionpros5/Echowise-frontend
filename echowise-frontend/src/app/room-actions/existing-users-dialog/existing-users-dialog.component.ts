@@ -22,7 +22,7 @@ export class ExistingUsersDialogComponent {
 
   constructor(
     private dialogRef: MatDialogRef<ExistingUsersDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { roomId: string },
+    @Inject(MAT_DIALOG_DATA) public data: { roomId: number },
     private roomService: RoomService
   ) { }
 

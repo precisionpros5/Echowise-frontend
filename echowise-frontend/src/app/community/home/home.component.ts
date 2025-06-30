@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; // Import FormsModule for ngModel
 import { RouterModule } from '@angular/router';
@@ -9,6 +9,7 @@ import { FooterComponent } from '../../shared/footer/footer.component';
 import { ListComponent } from '../../question/list/list.component';
 import { AnswersComponent } from '../../answers/answers.component';
 import { DiscussionRoomComponent } from '../../discussion/discussion-room/discussion-room.component';
+import { EventEmitter } from 'stream';
 
 @Component({
   selector: 'app-home',
@@ -40,8 +41,9 @@ export class HomeComponent implements OnInit {
   discussionRoom: any = null; // Store the selected discussion room ID
   currentView: 'list' | 'answers' | 'discussionRoom' | null | string = 'list'; // Track the current view
   selectedCommunityCode: number | null = null; // Store the community code
-
+ // @Output() roomDeleted = new EventEmitter<any>();; // Emit when room details are updated
   question: any = null;
+  roomDeletedEvent: any = null; 
 
   ngOnInit(): void {
     // Load saved state from localStorage
@@ -154,5 +156,13 @@ export class HomeComponent implements OnInit {
 
     // Save selection to localStorage
     localStorage.setItem('currentView', 'list');
+  }
+  handleDeleteRoom(event:any){
+    console.log('Room deleted event received:in homes', event);
+    this.currentView= 'list'; // Switch back to question list view
+    localStorage.setItem('currentView', 'list');  
+    this.roomDeletedEvent = event; // Emit the roomDeleted event to notify parent components
+
+
   }
 }

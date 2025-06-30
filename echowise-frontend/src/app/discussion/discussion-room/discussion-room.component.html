@@ -40,4 +40,22 @@
           </div>
         </div>
       </div>
+      <div *ngIf = "isRoomDetailsPopupVisible">
+        <h1>Testing tag...</h1>
+      </div>
+      <div class="popup-overlay" *ngIf="isRoomDetailsPopupVisible">
+        <div class="popup-container">
+          <h2>Room Details</h2>
+          <p><strong>Room Name:</strong> {{ roomDetails?.name }}</p>
+          <p><strong>Community ID:</strong> {{ roomDetails?.communityId }}</p>
+          <p><strong>Is Private:</strong> {{ roomDetails?.isPrivate ? 'Yes' : 'No' }}</p>
+          <h3>Members</h3>
+          <ul>
+            <li *ngFor="let member of roomMembers">{{ member.username }}</li>
+          </ul>
+          <div class="popup-actions">
+            <button class="btn btn-secondary" (click)="closeRoomDetailsPopup()">Close</button>
+          </div>
+        </div>
+      </div>
 </div>
