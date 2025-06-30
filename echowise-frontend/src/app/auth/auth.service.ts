@@ -11,7 +11,6 @@ export class AuthService {
   private discussionRoomUrl = 'http://localhost:8085/api';
   private baseUrl = 'http://localhost:8085/api/auth'; // Backend URL for authentication
   private communityBaseUrl = 'http://localhost:8085/api/communities'; // Backend URL for communities
-  private discussionRoomUrl = 'http://localhost:8085/api'; // Backend URL for discussion rooms
   cachedCommunities: { id: number; name: string }[] = []; // Add this property to store cached communities
 
   constructor(private http: HttpClient) { }
@@ -181,13 +180,5 @@ export class AuthService {
 
   }
 
-  
-  editRoomDetails(roomId: number, name: string) {
-    return this.http.patch(`${this.discussionRoomUrl}/rooms/${roomId}`, name, {
-      headers: {
-        'Content-Type': 'text/plain' // Specify the content type as plain text
-      },
-      withCredentials: true
-    });
-  }
+
 }
