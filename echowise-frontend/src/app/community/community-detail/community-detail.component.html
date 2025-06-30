@@ -2,16 +2,28 @@
     <div class="popup-content">
         <!-- Close button inside the popup content -->
         <button class="close-button" (click)="triggerClosePopup()">X</button>
-        <h3>{{ name }}</h3>
-        <p><strong>Description:</strong> {{ description }}</p>
-        <p><strong>Community Code:</strong> {{ code }}</p>
+
+        <h3 *ngIf="!isEditMode">{{ name }}</h3>
+        <input *ngIf="isEditMode" [(ngModel)]="updatedName" placeholder="Enter new name" />
+
+        <p *ngIf="!isEditMode"><strong>Description:</strong> {{description }} </p>
+        <textarea *ngIf="isEditMode" [(ngModel)]="updatedDescription" placeholder="Enter new description"></textarea>
+
+        <p><strong>Community Code:</strong> {{code }}
+        </p>
 
         <!-- Copy to Clipboard button -->
-        <button class="copy-button" (click)="copyToClipboard()">Copy Community Code</button>
+        <button class="copy-button" (click)="copyToClipboard()">Copy Community
+            Code</button>
         <h4>Users in Community:</h4>
         <ul>
             <li *ngFor="let user of users">{{ user }}</li>
         </ul>
+        <div *ngIf="createdUserId==currentUser" class="action-buttons">
+            <button *ngIf="!isEditMode" class="update-button" (click)="enableEditMode()">Update</button>
+            <button *ngIf="isEditMode" class="save-button" (click)="saveChanges()">Save</button>
+            <button *ngIf="!isEditMode" class="delete-button" (click)="deleteCommunity()">Delete</button>
+        </div>
 
     </div>
 </div>

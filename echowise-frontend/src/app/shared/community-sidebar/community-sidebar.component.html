@@ -4,14 +4,18 @@
         <div class="community-item">
             <div>
                 <input type="radio" name="community" [value]="community.name"
-                    [checked]="community.name === selectedCommunity.name" (change)="selectCommunity(community)"
+                    [checked]="community.code === selectedCommunity.code" (change)="selectCommunity(community)"
                     (click)="selectCommunity(community)" id="community-{{ community.code }}" />
                 <label for="community-{{ community.code }}">{{ community.name }}</label>
             </div>
-            <button class="add-button" (click)="openCreateDiscussionGroup(community)">+</button>
+            <div>
+                <button class="add-button" (click)="showCommunityDetailPopup(community)">i</button>
+
+                <button class="add-button" (click)="openCreateDiscussionGroup(community)">+</button>
+            </div>
         </div>
         <div class="discussion-rooms"
-            *ngIf="community.name === selectedCommunity.name && roomsByCommunity[community.code]?.length">
+            *ngIf="community.code === selectedCommunity.code && roomsByCommunity[community.code]?.length">
             <div *ngFor="let room of roomsByCommunity[community.code]">
                 <input type="radio" name="room" [value]="room.name" (change)="selectDiscussion(room)"
                     [checked]="room.id === selectedRoom?.id" id="room-{{ room.name }}" />
@@ -31,4 +35,11 @@
         (communityCreated)="handleCommunityCreated()"></app-create-community>
     <app-join-community *ngIf="isJoinPopupVisible" (popupClosed)="closeJoinPopup()"
         (communityJoined)="handleCommunityCreated()"></app-join-community>
+    <div class="post-popup">
+        <app-community-detail *ngIf="isCommunityDetailPopupVisible" [name]="communityDetail?.name"
+            [code]="communityDetail?.code" [description]="communityDetail?.description"
+            [createdUserId]="communityDetail?.userId" (closePopup)="closeCommunityDetailPopup()"
+            (communityUpdated)="updateCommunity($event)" (communityDeleted)="deleteCommunity($event)">
+        </app-community-detail>
+    </div>
 </div>
