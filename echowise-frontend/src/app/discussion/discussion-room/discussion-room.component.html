@@ -9,15 +9,15 @@
       </span>
       <mat-menu #roomMenu="matMenu">
         <button mat-menu-item (click)="viewRoomDetails()">Room Details</button>
-        <button mat-menu-item (click)="openUpdateRoomDialog()">Update Room</button>
+        <button mat-menu-item (click)="openUpdateRoomDialog()">Update Room Details</button>
         <button mat-menu-item (click)="confirmDeleteRoom()">Delete Room</button>
         <button mat-menu-item (click)="openAddMembersDialog()">Add Members</button>
-        <button mat-menu-item (click)="viewExistingUsers()">Existing Users</button>
+        <!-- <button mat-menu-item (click)="viewExistingUsers()">Existing Users</button> -->
     </mat-menu>
     </div>
-    <div class="action-bar">
+    <!-- <div class="action-bar">
         <button class="post-button" (click) = "editDetails()">Edit Room Details</button>
-    </div>
+    </div> -->
     <hr class="my-2" style="border-width: 2px;" />
     <div class="chat-area">
         <app-chat-window [currentUser]="currentUser" [currentRoomId]="currentRoomId"></app-chat-window>
@@ -49,7 +49,7 @@
           <p><strong>Room Name:</strong> {{ roomDetails?.name }}</p>
           <p><strong>Community ID:</strong> {{ roomDetails?.communityId }}</p>
           <p><strong>Is Private:</strong> {{ roomDetails?.isPrivate ? 'Yes' : 'No' }}</p>
-          <h3>Members</h3>
+          <p><strong>Room Members</strong></p>
           <ul>
             <li *ngFor="let member of roomMembers">{{ member.username }}</li>
           </ul>
