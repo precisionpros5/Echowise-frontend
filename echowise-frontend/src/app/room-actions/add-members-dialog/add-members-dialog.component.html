@@ -1,23 +1,24 @@
-<p>add-members-dialog works!</p>
 <h2 mat-dialog-title>Add Members</h2>
 <mat-dialog-content>
-    <form [formGroup]="memberForm">
-        <mat-form-field appearance="fill" class="full-width">
-            <mat-label>Enter Member ID</mat-label>
-            <input matInput formControlName="memberId" />
-        </mat-form-field>
-        <button mat-button type="button" (click)="addMember()">Add</button>
-    </form>
-
-    <div *ngIf="memberIds.length > 0">
-        <h4>Members to be added:</h4>
-        <ul>
-            <li *ngFor="let id of memberIds">{{ id }}</li>
-        </ul>
+  <div *ngIf="usersToAdd.length > 0">
+    <h4>Select Users to Add:</h4>
+    <div class="user-list">
+      <div *ngFor="let user of usersToAdd" class="user-item">
+        <input
+          type="checkbox"
+          [value]="user.username"
+          (change)="onUserSelectionChange($event, user.username)"
+        />
+        <label>{{ user.username }}</label>
+      </div>
     </div>
+  </div>
+  <div *ngIf="usersToAdd.length === 0">
+    <p>No users available to add.</p>
+  </div>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-    <button mat-button (click)="cancel()">Cancel</button>
-    <button mat-raised-button color="primary" (click)="submitMembers()">Submit</button>
+  <button mat-button (click)="cancel()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="submitMembers()">Submit</button>
 </mat-dialog-actions>

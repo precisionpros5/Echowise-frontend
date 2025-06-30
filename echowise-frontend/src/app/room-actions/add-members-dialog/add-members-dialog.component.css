@@ -1,3 +1,15 @@
 .full-width {
     width: 100%;
 }
+
+.user-list {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+.user-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}

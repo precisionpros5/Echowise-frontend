@@ -6,32 +6,45 @@ import { Observable } from 'rxjs';
     providedIn: 'root'
 })
 export class RoomService {
-    private baseUrl = '/api/rooms'; // Adjust this if your API path is different
+    private baseUrl = 'http://localhost:8085/api'; // Adjust this if your API path is different
 
     constructor(private http: HttpClient) { }
 
     // Get room details by ID
-    getRoomById(roomId: string): Observable<any> {
-        return this.http.get(`${this.baseUrl}/${roomId}`);
+    getRoomById(roomId: number): Observable<any> {
+        return this.http.get(`${this.baseUrl}/rooms/${roomId}`);
     }
 
     // Update room details
-    updateRoom(roomId: string, data: { name: string; description: string }): Observable<any> {
-        return this.http.put(`${this.baseUrl}/${roomId}`, data);
-    }
+    updateRoom(roomId: number,name: string): Observable<any> {
+        return this.http.patch(`${this.baseUrl}/rooms/${roomId}`, name, {
+            headers: {
+              'Content-Type': 'text/plain' // Specify the content type as plain text
+            },
+            withCredentials: true
+          });
+        }
 
     // Delete a room
-    deleteRoom(roomId: string): Observable<any> {
-        return this.http.delete(`${this.baseUrl}/${roomId}`);
+    deleteRoom(roomId: number): Observable<string> {
+        return this.http.delete<string>(`${this.baseUrl}/rooms/${roomId}`, {
+            responseType: 'text' as 'json', // Ensure the response is treated as text
+          withCredentials: true
+        });
     }
 
     // Add members to a room
-    addMembers(roomId: string, memberIds: string[]): Observable<any> {
-        return this.http.post(`${this.baseUrl}/${roomId}/members`, { members: memberIds });
-    }
+    addMembers(roomId: number, usernames: string[]): Observable<void> {
+        return this.http.post<void>(`${this.baseUrl}/rooms/${roomId}/members`, usernames, {
+          withCredentials: true
+        });
+      }
 
-    // Get existing members of a room
-    getRoomMembers(roomId: string): Observable<any> {
-        return this.http.get(`${this.baseUrl}/${roomId}/members`);
-    }
+    getRoomDetails(roomId: number): Observable<any> {
+        return this.http.get(`${this.baseUrl}/rooms/${roomId}`, { withCredentials: true });
+      }
+    
+      getRoomMembers(roomId: number): Observable<any[]> {
+        return this.http.get<any[]>(`${this.baseUrl}/rooms/${roomId}/users`, { withCredentials: true });
+      }
 }
