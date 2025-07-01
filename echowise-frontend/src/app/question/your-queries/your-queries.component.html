@@ -1,3 +1,21 @@
 <app-navbar></app-navbar>
-<p>your-queries works!</p>
+<div class="list-container">
+    <div *ngFor="let community of communities">
+        <h2>{{ community.name }}</h2>
+        <div class="questions-container">
+            <div *ngFor="let question of questionsByCommunity[community.code]" (click)="GoToAnswers(question)">
+                <div *ngIf="question.username===currentUsername">
+                    <app-detail [question]="question.title" [description]="question.description"
+                        [username]="question.username" [creationDate]="question.creationDate"
+                        [lastEditedDate]="question.lastEditedDate" [communityCode]="question.communityCode"
+                        [status]="question.status" [tags]="question.tags">
+                    </app-detail>
+                </div>
+            </div>
+            <div *ngIf="questionsByCommunity[community.code]?.length === 0" class="no-questions">
+                <p>No questions available for this community.</p>
+            </div>
+        </div>
+    </div>
+</div>
 <app-footer></app-footer>

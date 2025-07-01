@@ -3,12 +3,11 @@ import { CommonModule } from '@angular/common';
 import { DetailComponent } from '../detail/detail.component';
 import { PostComponent } from '../post/post.component';
 import { AuthService } from '../../auth/auth.service';
-import { CommunityDetailComponent } from '../../community/community-detail/community-detail.component';
 
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [CommonModule, DetailComponent, PostComponent, CommunityDetailComponent],
+  imports: [CommonModule, DetailComponent, PostComponent],
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css']
 })
