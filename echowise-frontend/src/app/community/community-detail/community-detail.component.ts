@@ -40,6 +40,8 @@ export class CommunityDetailComponent {
         console.error('Failed to fetch users:', err);
       }
     });
+    console.log('currentUser:', this.currentUser);
+    console.log('community:', this.createdUserId);
   }
 
   triggerClosePopup() {

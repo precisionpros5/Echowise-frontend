@@ -8,6 +8,7 @@ import { AuthGuard } from './auth/auth.guard';
 import { AboutComponent } from './pages/about/about.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { HelpComponent } from './pages/help/help.component';
+import { YourQueriesComponent } from './question/your-queries/your-queries.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -17,5 +18,6 @@ export const routes: Routes = [
     { path: 'about', component: AboutComponent },
     { path: 'contact', component: ContactComponent },
     { path: 'help', component: HelpComponent },
+    { path: 'queries', component: YourQueriesComponent },
     { path: '', redirectTo: 'landing', pathMatch: 'full' }
 ];

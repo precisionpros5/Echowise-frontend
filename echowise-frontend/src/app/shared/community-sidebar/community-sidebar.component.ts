@@ -47,6 +47,7 @@ export class CommunitySidebarComponent implements OnInit {
       this.fetchQuestionsByCommunity(this.selectedCommunity);
     }
 
+
     if (savedRoom) {
       this.selectedRoom = JSON.parse(savedRoom);
     }
@@ -58,13 +59,16 @@ export class CommunitySidebarComponent implements OnInit {
       const communityId = changes['roomDeletedEvent'].currentValue;
       console.log(`Room deleted event received for community sidebar ${communityId}. Refreshing rooms...`);
       this.fetchRoomsByCommunity({ code: communityId }); // Trigger room refresh
-    }}
+    }
+  }
   fetchCommunities() {
     this.authService.getUserCommunities().subscribe({
       next: (response: any[]) => {
         this.communities = response; // Bind the fetched communities to the component
         if (!this.selectedCommunity && this.communities.length > 0) {
           console.log('Fetched communities:', this.communities);
+          console.log('community resonse:', this.communityDetail);
+
           this.selectedCommunity = this.communities[0];
           //console.log("check", this.selectedCommunity) // Select the first community by default
           this.fetchRoomsByCommunity(this.selectedCommunity); // Fetch rooms for the first community
