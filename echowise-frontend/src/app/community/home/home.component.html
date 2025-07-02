@@ -4,7 +4,7 @@
     <app-community-sidebar (createDiscussionGroup)="openCreateDiscussionGroup($event)"
         (questionsFetched)="onQuestionsFetched($event)" (onCommunityclicked)="handleCommunitySelected($event)"
         (onAnswerclicked)="handleItemClicked($event)" (onDiscussionclicked)="handleDiscussionRoomSelected($event)"
-        [roomDeletedEvent]="roomDeletedEvent">
+        [roomDeletedEvent]="roomDeletedEvent" [roomcreatedEvent]="roomcreatedEvent">
     </app-community-sidebar>
     <!-- Sidebar -->
     <main class="main-content">
@@ -25,5 +25,5 @@
 
 <!-- Create Discussion Group Popup -->
 <app-create-discussion-group *ngIf="isCreateDiscussionGroupVisible" [community]="selectedCommunity"
-    (closePopup)="closeCreateDiscussionGroup()">
+    (closePopup)="closeCreateDiscussionGroup()" (roomcreated)="handleDiscussionRoomCreated($event)">
 </app-create-discussion-group>

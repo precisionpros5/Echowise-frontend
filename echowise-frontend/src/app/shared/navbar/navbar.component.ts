@@ -14,7 +14,7 @@ import { AuthService } from '../../auth/auth.service';
 })
 export class NavbarComponent {
   showDropdown = false;
-
+  username = sessionStorage.getItem('username') || 'Guest'; // Default to 'Guest' if no username is found
   constructor(private authService: AuthService, private router: Router) { }
 
   toggleDropdown() {

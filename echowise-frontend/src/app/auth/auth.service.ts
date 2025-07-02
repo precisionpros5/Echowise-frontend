@@ -126,7 +126,7 @@ export class AuthService {
   deleteAnswer(answerId: number): Observable<any> {
     const url = `http://localhost:8085/api/questions/answers/${answerId}`;
     console.log('Deleting answer with ID:', answerId); // Debugging
-    return this.http.delete(url, { withCredentials: true });
+    return this.http.delete(url, { withCredentials: true, responseType: 'text' as 'json' });
   }
 
   updateAnswer(answerId: number, updateData: { content: string }): Observable<any> {

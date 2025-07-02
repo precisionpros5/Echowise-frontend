@@ -14,6 +14,7 @@ import { AlertService } from '../../shared/alert/alert.service'; // Import Alert
 export class CreateDiscussionGroupComponent implements OnChanges {
   @Input() community: any;
   @Output() closePopup = new EventEmitter<void>();
+  @Output() roomcreated = new EventEmitter<any>(); // Emit the community code when a room is created
   users: string[] = [];
   selectedUsers: string[] = [];
   currentUser: string | null = sessionStorage.getItem('username'); // Current user username
@@ -80,6 +81,7 @@ export class CreateDiscussionGroupComponent implements OnChanges {
       next: (response: any) => {
         console.log('Discussion group created successfully:', response);
         this.alertService.showAlert('Discussion group created successfully!', 'success'); // Custom alert
+        this.roomcreated.emit(this.community.code); // Emit event to notify parent component
         this.close();
       },
       error: (err: any) => {

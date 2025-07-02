@@ -31,7 +31,7 @@
     <div class="navbar-right">
         <div class="profile-container" (click)="toggleDropdown()">
             <img src="assets/profile-logo.svg" alt="Profile Logo" class="profile-logo" />
-            <span class="profile-text">My Profile</span>
+            <span class="profile-text">{{username}}</span>
             <div class="dropdown-menu" *ngIf="showDropdown">
                 <button (click)="navigateTo('/queries')">Your Queries</button>
                 <button (click)="navigateTo('/help')">Help</button>

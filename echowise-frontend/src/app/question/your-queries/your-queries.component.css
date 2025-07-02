@@ -15,5 +15,12 @@
     border-bottom: 2px solid #007bff;
     /* Add a bottom border for emphasis */
     width: fit-content;
+
+    /* Light gradient background with opacity */
+
     /* Ensure the width fits the content */
+}
+
+.list-container {
+    background: linear-gradient(135deg, rgba(190, 128, 251, 0.2), rgba(108, 96, 245, 0.2));
 }

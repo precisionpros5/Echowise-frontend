@@ -23,6 +23,7 @@ export class CommunitySidebarComponent implements OnInit {
   @Output() onAnswerclicked = new EventEmitter<any>(); // EventEmitter for answer selection   
   @Output() onDiscussionclicked = new EventEmitter<any>();
   @Input() roomDeletedEvent: any = null; // EventEmitter for discussion room selection
+  @Input() roomcreatedEvent: any = null; // EventEmitter for discussion room selection
   communities: any[] = []; // List of communities fetched from the backend
   selectedCommunity: any = null; // Selected community name
   isCreatePopupVisible = false;
@@ -57,6 +58,11 @@ export class CommunitySidebarComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['roomDeletedEvent'] && changes['roomDeletedEvent'].currentValue) {
       const communityId = changes['roomDeletedEvent'].currentValue;
+      console.log(`Room deleted event received for community sidebar ${communityId}. Refreshing rooms...`);
+      this.fetchRoomsByCommunity({ code: communityId }); // Trigger room refresh
+    }
+    if (changes['roomcreatedEvent'] && changes['roomcreatedEvent'].currentValue) {
+      const communityId = changes['roomcreatedEvent'].currentValue;
       console.log(`Room deleted event received for community sidebar ${communityId}. Refreshing rooms...`);
       this.fetchRoomsByCommunity({ code: communityId }); // Trigger room refresh
     }
@@ -156,6 +162,7 @@ export class CommunitySidebarComponent implements OnInit {
 
       // Reset the selected room to null to clear the discussion room selection
       this.selectedRoom = null;
+      localStorage.removeItem('selectedRoom'); // Clear the selected room from localStorage
       this.onCommunityclicked.emit(community);
 
       // Fetch questions for the community
@@ -223,6 +230,7 @@ export class CommunitySidebarComponent implements OnInit {
     //console.log('Community created, refreshing list...');
     this.fetchCommunities(); // Refresh the list of communities
   }
+
   showCommunityDetailPopup(community: any) {
     console.log('Showing community detail popup for1:', community);
 

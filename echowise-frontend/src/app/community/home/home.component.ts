@@ -44,6 +44,8 @@ export class HomeComponent implements OnInit {
  // @Output() roomDeleted = new EventEmitter<any>();; // Emit when room details are updated
   question: any = null;
   roomDeletedEvent: any = null; 
+  roomcreatedEvent: any = null; 
+
 
   ngOnInit(): void {
     // Load saved state from localStorage
@@ -164,5 +166,11 @@ export class HomeComponent implements OnInit {
     this.roomDeletedEvent = event; // Emit the roomDeleted event to notify parent components
 
 
+  }
+  handleDiscussionRoomCreated(event: any) {
+    console.log('Discussion room created event received:', event);
+    this.roomcreatedEvent = event; // Emit the roomcreated event to notify parent components
+    this.currentView = 'list'; // Switch back to question list view
+    localStorage.setItem('currentView', 'list');  
   }
 }
