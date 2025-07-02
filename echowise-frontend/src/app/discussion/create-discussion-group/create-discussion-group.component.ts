@@ -70,7 +70,30 @@ export class CreateDiscussionGroupComponent implements OnChanges {
       this.alertService.showAlert('Please provide both a group name and description.', 'error'); // Custom alert
       return;
     }
+    if (!this.groupName.trim()) {
+      this.alertService.showAlert('Group Name is required.', 'error'); // Custom alert
+      return;
+    }
+    if (this.groupName.length < 3 || this.groupName.length > 15) {
+      this.alertService.showAlert('Group Name must be between 3 and 15 characters.', 'error'); // Custom alert
+      return;
+    }
 
+    // Validate Group Description
+    if (!this.groupDescription.trim()) {
+      this.alertService.showAlert('Group Description is required.', 'error'); // Custom alert
+      return;
+    }
+    if (this.groupDescription.length < 10 || this.groupDescription.length > 200) {
+      this.alertService.showAlert('Group Description must be between 10 and 200 characters.', 'error'); // Custom alert
+      return;
+    }
+
+    // Validate Selected Users
+    if (this.selectedUsers.length === 0) {
+      this.alertService.showAlert('Please select at least one user.', 'error'); // Custom alert
+      return;
+    }
     const payload = {
       name: this.groupName,
       description: this.groupDescription,

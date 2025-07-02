@@ -25,7 +25,7 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 10;
 }
 
 .popup-content {
@@ -62,7 +62,7 @@ button {
     margin-top: 1.5rem;
     padding: 0.8rem 1.5rem;
     background: linear-gradient(135deg, #c088f8, #7367F0);
-  color: white;
+    color: white;
     border: none;
     border-radius: 6px;
     cursor: pointer;
@@ -79,10 +79,13 @@ button {
     right: 0.5rem;
     background-color: transparent;
     border: none;
-    font-size: 1rem; /* Keep the size of "X" unchanged */
+    font-size: 1rem;
+    /* Keep the size of "X" unchanged */
     cursor: pointer;
-    padding: 0.5rem; /* Reduce padding to make the button smaller */
-    margin: 0.5rem; /* Adjust margin for positioning */
+    padding: 0.5rem;
+    /* Reduce padding to make the button smaller */
+    margin: 0.5rem;
+    /* Adjust margin for positioning */
 }
 
 .popup-content .close-button:hover {

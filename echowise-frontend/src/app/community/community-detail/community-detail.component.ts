@@ -67,19 +67,36 @@ export class CommunityDetailComponent {
   }
 
   saveChanges(): void {
-    if (this.updatedName.trim() && this.updatedDescription.trim()) {
-      this.communityUpdated.emit({
-        communitycode: this.code,
-        update: {
-          name: this.updatedName,
-          description: this.updatedDescription
-        }
-      }
-      );
-      this.isEditMode = false; // Exit edit mode after saving
-    } else {
-      alert('Name and description cannot be empty.');
+    // Validate Community Name
+    if (!this.updatedName.trim()) {
+      alert('Community Name is required.');
+      return;
     }
+    if (this.updatedName.length < 3 || this.updatedName.length > 15) {
+      alert('Community Name must be between 3 and 15 characters.');
+      return;
+    }
+
+    // Validate Community Description
+    if (!this.updatedDescription.trim()) {
+      alert('Community Description is required.');
+      return;
+    }
+    if (this.updatedDescription.length < 10 || this.updatedDescription.length > 200) {
+      alert('Community Description must be between 10 and 200 characters.');
+      return;
+    }
+
+    // Emit the update event if validations pass
+    this.communityUpdated.emit({
+      communitycode: this.code,
+      update: {
+        name: this.updatedName.trim(),
+        description: this.updatedDescription.trim()
+      }
+    });
+
+    this.isEditMode = false; // Exit edit mode after saving
   }
 
   deleteCommunity(): void {
