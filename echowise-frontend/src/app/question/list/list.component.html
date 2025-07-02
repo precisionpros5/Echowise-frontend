@@ -6,10 +6,11 @@
     </div>
 
     <div class="questions-container">
-        <div *ngFor="let question of questions" (click)="GoToAnswers(question)">
+        <div *ngFor="let question of questions">
             <app-detail [question]="question.title" [description]="question.description" [username]="question.username"
                 [creationDate]="question.creationDate" [lastEditedDate]="question.lastEditedDate"
-                [communityCode]="question.communityCode" [status]="question.status" [tags]="question.tags"   (questionUpdated)="handleUpdateQuestion($event)"
+                [communityCode]="question.communityCode" [status]="question.status" [tags]="question.tags"
+                [id]="question.questionId" (questionUpdated)="handleUpdateQuestion($event)"
                 (questionDeleted)="handleDeleteQuestion()">>
             </app-detail>
         </div>
@@ -24,6 +25,6 @@
                 </app-post>
             </div>
         </div>
-       
+
     </div>
 </div>

@@ -8,6 +8,7 @@ import { jwtDecode } from 'jwt-decode'; // Import jwt-decode for token validatio
 })
 export class AuthService {
 
+
   private discussionRoomUrl = 'http://localhost:8085/api';
   private baseUrl = 'http://localhost:8085/api/auth'; // Backend URL for authentication
   private communityBaseUrl = 'http://localhost:8085/api/communities'; // Backend URL for communities
@@ -132,6 +133,11 @@ export class AuthService {
   updateAnswer(answerId: number, updateData: { content: string }): Observable<any> {
     const url = `http://localhost:8085/api/questions/answers/${answerId}`; // Replace `this.baseUrl` with your API base URL
     return this.http.put(url, updateData, { withCredentials: true });
+  }
+
+  updateQuestion(id: number, arg1: { title: string; description: string; tags: string[]; }) {
+    const url = `http://localhost:8085/api/questions/${id}`;
+    return this.http.put(url, arg1, { withCredentials: true });
   }
 
   createDiscussionRoom(communityCode: string, payload: { name: string; description: string; memberUsernames: (string | null)[] }): Observable<any> {

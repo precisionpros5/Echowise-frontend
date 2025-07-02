@@ -1,23 +1,43 @@
 <div class="detail-card">
     <div class="detail-header">
-        <h2 class="question-title">{{ question }}</h2>
+        <!-- Editable Title -->
+
+        <h2 *ngIf="!isEditMode" class="question-title">{{ question }}</h2>
+        <input *ngIf="isEditMode" [(ngModel)]="updatedTitle" placeholder="Edit title" class="edit-input" />
         <p class="author-info">Posted by <span class="username">{{ username }}</span></p>
     </div>
     <div class="detail-body">
-        <p class="description">{{ description }}</p>
+        <!-- Editable Description -->
+        <p *ngIf="!isEditMode" class="description">{{ description }}</p>
+        <textarea *ngIf="isEditMode" [(ngModel)]="updatedDescription" placeholder="Edit description"
+            class="edit-textarea"></textarea>
     </div>
     <div class="detail-footer">
         <p><strong>Creation Date:</strong> {{ creationDate | date:'medium' }}</p>
         <p><strong>Last Edited Date:</strong> {{ lastEditedDate | date:'medium' }}</p>
         <p><strong>Status:</strong> <span class="status">{{ status }}</span></p>
+
         <div class="tags-container">
             <strong>Tags:</strong>
-            <span *ngFor="let tag of tags" class="tag">{{ tag }}</span>
+            <!-- Display tags when not in edit mode -->
+            <ng-container *ngIf="!isEditMode">
+                <span *ngFor="let tag of tags" class="tag">{{ tag }}</span>
+            </ng-container>
+
+            <!-- Editable tags in a single input field when in edit mode -->
+            <div *ngIf="isEditMode" class="edit-tags">
+                <input [(ngModel)]="updatedTagsString" placeholder="Edit tags (comma-separated)"
+                    class="edit-tags-input" />
+            </div>
+        </div>
+        <div *ngIf="username == currentUser" class="edit-info">
+
+            <div class="action-buttons">
+                <!-- Edit and Save Buttons -->
+                <button *ngIf="!isEditMode" class="edit-button" (click)="enableEditMode()">Edit</button>
+                <button *ngIf="isEditMode" class="save-button" (click)="saveChanges()">Save</button>
+                <!-- Delete Button -->
+                <button class="delete-button" (click)="deleteQuestion()">Delete</button>
+            </div>
         </div>
     </div>
-    <div class="action-buttons">
-        <!-- <button *ngIf="!isEditMode" class="edit-button" (click)="enableEditMode()">Edit</button>
-        <button *ngIf="isEditMode" class="save-button" (click)="saveChanges()">Save</button>
-        <button class="delete-button" (click)="deleteQuestion()">Delete</button> -->
-    </div>
-</div>

@@ -33,7 +33,7 @@ export class ListComponent {
     this.isPostPopupVisible = false; // Hide the Post popup
   }
 
- 
+
 
 
   handleQuestionSubmitted(questionData: { title: string; description: string; tags: string[] }) {
@@ -59,11 +59,33 @@ export class ListComponent {
     console.log('Answers button clicked');
     this.clickenter.emit(question); // Emit event to notify parent to navigate back
   }
-  handleUpdateQuestion(event: { description: string }): void {
-    console.log('Updated description:', event.description);
-    // Logic to update the question description in the backend
+  handleUpdateQuestion(event: { id: number, title: string; description: string; tags: string[] }): void {
+    console.log('Updating question:', event);
+
+    this.authService.updateQuestion(event.id, {
+      title: event.title,
+      description: event.description,
+      tags: event.tags
+    }).subscribe({
+      next: (response) => {
+        console.log('Question updated successfully:', response);
+
+        // Update the question in the local list
+        const questionIndex = this.questions.findIndex((q) => q.questionId === event.id);
+        console.log('Question index:', questionIndex); // Debugging log
+        if (questionIndex !== -1) {
+          this.questions[questionIndex].title = event.title;
+          this.questions[questionIndex].description = event.description;
+          this.questions[questionIndex].tags = event.tags;
+        }
+      },
+      error: (err) => {
+        console.error('Failed to update question:', err);
+        alert('Failed to update the question. Please try again.');
+      }
+    });
   }
-  
+
   handleDeleteQuestion(): void {
     console.log('Delete Question button clicked');
     // Logic to delete the question in the backend
